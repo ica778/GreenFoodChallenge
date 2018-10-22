@@ -7,7 +7,7 @@ public class Diet
 {
     private Map<ProteinSource, Float> proteinPercentMap;
 
-    Diet ()
+    Diet()
     {
         proteinPercentMap = new HashMap<>();
     }
@@ -24,9 +24,11 @@ public class Diet
         return proteinPercentMap.get(protein);
     }
 
+    // Gets the weekly CO2e usage for the diet
     public float getWeeklyCO2e()
     {
         float output = 0;
+
         // Weekly serving in grams for protein
         float weeklyServing = ProteinSource.getDailyServing() * 7;
 
@@ -42,6 +44,7 @@ public class Diet
         return output;
     }
 
+    // Gets the yearly CO2e usage for the diet
     public float getYearlyCO2e()
     {
         // There are 52 weeks in a year
