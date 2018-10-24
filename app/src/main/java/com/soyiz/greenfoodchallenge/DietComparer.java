@@ -1,10 +1,16 @@
 package com.soyiz.greenfoodchallenge;
 
-/*Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/* Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
  * Calculates the difference in kg of CO2e between diets
  * Calculates the CO2e saved if all of Vancouver made similar changes
  * Calculates the CO2e saved in litres of gasoline burned
- * All rounded to 0 decimal places*/
+ * All rounded to 0 decimal places
+ * Compares how well current diet compares to area average in terms of C02e per year
+ */
 public class DietComparer {
 
     public DietComparer() {}
@@ -36,5 +42,36 @@ public class DietComparer {
         //2.31 kg of CO2 per L of gasoline burned
         float litresOfGasoline = (float)Math.round(CO2eDifference/2.31f);
         return litresOfGasoline;
+    }
+
+    // Returns a string describing how the CO2e inputed compares to region of choice
+    public String getHowWellUserComparesToRegion(float currentC02e, float averageC02eInDietForArea) {
+        List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
+                "Much better than regional average",
+                "Better than regional average",
+                "Average",
+                "Worse than average",
+                "Much worse than average"
+        ));
+
+        if (currentC02e <= averageC02eInDietForArea * 0.75) {
+            return howWellDietC02eCompares.get(0);
+        }
+        else if (currentC02e <= averageC02eInDietForArea * 0.9) {
+            return howWellDietC02eCompares.get(1);
+        }
+        else if (currentC02e <= averageC02eInDietForArea * 1.1) {
+            return howWellDietC02eCompares.get(2);
+        }
+        else if (currentC02e <= averageC02eInDietForArea * 1.25) {
+            return howWellDietC02eCompares.get(3);
+        }
+        else {
+            return howWellDietC02eCompares.get(4);
+        }
+    }
+
+    public float getCurrentC02eInDiet (Diet currentDiet) {
+        return currentDiet.getYearlyCO2e();
     }
 }
