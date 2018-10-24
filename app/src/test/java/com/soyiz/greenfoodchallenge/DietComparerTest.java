@@ -111,7 +111,8 @@ public class DietComparerTest {
             else {
                 actualAnswer = 4;
             }
-            assertEquals(comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea), howWellDietC02eCompares.get(actualAnswer));
+            assertEquals(comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea),
+                    howWellDietC02eCompares.get(actualAnswer));
         }
 
 
