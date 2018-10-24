@@ -52,10 +52,9 @@ public class DietComparer {
                 "Much worse than average"
         ));
         float currentDietC02e = currentDiet.getYearlyCO2e();
+
         // 7.7 is C02e/ca for Vancouver according to lecture notes
         float averageC02eInDietForVancouver =  7.7f;
-
-        // returns how well
         if (currentDietC02e <= averageC02eInDietForVancouver * 0.75) {
             return howWellDietC02eCompares.get(0);
         }
