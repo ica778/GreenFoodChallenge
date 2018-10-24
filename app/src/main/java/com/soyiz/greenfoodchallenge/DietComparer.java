@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
+/* Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
  * Calculates the difference in kg of CO2e between diets
  * Calculates the CO2e saved if all of Vancouver made similar changes
  * Calculates the CO2e saved in litres of gasoline burned
- * All rounded to 0 decimal places*/
+ * All rounded to 0 decimal places
+ * Compares how well current diet compares to area average in terms of C02e per year
+ */
 public class DietComparer {
 
     public DietComparer() {}
@@ -42,8 +44,8 @@ public class DietComparer {
         return litresOfGasoline;
     }
 
-    // Returns a string describing how the CO2e in the diet compares to regional average
-    public String getHowWellUserComparesToRegion(Diet currentDiet) {
+    // Returns a string describing how the CO2e inputed compares to region of choice
+    public String getHowWellUserComparesToRegion(float currentC02e, float averageC02eInDietForArea) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
                 "Much better than regional average",
                 "Better than regional average",
@@ -51,20 +53,17 @@ public class DietComparer {
                 "Worse than average",
                 "Much worse than average"
         ));
-        float currentDietC02e = currentDiet.getYearlyCO2e();
 
-        // 7.7 is C02e/ca for Vancouver according to lecture notes
-        float averageC02eInDietForVancouver =  7.7f;
-        if (currentDietC02e <= averageC02eInDietForVancouver * 0.75) {
+        if (currentC02e <= averageC02eInDietForArea * 0.75) {
             return howWellDietC02eCompares.get(0);
         }
-        else if (currentDietC02e <= averageC02eInDietForVancouver * 0.9) {
+        else if (currentC02e <= averageC02eInDietForArea * 0.9) {
             return howWellDietC02eCompares.get(1);
         }
-        else if (currentDietC02e <= averageC02eInDietForVancouver * 1.1) {
+        else if (currentC02e <= averageC02eInDietForArea * 1.1) {
             return howWellDietC02eCompares.get(2);
         }
-        else if (currentDietC02e <= averageC02eInDietForVancouver * 1.25) {
+        else if (currentC02e <= averageC02eInDietForArea * 1.25) {
             return howWellDietC02eCompares.get(3);
         }
         else {
