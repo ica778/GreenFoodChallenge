@@ -114,9 +114,5 @@ public class DietComparerTest {
             assertEquals(comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea),
                     howWellDietC02eCompares.get(actualAnswer));
         }
-
-
-
     }
-
 }

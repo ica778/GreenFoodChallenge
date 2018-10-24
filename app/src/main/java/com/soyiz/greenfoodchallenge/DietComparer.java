@@ -70,4 +70,8 @@ public class DietComparer {
             return howWellDietC02eCompares.get(4);
         }
     }
+
+    public float getCurrentC02eInDiet (Diet currentDiet) {
+        return currentDiet.getYearlyCO2e();
+    }
 }
