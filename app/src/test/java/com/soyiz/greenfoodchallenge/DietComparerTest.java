@@ -28,15 +28,27 @@ public class DietComparerTest {
         newer.setProteinPercent(ProteinSource.Vegetables, 5);
     }
 
-
     @Test
-    public void testCompareCO2e() {
+    public void testCompareCO2ePercent() {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2e(older,newer);
+        float CO2e = comparer.compareCO2ePercent(older,newer);
+        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float expected = (float)Math.round(100*difference/older.getYearlyCO2e());
+        //Assert CO2e saved is calculated correctly ((older-newer)/older*100)
+        assertEquals(expected, CO2e, 0);
+    }
+
+    @Test
+    public void testCompareCO2eKilos() {
+        DietComparer comparer = new DietComparer();
+        setNewer();
+        setOlder();
+        float CO2e = comparer.compareCO2eKilos(older,newer);
+        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
         //Assert CO2e saved is calculated correctly (older diet - newer diet)
-        assertEquals(older.getYearlyCO2e()-newer.getYearlyCO2e(), CO2e, 0);
+        assertEquals((float)Math.round(difference), CO2e, 0);
     }
 
     @Test
@@ -44,12 +56,12 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2e(older,newer);
-        comparer.setCO2eSaved(CO2e);
-        float CO2eVancouver = comparer.getCO2eSavedInVancouver();
+        float CO2eVancouver = comparer.getCO2eSavedInVancouver(older, newer);
+        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float expected = (float)Math.round(22.167f*difference);
         /*Assert CO2e saved in Vancouver is correct (~22.167 million non vegetarians
         * who can change to new diet)*/
-        assertEquals(CO2e*22.167f, CO2eVancouver, 0);
+        assertEquals(expected, CO2eVancouver, 0);
     }
 
     @Test
@@ -57,11 +69,11 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2e(older,newer);
-        comparer.setCO2eSaved(CO2e);
-        float litresOfGasoline = comparer.getEquivalentLitresOfGasoline();
+        float litresOfGasoline = comparer.getEquivalentLitresOfGasoline(older, newer);
+        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float expected = (float)Math.round(difference/2.31f);
         //Assert proper amount of equivalent gas (2.31 kg of CO2 per L of gas burned)
-        assertEquals(CO2e/2.31f, litresOfGasoline, 0);
+        assertEquals(expected, litresOfGasoline, 0);
     }
 
 }
