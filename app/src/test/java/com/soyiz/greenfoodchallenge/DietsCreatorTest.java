@@ -31,7 +31,8 @@ public class DietsCreatorTest {
     @Test
     public void testSetUserDiet() {
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         setNewuser();
         creator.setUserDiet(newUser);
         assertEquals(newUser.getProteinPercent(ProteinSource.Beef),
@@ -54,7 +55,8 @@ public class DietsCreatorTest {
     @Test
     public void testCreateMeatEaterDiet() {
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         Diet meatEaterDiet = creator.createMeatEaterDiet();
         //Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > meatEaterDiet.getYearlyCO2e());
@@ -78,7 +80,8 @@ public class DietsCreatorTest {
     @Test
     public void testCreateLowMeatDiet(){
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         Diet lowMeatDiet = creator.createLowMeatDiet();
         //Assert yearly CO2e decreases
         assertTrue(user.getYearlyCO2e() > lowMeatDiet.getYearlyCO2e());
@@ -102,7 +105,8 @@ public class DietsCreatorTest {
     @Test
     public void testCreateOnlyFishDiet(){
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         Diet onlyFishDiet = creator.createOnlyFishDiet();
         //Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > onlyFishDiet.getYearlyCO2e());
@@ -122,7 +126,8 @@ public class DietsCreatorTest {
     @Test
     public void testCreateVegetarianDiet(){
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         Diet vegetarianDiet = creator.createVegetarianDiet();
         //Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > vegetarianDiet.getYearlyCO2e());
@@ -142,7 +147,8 @@ public class DietsCreatorTest {
     @Test
     public void testCreateVeganDiet(){
         setUser();
-        DietsCreator creator = new DietsCreator(user);
+        DietsCreator creator = new DietsCreator();
+        creator.setUserDiet(user);
         Diet veganDiet = creator.createVeganDiet();
         //Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() >= veganDiet.getYearlyCO2e());

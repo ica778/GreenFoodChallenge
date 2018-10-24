@@ -12,16 +12,7 @@ public class DietsCreator {
     private float userDietVegetables;
 
 
-    public DietsCreator(Diet diet) {
-        userDiet = diet;
-        userDietBeef = userDiet.getProteinPercent(ProteinSource.Beef);
-        userDietPork = userDiet.getProteinPercent(ProteinSource.Pork);
-        userDietChicken = userDiet.getProteinPercent(ProteinSource.Chicken);
-        userDietFish = userDiet.getProteinPercent(ProteinSource.Fish);
-        userDietEggs = userDiet.getProteinPercent(ProteinSource.Eggs);
-        userDietBeans = userDiet.getProteinPercent(ProteinSource.Beans);
-        userDietVegetables = userDiet.getProteinPercent(ProteinSource.Vegetables);
-    }
+    public DietsCreator() {}
 
     //Sets the base diet to work with
     public void setUserDiet(Diet diet) {
