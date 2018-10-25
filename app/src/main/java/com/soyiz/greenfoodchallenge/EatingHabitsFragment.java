@@ -48,7 +48,7 @@ public class EatingHabitsFragment extends Fragment
         double fishnum = Double.parseDouble(fish.getText().toString());
         double beansnum = Double.parseDouble(beans.getText().toString());
         double vegetablesnum = Double.parseDouble(vegetables.getText().toString());
-        Intent intent = new Intent(this, EcoFragment.class);
+
 
 
 
