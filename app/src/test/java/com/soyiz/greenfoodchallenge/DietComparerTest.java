@@ -82,21 +82,34 @@ public class DietComparerTest {
     }
 
     @Test
-    public void getPercentDifferenceC02e() {
+    public void testGetHowWellUserComparesToRegion() {
+        List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
+                "This diet much produces less C02e than the",
+                "This diet produces less C02e than the",
+                "This diet produces about the same C02e as the",
+                "This diet produces more C02e than the",
+                "This diet produces much more C02e than the"
+        ));
         DietComparer comparer = new DietComparer();
-        float averageC02eInDietForArea = 100f;
-        float answerToTest;
+        float averageC02eInDietForArea = 1000f;
+        int actualAnswer = 0;
         for (float amountOfC02eToTest = 0f;
              amountOfC02eToTest < averageC02eInDietForArea * 2;
              amountOfC02eToTest = amountOfC02eToTest + 0.1f) {
-            answerToTest = comparer.getPercentDifferenceC02e
-                    (amountOfC02eToTest, averageC02eInDietForArea);
+            if (amountOfC02eToTest <= averageC02eInDietForArea * 0.75) {
+                actualAnswer = 0;
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 0.9) {
+                actualAnswer = 1;
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.1) {
+                actualAnswer = 2;
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.25) {
+                actualAnswer = 3;
+            } else {
+                actualAnswer = 4;
+            }
             assertEquals
-                    ((amountOfC02eToTest - averageC02eInDietForArea) / amountOfC02eToTest * 100
-                    , answerToTest, 0.1);
+                    (comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea)
+                            , howWellDietC02eCompares.get(actualAnswer));
         }
-        assertEquals(50f,comparer.getPercentDifferenceC02e(2,1), 0.1);
-        assertEquals(-100f,comparer.getPercentDifferenceC02e(1,2), 0.1);
-        assertEquals(0f,comparer.getPercentDifferenceC02e(1,1), 0.1);
     }
 }

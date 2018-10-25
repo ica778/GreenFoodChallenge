@@ -122,23 +122,10 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
         Float total = 365*(27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg + 2 * dBeans + 2 * dVegetables)/1000;
         Integer i = Math.round(total);
-        String a = getResources().getString(R.string.co2_100g_n);
-        String b = "";// different output according to the total co2e compared to the regional average
-        if (total <= 7800 * 0.75) {
-            b = String.format(a, i, "Much better than");
-        } else if(total <= 7800*0.9) {
-            b = String.format(a, i, "Better than");
-        } else if (total <= 1.1 * 7800) {
-            b = String.format(a,i,"Equals to");
-        }
-        else if (total <= 1.1 * 7800) {
-            b = String.format(a,i,"Worse than");
-        }
-        else{
-            b = String.format(a,i,"Much Worse than");
-        }
-
-        tv_result.setText(b);
+        String stringToShow = getResources().getString(R.string.co2_100g_n);
+        float regionAverageC02eConsumption = 7700;
+        String howDoesUsersDietCompare = String.format(stringToShow, i, DietComparer.getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
+        tv_result.setText(howDoesUsersDietCompare);
 
     }
 
