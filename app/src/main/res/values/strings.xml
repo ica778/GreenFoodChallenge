@@ -21,5 +21,6 @@
         \n\n\tIn an effort to reduce our carbon footprints, the Green Food
         Challenge aims to raise awareness and encourage others to adopt lower
         carbon diets.</string>
+    <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
 
 </resources>
