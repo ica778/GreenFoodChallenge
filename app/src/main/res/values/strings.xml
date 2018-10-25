@@ -53,4 +53,5 @@
         to choose from. It\'s that easy, so what are you waiting for?
         \n\n\tLet\'s get saving!</string>
 
+    <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
 </resources>
