@@ -43,31 +43,10 @@ public class DietComparer {
         return litresOfGasoline;
     }
 
-    // Returns a string describing how the CO2e inputed compares to region of choice
-    public String getHowWellUserComparesToRegion
-        (float currentC02e, float averageC02eInDietForArea) {
-        List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "Much better than regional average",
-                "Better than regional average",
-                "Average",
-                "Worse than average",
-                "Much worse than average"
-        ));
-        if (currentC02e <= averageC02eInDietForArea * 0.75) {
-            return howWellDietC02eCompares.get(0);
-        }
-        else if (currentC02e <= averageC02eInDietForArea * 0.9) {
-            return howWellDietC02eCompares.get(1);
-        }
-        else if (currentC02e <= averageC02eInDietForArea * 1.1) {
-            return howWellDietC02eCompares.get(2);
-        }
-        else if (currentC02e <= averageC02eInDietForArea * 1.25) {
-            return howWellDietC02eCompares.get(3);
-        }
-        else {
-            return howWellDietC02eCompares.get(4);
-        }
+    // Returns a float representing percent difference between firstC02e and secondC02e
+    public float getPercentDifferenceC02e (float firstC02e, float secondC02e) {
+        float percentDifference = (firstC02e - secondC02e) / firstC02e * 100;
+        return percentDifference;
     }
     public float getCurrentC02eInDiet (Diet currentDiet) {
         return currentDiet.getYearlyCO2e();
