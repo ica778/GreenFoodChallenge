@@ -16,6 +16,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:gravity="center"
+                android:text="Enter the amount of each food you eat below to calculate the C02e produced"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,13 +34,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="food" />
+                    android:text="Food"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="g/day" />
+                    android:gravity="center"
+                    android:text="g/day"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </LinearLayout>
 
@@ -46,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="beef" />
+                    android:text="Beef"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
                 <EditText
                     android:id="@+id/et_beef"
@@ -68,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="chicken" />
+                    android:text="Chicken"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText
@@ -91,7 +104,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="pork" />
+                    android:text="Pork"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText
@@ -114,7 +128,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="fish" />
+                    android:text="Fish"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText
@@ -137,7 +152,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="beans" />
+                    android:text="Beans"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText
@@ -160,7 +176,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="vegetables" />
+                    android:text="Vegetables"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText
@@ -183,7 +200,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="egg" />
+                    android:text="Egg"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 
                 <EditText

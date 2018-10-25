@@ -46,14 +46,15 @@ public class DietComparer {
 
     // Compares the diets and produces a report.
     public String getChangeReport(Diet oldDiet, Diet newDiet) {
-        String report = "Changes:\n" + (newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet.getProteinPercent(ProteinSource.Beef)) + "% Beef; " +
-                (newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet.getProteinPercent(ProteinSource.Pork)) + "% Pork; " +
-                (newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet.getProteinPercent(ProteinSource.Chicken)) + "% Chicken;\n" +
-                (newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet.getProteinPercent(ProteinSource.Fish)) + "% Fish; " +
-                (newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet.getProteinPercent(ProteinSource.Eggs)) + "% Egg; " +
-                (newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet.getProteinPercent(ProteinSource.Beans)) + "%Beans; \n" +
-                (newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet.getProteinPercent(ProteinSource.Vegetables)) + " %Vegetables;\n" +
-                "You will save " + this.compareCO2ePercent(oldDiet, newDiet) + "% CO2e.";
+        String report = "Changes:\n\nBeef/Pork/Chicken/Fish/Egg/Beans/Vegetables\n" + (newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet.getProteinPercent(ProteinSource.Beef)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet.getProteinPercent(ProteinSource.Pork)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet.getProteinPercent(ProteinSource.Chicken)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet.getProteinPercent(ProteinSource.Fish)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet.getProteinPercent(ProteinSource.Eggs)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet.getProteinPercent(ProteinSource.Beans)) + "%/" +
+                (newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet.getProteinPercent(ProteinSource.Vegetables)) + "%/\n\n" +
+                "You will save " + this.compareCO2ePercent(oldDiet, newDiet) + "% CO2e which is about "+
+                this.compareCO2eKilos(oldDiet, newDiet) + "kg per year.";
         if (this.compareCO2ePercent(oldDiet, newDiet) == 0) {
             return "Original diet is good enough!";
         }
@@ -64,7 +65,7 @@ public class DietComparer {
     public static String getHowWellUserComparesToRegion
             (float currentC02e, float averageC02eInDietForArea) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "This diet much produces less C02e than the",
+                "This diet produces much less C02e than the",
                 "This diet produces less C02e than the",
                 "This diet produces about the same C02e as the",
                 "This diet produces more C02e than the",

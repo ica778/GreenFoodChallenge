@@ -137,7 +137,8 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         Integer i = Math.round(total);
         String stringToShow = getResources().getString(R.string.co2_100g_n);
         float regionAverageC02eConsumption = 7700;
-        String howDoesUsersDietCompare = String.format(stringToShow, i, DietComparer.getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
+        String howDoesUsersDietCompare = String.format
+                (stringToShow, i, DietComparer.getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
         tv_result.setText(howDoesUsersDietCompare);
 
     }
@@ -145,8 +146,10 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         submit();
+        /*
         Intent intent = new Intent(getActivity().getBaseContext(), EcoFragment.class);
         intent.putExtra("message", dBeef);
         getActivity().startActivity(intent);
+        */
     }
 }
