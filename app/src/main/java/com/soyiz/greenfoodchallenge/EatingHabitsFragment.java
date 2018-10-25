@@ -1,6 +1,8 @@
 package com.soyiz.greenfoodchallenge;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,10 +29,21 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private EditText et_egg;
     private Button btn_total;
     private TextView tv_result;
+    private Integer dBeef;
+    private Integer dChicken;
+    private Integer dPork;
+    private Integer dFish;
+    private Integer dBeans;
+    private Integer dVegetables;
+    private Integer dEgg;
 
     public EatingHabitsFragment() {
 
 
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, EatingHabitsFragment.class);
     }
 
 
@@ -111,13 +124,13 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             return;
         }
 
-        Integer dBeef = Integer.valueOf(beef);
-        Integer dChicken = Integer.valueOf(chicken);
-        Integer dPork = Integer.valueOf(pork);
-        Integer dFish = Integer.valueOf(fish);
-        Integer dBeans = Integer.valueOf(beans);
-        Integer dVegetables = Integer.valueOf(vegetables);
-        Integer dEgg = Integer.valueOf(egg);
+        dBeef = Integer.valueOf(beef);
+        dChicken = Integer.valueOf(chicken);
+        dPork = Integer.valueOf(pork);
+        dFish = Integer.valueOf(fish);
+        dBeans = Integer.valueOf(beans);
+        dVegetables = Integer.valueOf(vegetables);
+        dEgg = Integer.valueOf(egg);
 
 
         Float total = 365*(27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg + 2 * dBeans + 2 * dVegetables)/1000;
@@ -132,5 +145,8 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         submit();
+        Intent intent = new Intent(getActivity().getBaseContext(), EcoFragment.class);
+        intent.putExtra("message", dBeef);
+        getActivity().startActivity(intent);
     }
 }
