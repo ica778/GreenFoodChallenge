@@ -82,6 +82,28 @@ public class DietComparerTest {
     }
 
     @Test
+    public void testGetChangeReport() {
+        DietComparer comparer = new DietComparer();
+        Diet dietTestOne = new Diet();
+        Diet dietTestTwo = new Diet();
+        dietTestOne.setProteinPercent(ProteinSource.Beef,35);
+        dietTestOne.setProteinPercent(ProteinSource.Pork, 10);
+        dietTestOne.setProteinPercent(ProteinSource.Chicken, 35);
+        dietTestOne.setProteinPercent(ProteinSource.Fish, 10);
+        dietTestOne.setProteinPercent(ProteinSource.Eggs, 5);
+        dietTestOne.setProteinPercent(ProteinSource.Beans, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Vegetables, 5);
+        dietTestTwo.setProteinPercent(ProteinSource.Beef,35);
+        dietTestTwo.setProteinPercent(ProteinSource.Pork, 10);
+        dietTestTwo.setProteinPercent(ProteinSource.Chicken, 35);
+        dietTestTwo.setProteinPercent(ProteinSource.Fish, 10);
+        dietTestTwo.setProteinPercent(ProteinSource.Eggs, 5);
+        dietTestTwo.setProteinPercent(ProteinSource.Beans, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Vegetables, 5);
+        assertEquals("Original diet is good enough!", comparer.getChangeReport(dietTestOne, dietTestTwo));
+    }
+
+    @Test
     public void testGetHowWellUserComparesToRegion() {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
                 "This diet much produces less C02e than the",
@@ -107,9 +129,10 @@ public class DietComparerTest {
             } else {
                 actualAnswer = 4;
             }
-            assertEquals
-                    (comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea)
+            assertEquals(DietComparer
+                            .getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea)
                             , howWellDietC02eCompares.get(actualAnswer));
         }
+
     }
 }

@@ -46,7 +46,6 @@ public class DietComparer {
 
     // Compares the diets and produces a report.
     public String getChangeReport(Diet oldDiet, Diet newDiet) {
-
         String report = "Changes:\n" + (newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet.getProteinPercent(ProteinSource.Beef)) + "% Beef; " +
                 (newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet.getProteinPercent(ProteinSource.Pork)) + "% Pork; " +
                 (newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet.getProteinPercent(ProteinSource.Chicken)) + "% Chicken;\n" +
