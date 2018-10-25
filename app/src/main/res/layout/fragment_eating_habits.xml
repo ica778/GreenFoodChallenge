@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/vegetablesedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
@@ -21,34 +21,34 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText6"
+            app:layout_constraintTop_toBottomOf="@+id/beansedit"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/beansedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/editText5"
+            app:layout_constraintTop_toBottomOf="@+id/eggedit"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/eggedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
@@ -56,17 +56,17 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/editText4"
+            app:layout_constraintTop_toBottomOf="@+id/fishedit"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/fishedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
@@ -74,17 +74,17 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/editText3"
+            app:layout_constraintTop_toBottomOf="@+id/porkedit"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/porkedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
@@ -92,28 +92,28 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/editText2"
+            app:layout_constraintTop_toBottomOf="@+id/chickenedit"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/chickenedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/beefedit" />
 
         <TextView
             android:id="@+id/textView7"
@@ -121,7 +121,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Beans"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -131,7 +131,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Vegetables:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -141,7 +141,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Egg:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -151,7 +151,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Fish:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -161,7 +161,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Pork:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -171,7 +171,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
+            android:text="Chicken:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -193,12 +193,12 @@
             android:layout_height="35dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="88dp"
-            android:text="TextView"
+            android:text="Beef:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/beefedit"
             android:layout_width="107dp"
             android:layout_height="39dp"
             android:layout_marginStart="8dp"
@@ -206,7 +206,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:text="Name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
