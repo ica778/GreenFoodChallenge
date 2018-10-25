@@ -64,7 +64,7 @@ public class DietComparer {
     public static String getHowWellUserComparesToRegion
             (float currentC02e, float averageC02eInDietForArea) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "This diet much produces less C02e than the",
+                "This diet produces much less C02e than the",
                 "This diet produces less C02e than the",
                 "This diet produces about the same C02e as the",
                 "This diet produces more C02e than the",
