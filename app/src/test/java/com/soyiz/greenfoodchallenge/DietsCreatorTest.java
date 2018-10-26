@@ -1,6 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class DietsCreatorTest {
@@ -9,7 +10,7 @@ public class DietsCreatorTest {
     private Diet user = new Diet();
 
     public void setUser() {
-        user.setProteinPercent(ProteinSource.Beef,35);
+        user.setProteinPercent(ProteinSource.Beef, 35);
         user.setProteinPercent(ProteinSource.Pork, 10);
         user.setProteinPercent(ProteinSource.Chicken, 35);
         user.setProteinPercent(ProteinSource.Fish, 10);
@@ -58,6 +59,7 @@ public class DietsCreatorTest {
         DietsCreator creator = new DietsCreator();
         creator.setUserDiet(user);
         Diet meatEaterDiet = creator.createMeatEaterDiet();
+
         // Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > meatEaterDiet.getYearlyCO2e());
         float meatSum = meatEaterDiet.getProteinPercent(ProteinSource.Beef) +
@@ -68,21 +70,24 @@ public class DietsCreatorTest {
                 user.getProteinPercent(ProteinSource.Pork) +
                 user.getProteinPercent(ProteinSource.Chicken) +
                 user.getProteinPercent(ProteinSource.Fish);
+
         // Assert no change in total meat proportion
         assertTrue(meatSum == userSum);
         float totalSum = meatEaterDiet.getProteinPercent(ProteinSource.Eggs) +
                 meatEaterDiet.getProteinPercent(ProteinSource.Beans) +
                 meatEaterDiet.getProteinPercent(ProteinSource.Vegetables) + meatSum;
+
         // Assert proportions sum to 100%
         assertEquals(100f, totalSum, 0);
     }
 
     @Test
-    public void testCreateLowMeatDiet(){
+    public void testCreateLowMeatDiet() {
         setUser();
         DietsCreator creator = new DietsCreator();
         creator.setUserDiet(user);
         Diet lowMeatDiet = creator.createLowMeatDiet();
+
         // Assert yearly CO2e decreases
         assertTrue(user.getYearlyCO2e() > lowMeatDiet.getYearlyCO2e());
         float meatSum = lowMeatDiet.getProteinPercent(ProteinSource.Beef) +
@@ -93,6 +98,7 @@ public class DietsCreatorTest {
                 user.getProteinPercent(ProteinSource.Pork) +
                 user.getProteinPercent(ProteinSource.Chicken) +
                 user.getProteinPercent(ProteinSource.Fish);
+
         // Assert total proportion of meat decreases assuming starting diet with more CO2e
         assertTrue(userSum > meatSum);
         float totalSum = lowMeatDiet.getProteinPercent(ProteinSource.Eggs) +
@@ -103,53 +109,60 @@ public class DietsCreatorTest {
     }
 
     @Test
-    public void testCreateOnlyFishDiet(){
+    public void testCreateOnlyFishDiet() {
         setUser();
         DietsCreator creator = new DietsCreator();
         creator.setUserDiet(user);
         Diet onlyFishDiet = creator.createOnlyFishDiet();
+
         // Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > onlyFishDiet.getYearlyCO2e());
         float nonFishMeatSum = onlyFishDiet.getProteinPercent(ProteinSource.Beef) +
                 onlyFishDiet.getProteinPercent(ProteinSource.Pork) +
                 onlyFishDiet.getProteinPercent(ProteinSource.Chicken);
+
         // Assert fish is only meat that can have nonzero proportion
         assertEquals(0f, nonFishMeatSum, 0);
         float totalSum = onlyFishDiet.getProteinPercent(ProteinSource.Fish) +
                 onlyFishDiet.getProteinPercent(ProteinSource.Eggs) +
                 onlyFishDiet.getProteinPercent(ProteinSource.Beans) +
                 onlyFishDiet.getProteinPercent(ProteinSource.Vegetables) + nonFishMeatSum;
+
         // Assert total sum of proportions is 100%
-        assertEquals(100f, totalSum,0);
+        assertEquals(100f, totalSum, 0);
     }
 
     @Test
-    public void testCreateVegetarianDiet(){
+    public void testCreateVegetarianDiet() {
         setUser();
         DietsCreator creator = new DietsCreator();
         creator.setUserDiet(user);
         Diet vegetarianDiet = creator.createVegetarianDiet();
+
         // Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() > vegetarianDiet.getYearlyCO2e());
         float meatSum = vegetarianDiet.getProteinPercent(ProteinSource.Beef) +
                 vegetarianDiet.getProteinPercent(ProteinSource.Pork) +
                 vegetarianDiet.getProteinPercent(ProteinSource.Chicken) +
                 vegetarianDiet.getProteinPercent(ProteinSource.Fish);
+
         // Assert meat proportions is 0%
         assertEquals(0f, meatSum, 0);
         float totalSum = vegetarianDiet.getProteinPercent(ProteinSource.Eggs) +
                 vegetarianDiet.getProteinPercent(ProteinSource.Beans) +
                 vegetarianDiet.getProteinPercent(ProteinSource.Vegetables) + meatSum;
+
         // Assert total proportions equals 100%
         assertEquals(100f, totalSum, 0);
     }
 
     @Test
-    public void testCreateVeganDiet(){
+    public void testCreateVeganDiet() {
         setUser();
         DietsCreator creator = new DietsCreator();
         creator.setUserDiet(user);
         Diet veganDiet = creator.createVeganDiet();
+
         // Assert yearly CO2e decreases assuming starting diet with more CO2e
         assertTrue(user.getYearlyCO2e() >= veganDiet.getYearlyCO2e());
         float meatEggSum = veganDiet.getProteinPercent(ProteinSource.Beef) +
@@ -157,12 +170,13 @@ public class DietsCreatorTest {
                 veganDiet.getProteinPercent(ProteinSource.Chicken) +
                 veganDiet.getProteinPercent(ProteinSource.Fish) +
                 veganDiet.getProteinPercent(ProteinSource.Eggs);
+
         // Assert non beans and vegetable sums are 0% of proportions
         assertEquals(0f, meatEggSum, 0);
         float totalSum = veganDiet.getProteinPercent(ProteinSource.Beans) +
                 veganDiet.getProteinPercent(ProteinSource.Vegetables) + meatEggSum;
+
         // Assert total proportions sum to 100%
         assertEquals(100f, totalSum, 0);
     }
-
 }
