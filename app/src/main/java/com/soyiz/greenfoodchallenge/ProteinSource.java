@@ -3,8 +3,7 @@ package com.soyiz.greenfoodchallenge;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ProteinSource
-{
+public enum ProteinSource {
     Beef,
     Pork,
     Chicken,
@@ -12,10 +11,9 @@ public enum ProteinSource
     Eggs,
     Beans,
     Vegetables;
-
     private static final Map<ProteinSource, Float> proteinC02eMap;
-    static
-    {
+
+    static {
         proteinC02eMap = new HashMap<>();
         proteinC02eMap.put(ProteinSource.Beef, 27f);
         proteinC02eMap.put(ProteinSource.Pork, 12.1f);
@@ -26,13 +24,11 @@ public enum ProteinSource
         proteinC02eMap.put(ProteinSource.Vegetables, 2f);
     }
 
-    public float getCO2e()
-    {
+    public float getCO2e() {
         return proteinC02eMap.get(this);
     }
 
-    public static float getDailyServing()
-    {
+    public static float getDailyServing() {
         return 187.5f;
     }
 }

@@ -1,8 +1,5 @@
 package com.soyiz.greenfoodchallenge;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-public class EatingHabitsFragment extends Fragment implements View.OnClickListener
-
-{
-
+public class EatingHabitsFragment extends Fragment implements View.OnClickListener {
     private EditText et_beef;
     private EditText et_chicken;
     private EditText et_pork;
@@ -38,22 +31,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private Integer dEgg;
 
     public EatingHabitsFragment() {
-
-
     }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, EatingHabitsFragment.class);
-    }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -87,13 +69,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             Toast.makeText(getContext(), "beef cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String chicken = et_chicken.getText().toString().trim();
         if (TextUtils.isEmpty(chicken)) {
             Toast.makeText(getContext(), "chicken cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String pork = et_pork.getText().toString().trim();
         if (TextUtils.isEmpty(pork)) {
             Toast.makeText(getContext(), "pork cannot be empty", Toast.LENGTH_SHORT).show();
@@ -105,25 +85,21 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             Toast.makeText(getContext(), "fish cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String beans = et_beans.getText().toString().trim();
         if (TextUtils.isEmpty(beans)) {
             Toast.makeText(getContext(), "beans cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String vegetables = et_vegetables.getText().toString().trim();
         if (TextUtils.isEmpty(vegetables)) {
             Toast.makeText(getContext(), "vegetables cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         String egg = et_egg.getText().toString().trim();
         if (TextUtils.isEmpty(egg)) {
             Toast.makeText(getContext(), "egg cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         dBeef = Integer.valueOf(beef);
         dChicken = Integer.valueOf(chicken);
         dPork = Integer.valueOf(pork);
@@ -131,25 +107,17 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         dBeans = Integer.valueOf(beans);
         dVegetables = Integer.valueOf(vegetables);
         dEgg = Integer.valueOf(egg);
-
-
-        Float total = 365*(27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg + 2 * dBeans + 2 * dVegetables)/1000;
+        Float total = 365 * (27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg + 2 * dBeans + 2 * dVegetables) / 1000;
         Integer i = Math.round(total);
         String stringToShow = getResources().getString(R.string.co2_100g_n);
         float regionAverageC02eConsumption = 7700;
         String howDoesUsersDietCompare = String.format
                 (stringToShow, i, DietComparer.getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
         tv_result.setText(howDoesUsersDietCompare);
-
     }
 
     @Override
     public void onClick(View view) {
         submit();
-        /*
-        Intent intent = new Intent(getActivity().getBaseContext(), EcoFragment.class);
-        intent.putExtra("message", dBeef);
-        getActivity().startActivity(intent);
-        */
     }
 }

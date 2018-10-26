@@ -35,7 +35,6 @@ public class DietComparer {
         return CO2eSavedInVancouver;
     }
 
-
     //Returns the amount of gasoline needed to create an equivalent amount of CO2 per year
     public float getEquivalentLitresOfGasoline(Diet oldDiet, Diet newDiet) {
         float CO2eDifference = oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e();
@@ -53,7 +52,7 @@ public class DietComparer {
                 (newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet.getProteinPercent(ProteinSource.Eggs)) + "%/" +
                 (newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet.getProteinPercent(ProteinSource.Beans)) + "%/" +
                 (newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet.getProteinPercent(ProteinSource.Vegetables)) + "%/\n\n" +
-                "You will save " + this.compareCO2ePercent(oldDiet, newDiet) + "% CO2e which is about "+
+                "You will save " + this.compareCO2ePercent(oldDiet, newDiet) + "% CO2e which is about " +
                 this.compareCO2eKilos(oldDiet, newDiet) + "kg per year.";
         if (this.compareCO2ePercent(oldDiet, newDiet) == 0) {
             return "Original diet is good enough!";
@@ -63,7 +62,7 @@ public class DietComparer {
 
     // Compares current C02e in diet and returns how it compares to regional average
     public static String getHowWellUserComparesToRegion
-            (float currentC02e, float averageC02eInDietForArea) {
+    (float currentC02e, float averageC02eInDietForArea) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
                 "This diet produces much less C02e than the",
                 "This diet produces less C02e than the",
