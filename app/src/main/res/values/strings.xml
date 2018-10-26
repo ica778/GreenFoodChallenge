@@ -2,6 +2,32 @@
     <string name="app_name">GreenFoodChallenge</string>
     <string name="eating_habits_name">Eating Habits</string>
     <string name="eco_name">Eco</string>
+    //Strings for Eco
+    <string name="highMeat">Meat eater</string>
+    <string name="lowMeat">Low Meat</string>
+    <string name="onlyFish">Only Fish</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="vegan">Vegan</string>
+    <string name="BetterPercentage">Better CO2e than current Diet </string>
+    <string name="dietInfo">Please enter your diet in Eating Habits Page.\nAfter that, You
+    can chose the diets above.</string>
+    <string name="highMeatButtonInfo"> Diet with same overall meat proportions, but different proportions of each meat type.</string>
+    <string name="highMeatButtonChange">75% of beef proportions to pork\n50% of new pork proportions to chicken
+         \n25% of new chicken proportions to fish.</string>
+    <string name="lowMeatButtonInfo"> Diet with lowered proportions of overall meat.</string>
+    <string name="lowMeatButtonChange">100% of beef proportions moved to pork
+         \n75% of new pork proportions moved to chicken
+         \n50% of new chicken proportions moved to fish and eggs (25/75)
+         \n25% of each of new fish and eggs proportions go to beans and veg (50/50).</string>
+    <string name="onlyFishButtonInfo"> Diet with lower overall meat and fish being only meat.</string>
+    <string name="onlyFishButtonChange">100% of all meat but fish get split\n
+         \n(40/25/25/10) fish, eggs, beans, and veg.</string>
+    <string name="vegetarianButtonInfo">Diet with no meat.</string>
+    <string name="vegetarianButtonChange">100% of all beef, pork, chicken, and fish
+         gets split \n(40/40/20) with eggs, beans and veg.</string>
+    <string name="veganButtonInfo"> Diet with no meat or eggs.</string>
+    <string name="veganButtonChange">100% of all meats and eggs gets split
+         \n(80/20) with beans and veg.</string>
 
     <string name="info_name">About</string>
     <string name="info">\tThe reason we made this app is to help people
@@ -27,4 +53,5 @@
         to choose from. It\'s that easy, so what are you waiting for?
         \n\n\tLet\'s get saving!</string>
 
+    <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
 </resources>
