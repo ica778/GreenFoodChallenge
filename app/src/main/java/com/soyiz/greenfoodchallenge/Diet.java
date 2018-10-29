@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Diet {
+
     private Map<ProteinSource, Float> proteinPercentMap;
 
     Diet() {

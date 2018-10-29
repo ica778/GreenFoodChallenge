@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
     private Fragment eatingHabitsFragment = null;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(
+                R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         bottomNavigationView.getMenu().findItem(R.id.bottom_nav_item_Eco).setChecked(true);
         fragmentManager = getSupportFragmentManager();
