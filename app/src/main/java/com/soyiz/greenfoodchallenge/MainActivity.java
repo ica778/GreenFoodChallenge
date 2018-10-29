@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.getMenu().findItem(R.id.bottom_nav_item_Eco).setChecked(true);
         fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.frame_fragment_holder);
+
         changeToEcoFragment();
     }
 
