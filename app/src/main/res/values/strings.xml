@@ -54,4 +54,7 @@
         \n\n\tLet\'s get saving!</string>
 
     <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
