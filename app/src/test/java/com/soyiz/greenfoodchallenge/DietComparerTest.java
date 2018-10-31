@@ -119,11 +119,11 @@ public class DietComparerTest {
     @Test
     public void testGetHowWellUserComparesToRegion() {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "This diet produces much less C02e than the",
-                "This diet produces less C02e than the",
-                "This diet produces about the same C02e as the",
-                "This diet produces more C02e than the",
-                "This diet produces much more C02e than the"
+                "much less C02e",
+                "less C02e",
+                "about the same C02e",
+                "more C02e",
+                "much more C02e"
         ));
         DietComparer comparer = new DietComparer();
         float averageC02eInDietForArea = 1000f;

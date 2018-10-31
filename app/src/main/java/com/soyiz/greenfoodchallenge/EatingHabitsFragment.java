@@ -111,12 +111,17 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         Float total =
                 365 * (27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg
                         + 2 * dBeans + 2 * dVegetables) / 1000;
-        Integer i = Math.round(total);
+        Integer kgOfC02eInDiet = Math.round(total);
+        float tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
         String stringToShow = getResources().getString(R.string.co2_100g_n);
-        float regionAverageC02eConsumption = 7700;
+        float regionAverageTonC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
+        float litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
         String howDoesUsersDietCompare = String.format
-                (stringToShow, i, DietComparer
-                        .getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
+                (stringToShow,
+                        tonnesOfC02eInDiet,
+                        litresOfGasolineEquivalentToC02e,
+                        regionAverageTonC02e,
+                        DietComparer.getHowWellUserComparesToRegion(kgOfC02eInDiet, regionAverageTonC02e * 1000));
         tv_result.setText(howDoesUsersDietCompare);
     }
 
