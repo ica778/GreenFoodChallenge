@@ -8,7 +8,7 @@ public class User {
     private int municipalityStringId = R.string.no_municipality;
     private String userName;
 
-    public User(){}
+    User(){}
 
     public User(Diet current, Diet goal, Pledge pledge) {
         currentDiet = current;

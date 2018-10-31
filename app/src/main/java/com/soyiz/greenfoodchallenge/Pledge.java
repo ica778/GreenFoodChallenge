@@ -5,7 +5,7 @@ public class Pledge {
     private float goalCO2eSavingsTonnes = -1f;
     private float currentCO2eSavingsTonnes = -1f;
 
-    public Pledge(){}
+    Pledge(){}
 
     public float getGoalCO2eSavings() {
         return goalCO2eSavingsTonnes;
@@ -23,7 +23,7 @@ public class Pledge {
         currentCO2eSavingsTonnes += addedSavingsInTonnes;
     }
 
-    public void getCompletionPercentage() {
-        float completionPercentage = (float)Math.round(100*currentCO2eSavingsTonnes/goalCO2eSavingsTonnes);
+    public float getCompletionPercentage() {
+        return (float)Math.round(100*currentCO2eSavingsTonnes/goalCO2eSavingsTonnes);
     }
 }
