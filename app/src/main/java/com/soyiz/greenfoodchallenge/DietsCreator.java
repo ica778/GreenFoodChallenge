@@ -100,7 +100,9 @@ public class DietsCreator {
         /* Add user egg proportions with the remaining 75% of leftovers(1)
          * Give 75% of these proportions to final eggs proportions
          * Give remaining 25% as leftovers(3) to be split among final beans and vegetable proportions*/
-        float tempEggs = proportionLeavingChicken - (float) Math.ceil(proportionLeavingChicken * 1 / 4) + userDietEggs;
+        float tempEggs =
+                proportionLeavingChicken - (float) Math.ceil(proportionLeavingChicken * 1 / 4)
+                        + userDietEggs;
         float eggsInDiet = (float) Math.ceil(tempEggs * 3 / 4);
         float proportionLeavingEggs = tempEggs - eggsInDiet;
 
@@ -108,9 +110,12 @@ public class DietsCreator {
          * final bean proportions
          * Add remaining 50% of leftovers (2) and (3) with user vegetable proportions summing
          * to final vegetable proportions */
-        float beansInDiet = (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2) + userDietBeans;
+        float beansInDiet =
+                (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2)
+                        + userDietBeans;
         float vegetablesInDiet = proportionLeavingEggs + proportionLeavingFish
-                - (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2) + userDietVegetables;
+                - (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2)
+                + userDietVegetables;
 
         // Set final proportions
         lowMeatDiet.setProteinPercent(ProteinSource.Beef, beefInDiet);
@@ -160,7 +165,8 @@ public class DietsCreator {
         onlyFishDiet.setProteinPercent(ProteinSource.Fish, fishShare + userDietFish);
         onlyFishDiet.setProteinPercent(ProteinSource.Eggs, eggsShare + userDietEggs);
         onlyFishDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
-        onlyFishDiet.setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
+        onlyFishDiet
+                .setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
         return onlyFishDiet;
     }
 
@@ -196,7 +202,8 @@ public class DietsCreator {
         // Set final proportions to the sum of their respective extra proportion shares and user proportions
         vegetarianDiet.setProteinPercent(ProteinSource.Eggs, eggsShare + userDietEggs);
         vegetarianDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
-        vegetarianDiet.setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
+        vegetarianDiet
+                .setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
 
         return vegetarianDiet;
     }

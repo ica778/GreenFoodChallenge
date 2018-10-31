@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EatingHabitsFragment extends Fragment implements View.OnClickListener {
+
     private EditText et_beef;
     private EditText et_chicken;
     private EditText et_pork;
@@ -39,11 +40,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_eating_habits, container, false);
-
 
         initView(view);
         return view;
@@ -107,12 +108,15 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         dBeans = Integer.valueOf(beans);
         dVegetables = Integer.valueOf(vegetables);
         dEgg = Integer.valueOf(egg);
-        Float total = 365 * (27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg + 2 * dBeans + 2 * dVegetables) / 1000;
+        Float total =
+                365 * (27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg
+                        + 2 * dBeans + 2 * dVegetables) / 1000;
         Integer i = Math.round(total);
         String stringToShow = getResources().getString(R.string.co2_100g_n);
         float regionAverageC02eConsumption = 7700;
         String howDoesUsersDietCompare = String.format
-                (stringToShow, i, DietComparer.getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
+                (stringToShow, i, DietComparer
+                        .getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
         tv_result.setText(howDoesUsersDietCompare);
     }
 
