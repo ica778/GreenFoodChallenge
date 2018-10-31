@@ -53,7 +53,7 @@
         to choose from. It\'s that easy, so what are you waiting for?
         \n\n\tLet\'s get saving!</string>
 
-    <string name="co2_100g_n">%1$d kg/year CO2e\n %2$s regional average.</string>
+    <string name="co2_100g_n">This diet will produce %1$.2f t/year of CO2e which is equivalent to burning %2$.2f litres of gasoline.\nCompared to the regional average of %3$.2f t/year per capita, this diet produces %4$s.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
