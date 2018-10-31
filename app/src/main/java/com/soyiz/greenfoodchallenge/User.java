@@ -6,6 +6,7 @@ public class User {
     private Diet goalDiet = new Diet();
     private Pledge currentPledge = new Pledge();
     private int municipalityStringId = R.string.no_municipality;
+    private String userName;
 
     public User(){}
 
@@ -45,5 +46,13 @@ public class User {
 
     public void setMunicipalityStringId(int municipality) {
         municipalityStringId = municipality;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String name) {
+        userName = name;
     }
 }
