@@ -43,6 +43,14 @@ public class DietComparer {
         return litresOfGasoline;
     }
 
+    // Returns the litres of gasoline equivalent to C02e in diet
+    public static float getLitresOfGasolineEquivalentToDietC02e(float currentC02e) {
+        // 1 L of gasoline produces approximately 2.3 kg of C02
+        float litresOfGasoline = currentC02e / 2.3f;
+        return litresOfGasoline;
+
+    }
+
     // Compares the diets and produces a report.
     public String getChangeReport(Diet oldDiet, Diet newDiet) {
         String report = "Changes:\n\nBeef/Pork/Chicken/Fish/Egg/Beans/Vegetables\n" + (

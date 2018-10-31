@@ -147,4 +147,14 @@ public class DietComparerTest {
                     , howWellDietC02eCompares.get(actualAnswer));
         }
     }
+
+    @Test
+    public void testGetLitresOfGasolineEquivalentToDietC02e() {
+        DietComparer comparer = new DietComparer();
+        float expectedTestOutput;
+        for (int amountOfC02eToTest = 0;amountOfC02eToTest < 1000;amountOfC02eToTest++) {
+            expectedTestOutput = amountOfC02eToTest / 2.3f;
+            assertEquals(expectedTestOutput, comparer.getLitresOfGasolineEquivalentToDietC02e(amountOfC02eToTest), 0.1);
+        }
+    }
 }
