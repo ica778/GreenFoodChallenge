@@ -67,6 +67,7 @@
     <string name="north_vancouver">North Vancouver</string>
     <string name="pitt_meadows">Pitt Meadows</string>
     <string name="port_coquitlam">Port Coquitlam</string>
-
+    <string name="port_moody">Port Moody</string>
+    <string name="richmond">Richmond</string>
 
 </resources>
