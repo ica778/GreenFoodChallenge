@@ -38,10 +38,10 @@ public class DietComparer {
         return (float) Math.round(CO2eDifference / 2.31f);
     }
 
-    // Returns the litres of gasoline equivalent to C02e in diet
-    public static float getLitresOfGasolineEquivalentToDietC02e(float currentC02e) {
+    // Returns the litres of gasoline equivalent to kg of C02e
+    public static float getLitresOfGasolineEquivalentToDietC02e(float kgC02e) {
         // 1 L of gasoline produces approximately 2.3 kg of C02
-        float litresOfGasoline = currentC02e / 2.3f;
+        float litresOfGasoline = kgC02e / 2.3f;
         return litresOfGasoline;
 
     }
@@ -72,9 +72,9 @@ public class DietComparer {
         return report;
     }
 
-    // Compares current C02e in diet and returns how it compares to regional average
-    public static String getHowWellUserComparesToRegion
-    (float currentC02e, float averageC02eInDietForArea) {
+    // Compares current C02e in diet and returns how it compares to average
+    public static String getHowWellC02eComparesToAverage
+    (float kgC02e, float averageC02e) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
                 "much less C02e",
                 "less C02e",
@@ -82,13 +82,13 @@ public class DietComparer {
                 "more C02e",
                 "much more C02e"
         ));
-        if (currentC02e <= averageC02eInDietForArea * 0.75) {
+        if (kgC02e <= averageC02e * 0.75) {
             return howWellDietC02eCompares.get(0);
-        } else if (currentC02e <= averageC02eInDietForArea * 0.9) {
+        } else if (kgC02e <= averageC02e * 0.9) {
             return howWellDietC02eCompares.get(1);
-        } else if (currentC02e <= averageC02eInDietForArea * 1.1) {
+        } else if (kgC02e <= averageC02e * 1.1) {
             return howWellDietC02eCompares.get(2);
-        } else if (currentC02e <= averageC02eInDietForArea * 1.25) {
+        } else if (kgC02e <= averageC02e * 1.25) {
             return howWellDietC02eCompares.get(3);
         } else {
             return howWellDietC02eCompares.get(4);

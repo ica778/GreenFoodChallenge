@@ -116,12 +116,16 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         String stringToShow = getResources().getString(R.string.co2_100g_n);
         float regionAverageTonC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
         float litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
+        int currentPopulationOfArea = 2463000; // Current population of metro vancouver
         String howDoesUsersDietCompare = String.format
                 (stringToShow,
                         tonnesOfC02eInDiet,
                         litresOfGasolineEquivalentToC02e,
                         regionAverageTonC02e,
-                        DietComparer.getHowWellUserComparesToRegion(kgOfC02eInDiet, regionAverageTonC02e * 1000));
+                        DietComparer.getHowWellC02eComparesToAverage(kgOfC02eInDiet, regionAverageTonC02e * 1000),
+                        Math.round(currentPopulationOfArea * tonnesOfC02eInDiet),
+                        DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonC02e * currentPopulationOfArea),
+                        Math.round(currentPopulationOfArea * regionAverageTonC02e));
         tv_result.setText(howDoesUsersDietCompare);
     }
 

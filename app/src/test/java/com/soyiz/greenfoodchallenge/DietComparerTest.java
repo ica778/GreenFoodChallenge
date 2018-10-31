@@ -143,7 +143,7 @@ public class DietComparerTest {
                 actualAnswer = 4;
             }
             assertEquals(DietComparer
-                            .getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea)
+                            .getHowWellC02eComparesToAverage(amountOfC02eToTest, averageC02eInDietForArea)
                     , howWellDietC02eCompares.get(actualAnswer));
         }
     }
