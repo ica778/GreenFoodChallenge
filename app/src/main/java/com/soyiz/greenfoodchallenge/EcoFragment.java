@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EcoFragment extends Fragment {
+
     public EcoFragment() {
     }
 
@@ -20,15 +21,20 @@ public class EcoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View ecoView = inflater.inflate(R.layout.fragment_eco, container, false);
 
         //TextViews for Eco information display.
         final TextView dietTextView = ecoView.findViewById(R.id.dietInfo);
-        final TextView highMeatBetterPercentageView = ecoView.findViewById(R.id.highMeatBetterPercentage);
-        final TextView lowMeatBetterPercentageView = ecoView.findViewById(R.id.lowMeatBetterPercentage);
-        final TextView onlyFishBetterPercentageView = ecoView.findViewById(R.id.onlyFishBetterPercentage);
-        final TextView vegetarianBetterPercentageView = ecoView.findViewById(R.id.vegetarianPercentage);
+        final TextView highMeatBetterPercentageView = ecoView
+                .findViewById(R.id.highMeatBetterPercentage);
+        final TextView lowMeatBetterPercentageView = ecoView
+                .findViewById(R.id.lowMeatBetterPercentage);
+        final TextView onlyFishBetterPercentageView = ecoView
+                .findViewById(R.id.onlyFishBetterPercentage);
+        final TextView vegetarianBetterPercentageView = ecoView
+                .findViewById(R.id.vegetarianPercentage);
         final TextView veganBetterPercentageView = ecoView.findViewById(R.id.veganBetterPercentage);
 
         //Buttons in Econ fragment
@@ -59,18 +65,24 @@ public class EcoFragment extends Fragment {
         final DietComparer dietComparer = new DietComparer();
 
         //textViews for showing better percentage in Econ Fragment
-        highMeatBetterPercentageView.setText(dietComparer.compareCO2ePercent(myDiet, highMeat) + " %");
-        lowMeatBetterPercentageView.setText(dietComparer.compareCO2ePercent(myDiet, lowMeat) + " %");
-        onlyFishBetterPercentageView.setText(dietComparer.compareCO2ePercent(myDiet, onlyFish) + " %");
-        vegetarianBetterPercentageView.setText(dietComparer.compareCO2ePercent(myDiet, vegetarian) + " %");
+        highMeatBetterPercentageView
+                .setText(dietComparer.compareCO2ePercent(myDiet, highMeat) + " %");
+        lowMeatBetterPercentageView
+                .setText(dietComparer.compareCO2ePercent(myDiet, lowMeat) + " %");
+        onlyFishBetterPercentageView
+                .setText(dietComparer.compareCO2ePercent(myDiet, onlyFish) + " %");
+        vegetarianBetterPercentageView
+                .setText(dietComparer.compareCO2ePercent(myDiet, vegetarian) + " %");
         veganBetterPercentageView.setText(dietComparer.compareCO2ePercent(myDiet, vegan) + " %");
 
         // Button listeners for Eco Fragment
         highMeatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), R.string.highMeatButtonInfo, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), R.string.highMeatButtonChange, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.highMeatButtonInfo, Toast.LENGTH_SHORT)
+                        .show();
+                Toast.makeText(getActivity(), R.string.highMeatButtonChange, Toast.LENGTH_SHORT)
+                        .show();
                 dietTextView.setText(dietComparer.getChangeReport(myDiet, highMeat));
             }
         });
@@ -78,24 +90,30 @@ public class EcoFragment extends Fragment {
         lowMeatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), R.string.lowMeatButtonInfo, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), R.string.lowMeatButtonChange, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.lowMeatButtonInfo, Toast.LENGTH_SHORT)
+                        .show();
+                Toast.makeText(getActivity(), R.string.lowMeatButtonChange, Toast.LENGTH_LONG)
+                        .show();
                 dietTextView.setText(dietComparer.getChangeReport(myDiet, lowMeat));
             }
         });
         onlyFishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), R.string.onlyFishButtonInfo, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), R.string.onlyFishButtonChange, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.onlyFishButtonInfo, Toast.LENGTH_SHORT)
+                        .show();
+                Toast.makeText(getActivity(), R.string.onlyFishButtonChange, Toast.LENGTH_SHORT)
+                        .show();
                 dietTextView.setText(dietComparer.getChangeReport(myDiet, onlyFish));
             }
         });
         vegetarianButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), R.string.vegetarianButtonInfo, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), R.string.vegetarianButtonChange, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.vegetarianButtonInfo, Toast.LENGTH_SHORT)
+                        .show();
+                Toast.makeText(getActivity(), R.string.vegetarianButtonChange, Toast.LENGTH_SHORT)
+                        .show();
                 dietTextView.setText(dietComparer.getChangeReport(myDiet, vegetarian));
             }
         });
@@ -103,7 +121,8 @@ public class EcoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), R.string.veganButtonInfo, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), R.string.veganButtonChange, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.veganButtonChange, Toast.LENGTH_SHORT)
+                        .show();
                 dietTextView.setText(dietComparer.getChangeReport(myDiet, vegan));
             }
         });
