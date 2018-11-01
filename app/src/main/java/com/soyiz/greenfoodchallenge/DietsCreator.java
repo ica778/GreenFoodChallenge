@@ -11,8 +11,7 @@ public class DietsCreator {
     private float userDietBeans;
     private float userDietVegetables;
 
-    public DietsCreator() {
-    }
+    DietsCreator() {}
 
     // Sets the base diet to work with
     public void setUserDiet(Diet diet) {
@@ -148,10 +147,9 @@ public class DietsCreator {
         float eggsShare = (float) Math.ceil(proportionToSplit * 5 / 12);
         proportionToSplit = proportionToSplit - eggsShare;
 
-        /* Make beans share also 25/60 of the previous 60% of extra proportions
+        /* Make beans share the same as eggsshare
          * Subtract beans share from the extra proportions */
-        float beansShare = eggsShare;
-        proportionToSplit = proportionToSplit - beansShare;
+        proportionToSplit = proportionToSplit - eggsShare;
 
         // Make vegetable share the remaining extra proportions
         float vegetableShare = proportionToSplit;
@@ -164,7 +162,7 @@ public class DietsCreator {
         // Set final proportions to the sum of their respective extra proportion shares and user proportions
         onlyFishDiet.setProteinPercent(ProteinSource.Fish, fishShare + userDietFish);
         onlyFishDiet.setProteinPercent(ProteinSource.Eggs, eggsShare + userDietEggs);
-        onlyFishDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
+        onlyFishDiet.setProteinPercent(ProteinSource.Beans, eggsShare + userDietBeans);
         onlyFishDiet
                 .setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
         return onlyFishDiet;

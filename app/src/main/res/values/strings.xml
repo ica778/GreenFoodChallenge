@@ -43,8 +43,8 @@
         \n\n\tWhat Can We Do?
         \n\n\tWe can be more aware of what we eat and change our diets to reduce greenhouse
         gas emissions, and it does not even have to be an extreme dietary change. If people
-        in the Metro Vancouver area reduced their beef/lamb consumption by 20%% and replaced
-        it with chicken, Vancouver could save up to 1 million tonnes of CO2e per year!
+        in the Metro Vancouver area reduced their beef/lamb consumption by 20% and replaced
+        it with chicken, we could save up to 1 million tonnes of CO2e per year!
         \n\n\tWhere Does the Green Food Challenge Come In?
         \n\n\tThe Green Food Challenge aims to reduce our individual and collective carbon
         footprints by raising awareness and making it easy for users to adopt more
@@ -53,8 +53,23 @@
         to choose from. It\'s that easy, so what are you waiting for?
         \n\n\tLet\'s get saving!</string>
 
-    <string name="co2_100g_n">%1$d kg/year CO2e\n %2$s regional average.</string>
+    <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //Municipalities
+    <string name="no_municipality">No municipality chosen</string>
+    <string name="bowen_island">Bowen Island</string>
+    <string name="burnaby">Burnaby</string>
+    <string name="coquitlam">Coquitlam</string>
+    <string name="delta">Delta</string>
+    <string name="langley">Langley</string>
+    <string name="maple_ridge">Maple Ridge</string>
+    <string name="new_westminster">New West Minster</string>
+    <string name="north_vancouver">North Vancouver</string>
+    <string name="pitt_meadows">Pitt Meadows</string>
+    <string name="port_coquitlam">Port Coquitlam</string>
+    <string name="port_moody">Port Moody</string>
+    <string name="richmond">Richmond</string>
 </resources>
