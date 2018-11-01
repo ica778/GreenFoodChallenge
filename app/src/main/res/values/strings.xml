@@ -53,9 +53,9 @@
         to choose from. It\'s that easy, so what are you waiting for?
         \n\n\tLet\'s get saving!</string>
 
-    <string name="co2_100g_n">This diet will produce %1$.2f t/year of CO2e which is equivalent to burning %2$.2f litres of gasoline. Think about how much gas you use to commute!
-        \n\nCompared to the regional average of %3$.2f t/year per capita, this diet produces %4$s.
-        \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tons of C02e which is %6$s than the current %7$d tons.
+    <string name="co2_100g_n">This diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f litres of gasoline. Think about how much gas you use to commute!
+        \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
+        \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e which is %6$s than the current %7$d tonnes.
         \n\nAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can affect these numbers.</string>
 
     <!-- TODO: Remove or change this placeholder text -->

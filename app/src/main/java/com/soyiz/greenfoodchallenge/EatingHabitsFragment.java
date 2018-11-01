@@ -114,18 +114,18 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         Integer kgOfC02eInDiet = Math.round(total);
         float tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
         String stringToShow = getResources().getString(R.string.co2_100g_n);
-        float regionAverageTonC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
+        float regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
         float litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
         int currentPopulationOfArea = 2463000; // Current population of metro vancouver
         String howDoesUsersDietCompare = String.format
                 (stringToShow,
                         tonnesOfC02eInDiet,
                         litresOfGasolineEquivalentToC02e,
-                        regionAverageTonC02e,
-                        DietComparer.getHowWellC02eComparesToAverage(kgOfC02eInDiet, regionAverageTonC02e * 1000),
+                        regionAverageTonnesC02e,
+                        DietComparer.getHowWellC02eComparesToAverage(kgOfC02eInDiet, regionAverageTonnesC02e * 1000),
                         Math.round(currentPopulationOfArea * tonnesOfC02eInDiet),
-                        DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonC02e * currentPopulationOfArea),
-                        Math.round(currentPopulationOfArea * regionAverageTonC02e));
+                        DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonnesC02e * currentPopulationOfArea),
+                        Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
         tv_result.setText(howDoesUsersDietCompare);
     }
 
