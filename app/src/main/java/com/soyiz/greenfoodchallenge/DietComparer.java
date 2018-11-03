@@ -11,36 +11,31 @@ import java.util.List;
  * All rounded to 0 decimal places*/
 public class DietComparer {
 
-    public DietComparer() {
-    }
+    DietComparer() {}
 
     //Subtracts new diet from old diet CO2e and returns the % difference of CO2e with new diet
     public float compareCO2ePercent(Diet oldDiet, Diet newDiet) {
         float CO2eDifference = oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e();
-        float percentSaved = (float) Math.round(100 * CO2eDifference / oldDiet.getYearlyCO2e());
-        return percentSaved;
+        return (float) Math.round(100 * CO2eDifference / oldDiet.getYearlyCO2e());
     }
 
     //Subtracts new diet from old diet CO2e and returns the difference in kg of CO2e with new diet
     public float compareCO2eKilos(Diet oldDiet, Diet newDiet) {
-        float CO2eSaved = (float) Math.round(oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e());
-        return CO2eSaved;
+        return (float) Math.round(oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e());
     }
 
     //Returns CO2e saved per year in millions of kg if everyone in Vancouver made the same changes
     public float getCO2eSavedInVancouver(Diet oldDiet, Diet newDiet) {
         float CO2eDifference = oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e();
         //22.167 million non-vegetarians in Vancouver
-        float CO2eSavedInVancouver = (float) Math.round(CO2eDifference * 22.167f);
-        return CO2eSavedInVancouver;
+        return (float) Math.round(CO2eDifference * 22.167f);
     }
 
     //Returns the amount of gasoline needed to create an equivalent amount of CO2 per year
     public float getEquivalentLitresOfGasoline(Diet oldDiet, Diet newDiet) {
         float CO2eDifference = oldDiet.getYearlyCO2e() - newDiet.getYearlyCO2e();
         //2.31 kg of CO2 per L of gasoline burned
-        float litresOfGasoline = (float) Math.round(CO2eDifference / 2.31f);
-        return litresOfGasoline;
+        return (float) Math.round(CO2eDifference / 2.31f);
     }
 
     // Returns the litres of gasoline equivalent to kg of C02e
