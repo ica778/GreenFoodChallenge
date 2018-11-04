@@ -11,7 +11,8 @@ import java.util.List;
  * All rounded to 0 decimal places*/
 public class DietComparer {
 
-    DietComparer() {}
+    DietComparer() {
+    }
 
     //Subtracts new diet from old diet CO2e and returns the % difference of CO2e with new diet
     public float compareCO2ePercent(Diet oldDiet, Diet newDiet) {
