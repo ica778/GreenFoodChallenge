@@ -47,7 +47,6 @@ public class EcoFragment extends Fragment {
 
         //Test User Diet
         final Diet myDiet = new Diet();
-        /*
         myDiet.setProteinPercent(ProteinSource.Beef, 20);
         myDiet.setProteinPercent(ProteinSource.Pork, 20);
         myDiet.setProteinPercent(ProteinSource.Chicken, 10);
@@ -55,14 +54,6 @@ public class EcoFragment extends Fragment {
         myDiet.setProteinPercent(ProteinSource.Eggs, 10);
         myDiet.setProteinPercent(ProteinSource.Beans, 10);
         myDiet.setProteinPercent(ProteinSource.Vegetables, 10);
-        */
-        myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfBeef());
-        myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfPork());
-        myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfChicken());
-        myDiet.setProteinPercent(ProteinSource.Fish, UserDietInfo.getInstance().getAmountOfFish());
-        myDiet.setProteinPercent(ProteinSource.Eggs, UserDietInfo.getInstance().getAmountOfEgg());
-        myDiet.setProteinPercent(ProteinSource.Beans, UserDietInfo.getInstance().getAmountOfBean());
-        myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfVegetable());
         dietsCreator.setUserDiet(myDiet);
 
         //Default Diets in Eco Fragment
