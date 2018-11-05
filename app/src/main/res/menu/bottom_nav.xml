@@ -1,16 +1,19 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_nav_item_EatingHabits"
-        android:icon="@drawable/ic_eating_habits_icon_24dp"
-        android:title="@string/eating_habits_name" />
+      android:id="@+id/bottom_nav_item_EatingHabits"
+      android:icon="@drawable/ic_eating_habits_icon_24dp"
+      android:title="@string/eating_habits_name" />
     <item
-        android:id="@+id/bottom_nav_item_Eco"
-        android:icon="@drawable/ic_eco_icon_24dp"
-        android:title="@string/eco_name" />
+      android:id="@+id/bottom_nav_item_Eco"
+      android:icon="@drawable/ic_eco_icon_24dp"
+      android:title="@string/eco_name" />
     <item
-        android:id="@+id/bottom_nav_item_Info"
-        android:icon="@drawable/ic_info_icon_24dp"
-        android:title="@string/info_name" />
-
+      android:id="@+id/bottom_nav_item_Pledge"
+      android:icon="@drawable/ic_pledge_icon_24dp"
+      android:title="@string/pledge_name" />
+    <item
+      android:id="@+id/bottom_nav_item_User"
+      android:icon="@drawable/ic_user_icon_24dp"
+      android:title="@string/user_name" />
 </menu>

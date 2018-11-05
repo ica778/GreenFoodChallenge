@@ -1,7 +1,13 @@
 <resources>
+
     <string name="app_name">GreenFoodChallenge</string>
-    <string name="eating_habits_name">Eating Habits</string>
-    <string name="eco_name">Eco</string>
+    <string name="eating_habits_name">Diet</string>
+    <string name="eco_name">Eco Eating</string>
+    <string name="user_name">User</string>
+    <string name="pledge_name">Pledge</string>
+
+
+
     //Strings for Eco
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
@@ -57,6 +63,8 @@
         \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
         \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e which is %6$s than the current %7$d tonnes.
         \n\nAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can affect these numbers.</string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
