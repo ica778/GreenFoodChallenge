@@ -1,5 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class User {
 
     private Diet currentDiet = new Diet();
@@ -8,12 +10,24 @@ public class User {
     private int municipalityStringId = R.string.no_municipality;
     private String userName;
 
+    private FirebaseUser mFirebaseUser = null;
+
     User(){}
 
     public User(Diet current, Diet goal, Pledge pledge) {
         currentDiet = current;
         goalDiet = goal;
         currentPledge = pledge;
+    }
+
+    public void setFirebaseUser(FirebaseUser user)
+    {
+        mFirebaseUser = user;
+    }
+
+    public FirebaseUser getFirebaseUser(FirebaseUser user)
+    {
+        return mFirebaseUser;
     }
 
     public Diet getCurrentDiet() {
