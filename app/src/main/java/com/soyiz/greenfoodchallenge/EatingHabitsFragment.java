@@ -54,56 +54,68 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         tv_result = view.findViewById(R.id.tv_result);
         btn_total.setOnClickListener(this);
         mScrollView = (ScrollView) view.findViewById(R.id.mScrollView);
-        mScrollView.smoothScrollBy(0,10000);
+        mScrollView.smoothScrollBy(0, 10000);
     }
 
-    private void submitUserInput() {
-        // validate
+    /* This method checks if user has entered at least one input. If they have we set the blank spots to 0 and
+     * the part the user inputted as the number they entered. Returns true if they entered at least one input and
+     * false otherwise. */
+    private boolean hasUserInputed() {
         String beef = et_beef.getText().toString().trim();
-        if (TextUtils.isEmpty(beef)) {
-            Toast.makeText(getContext(), "beef cannot be empty", Toast.LENGTH_SHORT).show();
-            ;
-        }
         String chicken = et_chicken.getText().toString().trim();
-        if (TextUtils.isEmpty(chicken)) {
-            Toast.makeText(getContext(), "chicken cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String pork = et_pork.getText().toString().trim();
-        if (TextUtils.isEmpty(pork)) {
-            Toast.makeText(getContext(), "pork cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         String fish = et_fish.getText().toString().trim();
-        if (TextUtils.isEmpty(fish)) {
-            Toast.makeText(getContext(), "fish cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String bean = et_bean.getText().toString().trim();
-        if (TextUtils.isEmpty(bean)) {
-            Toast.makeText(getContext(), "bean cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String vegetable = et_vegetable.getText().toString().trim();
-        if (TextUtils.isEmpty(vegetable)) {
-            Toast.makeText(getContext(), "vegetable cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String egg = et_egg.getText().toString().trim();
-        if (TextUtils.isEmpty(egg)) {
-            Toast.makeText(getContext(), "egg cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
+        boolean userHasEnteredInput = false;
+        if (TextUtils.isEmpty(beef)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("beef", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("beef", Integer.parseInt(beef));
+            userHasEnteredInput = true;
         }
+        if (TextUtils.isEmpty(chicken)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", Integer.parseInt(chicken));
+            userHasEnteredInput = true;
+        }
+        if (TextUtils.isEmpty(pork)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", Integer.parseInt(pork));
+            userHasEnteredInput = true;
+        }
+        if (TextUtils.isEmpty(fish)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", Integer.parseInt(fish));
+            userHasEnteredInput = true;
+        }
+        if (TextUtils.isEmpty(bean)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", Integer.parseInt(bean));
+            userHasEnteredInput = true;
+        }
+        if (TextUtils.isEmpty(vegetable)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", Integer.parseInt(vegetable));
+            userHasEnteredInput = true;
+        }
+        if (TextUtils.isEmpty(egg)) {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", 0);
+        } else {
+            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", Integer.parseInt(egg));
+            userHasEnteredInput = true;
+        }
+        return userHasEnteredInput;
+    }
 
-        UserDietInfo.getInstance().setAmountOfProteinGrams("beef", Integer.parseInt(beef));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", Integer.parseInt(chicken));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("pork", Integer.parseInt(pork));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("fish", Integer.parseInt(fish));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("bean", Integer.parseInt(bean));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", Integer.parseInt(vegetable));
-        UserDietInfo.getInstance().setAmountOfProteinGrams("egg", Integer.parseInt(egg));
-
+    // This method calculates the C02e from the user's input.
+    private boolean calculateUserInput() {
         float total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
                 + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
                 + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
@@ -126,19 +138,25 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonnesC02e * currentPopulationOfArea),
                 Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
         tv_result.setText(howDoesUsersDietCompare);
+        return true;
     }
 
     @Override
     public void onClick(View view) {
-        submitUserInput();
-        new CountDownTimer(100, 100) {
-            public void onTick(long millisUntilFinished) {
+        if (hasUserInputed() == true) {
+            calculateUserInput();
+            new CountDownTimer(100, 100) {
+                public void onTick(long millisUntilFinished) {
 
-            }
+                }
 
-            public void onFinish() {
-                mScrollView.smoothScrollBy(0,10000);
-            }
-        }.start();
+                public void onFinish() {
+                    mScrollView.smoothScrollBy(0, 10000);
+                }
+            }.start();
+        }
+        else {
+            Toast.makeText(getContext(), "Please enter at least one amount", Toast.LENGTH_SHORT).show();
+        }
     }
 }
