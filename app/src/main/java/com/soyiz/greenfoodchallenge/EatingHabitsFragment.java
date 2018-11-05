@@ -18,18 +18,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private EditText et_chicken;
     private EditText et_pork;
     private EditText et_fish;
-    private EditText et_beans;
-    private EditText et_vegetables;
+    private EditText et_bean;
+    private EditText et_vegetable;
     private EditText et_egg;
     private Button btn_total;
     private TextView tv_result;
-    private Integer dBeef;
-    private Integer dChicken;
-    private Integer dPork;
-    private Integer dFish;
-    private Integer dBeans;
-    private Integer dVegetables;
-    private Integer dEgg;
 
     public EatingHabitsFragment() {
     }
@@ -41,7 +34,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_eating_habits, container, false);
@@ -55,8 +48,8 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         et_chicken = (EditText) view.findViewById(R.id.et_chicken);
         et_pork = (EditText) view.findViewById(R.id.et_pork);
         et_fish = (EditText) view.findViewById(R.id.et_fish);
-        et_beans = (EditText) view.findViewById(R.id.et_beans);
-        et_vegetables = (EditText) view.findViewById(R.id.et_vegetables);
+        et_bean = (EditText) view.findViewById(R.id.et_beans);
+        et_vegetable = (EditText) view.findViewById(R.id.et_vegetables);
         et_egg = (EditText) view.findViewById(R.id.et_egg);
         btn_total = view.findViewById(R.id.btn_total);
         tv_result = view.findViewById(R.id.tv_result);
@@ -86,14 +79,14 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             Toast.makeText(getContext(), "fish cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        String beans = et_beans.getText().toString().trim();
-        if (TextUtils.isEmpty(beans)) {
-            Toast.makeText(getContext(), "beans cannot be empty", Toast.LENGTH_SHORT).show();
+        String bean = et_bean.getText().toString().trim();
+        if (TextUtils.isEmpty(bean)) {
+            Toast.makeText(getContext(), "bean cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        String vegetables = et_vegetables.getText().toString().trim();
-        if (TextUtils.isEmpty(vegetables)) {
-            Toast.makeText(getContext(), "vegetables cannot be empty", Toast.LENGTH_SHORT).show();
+        String vegetable = et_vegetable.getText().toString().trim();
+        if (TextUtils.isEmpty(vegetable)) {
+            Toast.makeText(getContext(), "vegetable cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
         String egg = et_egg.getText().toString().trim();
@@ -101,22 +94,32 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             Toast.makeText(getContext(), "egg cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        dBeef = Integer.valueOf(beef);
-        dChicken = Integer.valueOf(chicken);
-        dPork = Integer.valueOf(pork);
-        dFish = Integer.valueOf(fish);
-        dBeans = Integer.valueOf(beans);
-        dVegetables = Integer.valueOf(vegetables);
-        dEgg = Integer.valueOf(egg);
-        Float total =
-                365 * (27 * dBeef + 12.1F * dPork + 6.9F * dChicken + 6.1F * dFish + 4.8F * dEgg
-                        + 2 * dBeans + 2 * dVegetables) / 1000;
-        Integer i = Math.round(total);
+
+        UserDietInfo.getInstance().setAmountOfEgg(Integer.parseInt(beef));
+        UserDietInfo.getInstance().setAmountOfBeef(Integer.parseInt(beef));
+        UserDietInfo.getInstance().setAmountOfChicken(Integer.parseInt(chicken));
+        UserDietInfo.getInstance().setAmountOfPork(Integer.parseInt(pork));
+        UserDietInfo.getInstance().setAmountOfFish(Integer.parseInt(fish));
+        UserDietInfo.getInstance().setAmountOfBean(Integer.parseInt(bean));
+        UserDietInfo.getInstance().setAmountOfVegetable(Integer.parseInt(vegetable));
+        UserDietInfo.getInstance().setAmountOfEgg(Integer.parseInt(egg));
+
+        float total = 365 * (27 * UserDietInfo.getInstance().getAmountOfBeef() + 12.1F * UserDietInfo.getInstance().getAmountOfPork() + 6.9F * UserDietInfo.getInstance().getAmountOfChicken() + 6.1F * UserDietInfo.getInstance().getAmountOfFish() + 4.8F * UserDietInfo.getInstance().getAmountOfEgg()
+                + 2 * UserDietInfo.getInstance().getAmountOfBean() + 2 * UserDietInfo.getInstance().getAmountOfVegetable()) / 1000;
+        Integer kgOfC02eInDiet = Math.round(total);
+        float tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
         String stringToShow = getResources().getString(R.string.co2_100g_n);
-        float regionAverageC02eConsumption = 7700;
-        String howDoesUsersDietCompare = String.format
-                (stringToShow, i, DietComparer
-                        .getHowWellUserComparesToRegion(i, regionAverageC02eConsumption));
+        float regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
+        float litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
+        int currentPopulationOfArea = 2463000; // Current population of metro vancouver
+        String howDoesUsersDietCompare = String.format(stringToShow,
+                tonnesOfC02eInDiet,
+                litresOfGasolineEquivalentToC02e,
+                regionAverageTonnesC02e,
+                DietComparer.getHowWellC02eComparesToAverage(kgOfC02eInDiet, regionAverageTonnesC02e * 1000),
+                Math.round(currentPopulationOfArea * tonnesOfC02eInDiet),
+                DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonnesC02e * currentPopulationOfArea),
+                Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
         tv_result.setText(howDoesUsersDietCompare);
     }
 
