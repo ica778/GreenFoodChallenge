@@ -12,8 +12,6 @@ public class User {
 
     private FirebaseUser mFirebaseUser = null;
 
-    private FirebaseUser mFirebaseUser = null;
-
     User(){}
 
     public int getMunicipalityStringId() {
@@ -30,16 +28,6 @@ public class User {
 
     public void setUserName(int nameId) {
         userNameStringId = nameId;
-    }
-
-    public void setFirebaseUser(FirebaseUser user)
-    {
-        mFirebaseUser = user;
-    }
-
-    public FirebaseUser getFirebaseUser()
-    {
-        return mFirebaseUser;
     }
 
     public void setFirebaseUser(FirebaseUser user)
