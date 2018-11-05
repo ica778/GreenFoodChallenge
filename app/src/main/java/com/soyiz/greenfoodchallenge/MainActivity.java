@@ -1,5 +1,8 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.annotation.SuppressLint;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import android.widget.TextView;
+import java.lang.reflect.Field;
 
 class UserDietInfo {
     private static UserDietInfo instance = null;
@@ -100,9 +104,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
+
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
-    private Fragment infoFragment = null;
+    private Fragment pledgeFragment = null;
+    private Fragment userFragment = null;
+
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -114,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.bottom_nav_item_Eco:
                             changeToEcoFragment();
                             return true;
-                        case R.id.bottom_nav_item_Info:
-                            changeToInfoFragment();
+                        case R.id.bottom_nav_item_Pledge:
+                            changeToPledgeFragment();
+                            return true;
+                        case R.id.bottom_nav_item_User:
+                            changeToUserFragment();
                             return true;
                     }
                     return false;
@@ -132,12 +142,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(
                 R.id.bottom_nav);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        bottomNavigationView.getMenu().findItem(R.id.bottom_nav_item_Eco).setChecked(true);
-        fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.frame_fragment_holder);
+        disableShiftMode(bottomNavigationView);
 
-        changeToEcoFragment();
+        fragmentManager = getSupportFragmentManager();
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
+        bottomNavigationView.getMenu().findItem(R.id.bottom_nav_item_Pledge).setChecked(true);
+        changeToPledgeFragment();
     }
 
     private void fragmentReplaceTransaction(Fragment fragment) {
@@ -172,13 +183,51 @@ public class MainActivity extends AppCompatActivity {
         setActionBarTitle(R.string.eco_name);
     }
 
-    private void changeToInfoFragment() {
-        if (infoFragment == null) {
-            infoFragment = new InfoFragment();
+    private void changeToPledgeFragment() {
+        if (pledgeFragment == null) {
+            pledgeFragment = new PledgeFragment();
         }
 
-        Log.d(TAG, "changing to Info fragment");
-        fragmentReplaceTransaction(infoFragment);
-        setActionBarTitle(R.string.info_name);
+        Log.d(TAG, "changing to Pledge fragment");
+        fragmentReplaceTransaction(pledgeFragment);
+        setActionBarTitle(R.string.pledge_name);
+    }
+
+    private void changeToUserFragment() {
+        if (userFragment == null) {
+            userFragment = new UserFragment();
+        }
+
+        Log.d(TAG, "changing to User fragment");
+        fragmentReplaceTransaction(userFragment);
+        setActionBarTitle(R.string.user_name);
+    }
+
+    @SuppressLint("RestrictedApi")
+    public static void disableShiftMode(BottomNavigationView view) {
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                //noinspection RestrictedApi
+                item.setShiftingMode(false);
+                // set once again checked value, so view will be updated
+                //noinspection RestrictedApi
+                item.setChecked(item.getItemData().isChecked());
+            }
+        } catch (NoSuchFieldException e) {
+            Log.e("BNVHelper", "Unable to get shift mode field", e);
+        } catch (IllegalAccessException e) {
+            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+        }
     }
 }
