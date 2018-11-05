@@ -1,6 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private EditText et_egg;
     private Button btn_total;
     private TextView tv_result;
+    private ScrollView mScrollView;
 
     public EatingHabitsFragment() {
     }
@@ -51,14 +53,16 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         btn_total = view.findViewById(R.id.btn_total);
         tv_result = view.findViewById(R.id.tv_result);
         btn_total.setOnClickListener(this);
+        mScrollView = (ScrollView) view.findViewById(R.id.mScrollView);
+        mScrollView.smoothScrollBy(0,10000);
     }
 
-    private void submit() {
+    private void submitUserInput() {
         // validate
         String beef = et_beef.getText().toString().trim();
         if (TextUtils.isEmpty(beef)) {
             Toast.makeText(getContext(), "beef cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
+            ;
         }
         String chicken = et_chicken.getText().toString().trim();
         if (TextUtils.isEmpty(chicken)) {
@@ -126,6 +130,15 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        submit();
+        submitUserInput();
+        new CountDownTimer(100, 100) {
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                mScrollView.smoothScrollBy(0,10000);
+            }
+        }.start();
     }
 }
