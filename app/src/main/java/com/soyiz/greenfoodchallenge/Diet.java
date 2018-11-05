@@ -1,14 +1,49 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Diet {
+    private static final String TAG = "Diet";
 
     private Map<ProteinSource, Float> proteinPercentMap;
 
     Diet() {
         proteinPercentMap = new HashMap<>();
+    }
+
+    // Used to load a map from Firebase into a diet object
+    public void loadFromStringMap(Map<String, Float> map)
+    {
+        for (Map.Entry<String, Float> entry : map.entrySet())
+        {
+            ProteinSource protein = ProteinSource.stringToEnumValue(entry.getKey());
+
+            if (protein == null)
+            {
+                // Yes, this is silently failing. Unfortunately that's pretty much the best we can do here.
+                // If this case occurs, eventually a NRE will happen. But if we're in that scenario, we've already lost.
+                Log.d(TAG, "[ERROR] loadFromStringMap: bad protein string. Got: '" + entry.getKey() + "'.");
+                continue;
+            }
+
+            setProteinPercent(protein, entry.getValue());
+        }
+    }
+
+    // Used to turn a diet into a string keyed map for saving with Firebase
+    public Map<String, Float> exportToStringMap()
+    {
+        Map<String, Float> outputMap = new HashMap<>();
+
+        for (Map.Entry<ProteinSource, Float> entry : proteinPercentMap.entrySet())
+        {
+            outputMap.put(entry.getKey().toString(), entry.getValue());
+        }
+
+        return outputMap;
     }
 
     // Sets the percentage of a given protein
