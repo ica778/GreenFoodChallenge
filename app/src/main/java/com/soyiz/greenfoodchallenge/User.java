@@ -25,7 +25,7 @@ public class User {
         mFirebaseUser = user;
     }
 
-    public FirebaseUser getFirebaseUser(FirebaseUser user)
+    public FirebaseUser getFirebaseUser()
     {
         return mFirebaseUser;
     }
