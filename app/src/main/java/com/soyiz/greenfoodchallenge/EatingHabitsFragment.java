@@ -156,7 +156,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             }.start();
         }
         else {
-            Toast.makeText(getContext(), "Please enter at least one amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.calculator_toast), Toast.LENGTH_SHORT).show();
         }
     }
 }
