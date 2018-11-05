@@ -7,10 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 public class EatingHabitsFragment extends Fragment implements View.OnClickListener {
 
@@ -95,17 +92,21 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             return;
         }
 
-        UserDietInfo.getInstance().setAmountOfEgg(Integer.parseInt(beef));
-        UserDietInfo.getInstance().setAmountOfBeef(Integer.parseInt(beef));
-        UserDietInfo.getInstance().setAmountOfChicken(Integer.parseInt(chicken));
-        UserDietInfo.getInstance().setAmountOfPork(Integer.parseInt(pork));
-        UserDietInfo.getInstance().setAmountOfFish(Integer.parseInt(fish));
-        UserDietInfo.getInstance().setAmountOfBean(Integer.parseInt(bean));
-        UserDietInfo.getInstance().setAmountOfVegetable(Integer.parseInt(vegetable));
-        UserDietInfo.getInstance().setAmountOfEgg(Integer.parseInt(egg));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("beef", Integer.parseInt(beef));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", Integer.parseInt(chicken));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("pork", Integer.parseInt(pork));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("fish", Integer.parseInt(fish));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("bean", Integer.parseInt(bean));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", Integer.parseInt(vegetable));
+        UserDietInfo.getInstance().setAmountOfProteinGrams("egg", Integer.parseInt(egg));
 
-        float total = 365 * (27 * UserDietInfo.getInstance().getAmountOfBeef() + 12.1F * UserDietInfo.getInstance().getAmountOfPork() + 6.9F * UserDietInfo.getInstance().getAmountOfChicken() + 6.1F * UserDietInfo.getInstance().getAmountOfFish() + 4.8F * UserDietInfo.getInstance().getAmountOfEgg()
-                + 2 * UserDietInfo.getInstance().getAmountOfBean() + 2 * UserDietInfo.getInstance().getAmountOfVegetable()) / 1000;
+        float total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+                + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
+                + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
+                + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
+                + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
         Integer kgOfC02eInDiet = Math.round(total);
         float tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
         String stringToShow = getResources().getString(R.string.co2_100g_n);
