@@ -6,14 +6,24 @@ public class User {
     private Diet goalDiet = new Diet();
     private Pledge currentPledge = new Pledge();
     private int municipalityStringId = R.string.no_municipality;
-    private String userName;
+    private int userNameStringId = R.string.no_user_name;
 
     User(){}
 
-    public User(Diet current, Diet goal, Pledge pledge) {
-        currentDiet = current;
-        goalDiet = goal;
-        currentPledge = pledge;
+    public int getMunicipalityStringId() {
+        return municipalityStringId;
+    }
+
+    public void setMunicipalityStringId(int municipality) {
+        municipalityStringId = municipality;
+    }
+
+    public int getUserNameStringId() {
+        return userNameStringId;
+    }
+
+    public void setUserName(int nameId) {
+        userNameStringId = nameId;
     }
 
     public Diet getCurrentDiet() {
@@ -40,19 +50,7 @@ public class User {
         currentPledge = pledge;
     }
 
-    public int getMunicipalityStringId() {
-        return municipalityStringId;
-    }
-
-    public void setMunicipalityStringId(int municipality) {
-        municipalityStringId = municipality;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String name) {
-        userName = name;
+    public void removePledge() {
+        currentPledge = new Pledge();
     }
 }

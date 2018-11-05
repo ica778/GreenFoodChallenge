@@ -1,7 +1,13 @@
 <resources>
+
     <string name="app_name">GreenFoodChallenge</string>
-    <string name="eating_habits_name">Eating Habits</string>
-    <string name="eco_name">Eco</string>
+    <string name="eating_habits_name">Diet</string>
+    <string name="eco_name">Eco Eating</string>
+    <string name="user_name">User</string>
+    <string name="pledge_name">Pledge</string>
+
+
+
     //Strings for Eco
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
@@ -55,21 +61,35 @@
 
     <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
 
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     //Municipalities
     <string name="no_municipality">No municipality chosen</string>
+    <string name="anmore">Anmore</string>
+    <string name="belcarra">Belcarra</string>
     <string name="bowen_island">Bowen Island</string>
     <string name="burnaby">Burnaby</string>
     <string name="coquitlam">Coquitlam</string>
     <string name="delta">Delta</string>
     <string name="langley">Langley</string>
+    <string name="lions_bay">Lions Bay</string>
     <string name="maple_ridge">Maple Ridge</string>
-    <string name="new_westminster">New West Minster</string>
+    <string name="new_westminster">New Westminster</string>
     <string name="north_vancouver">North Vancouver</string>
     <string name="pitt_meadows">Pitt Meadows</string>
     <string name="port_coquitlam">Port Coquitlam</string>
     <string name="port_moody">Port Moody</string>
     <string name="richmond">Richmond</string>
+    <string name="surrey">Surrey</string>
+    <string name="university_endowment_lands">University Endowment Lands</string>
+    <string name="vancouver">Vancouver</string>
+    <string name="west_vancouver">West Vancouver</string>
+    <string name="white_rock">White Rock</string>
+
+    //No user name
+    <string name="no_user_name">No name given</string>
+
 </resources>
