@@ -55,15 +55,15 @@ public class EcoFragment extends Fragment {
         myDiet.setProteinPercent(ProteinSource.Beans, 0);
         myDiet.setProteinPercent(ProteinSource.Vegetables, 0);
 
-        if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0){
-            int totalAmountOfProtein = UserDietInfo.getInstance().getTotalAmountOfProtein();
-            myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfBeef()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfPork()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfChicken()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Fish, UserDietInfo.getInstance().getAmountOfFish()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Eggs, UserDietInfo.getInstance().getAmountOfEgg()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Beans, UserDietInfo.getInstance().getAmountOfBean()*100/totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfVegetable()*100/totalAmountOfProtein);
+        if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0){
+            int totalAmountOfProtein = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+            myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfProteinGrams("beef")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfProteinGrams("pork")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Fish, UserDietInfo.getInstance().getAmountOfProteinGrams("fish")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Eggs, UserDietInfo.getInstance().getAmountOfProteinGrams("egg")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Beans, UserDietInfo.getInstance().getAmountOfProteinGrams("bean")*100/totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")*100/totalAmountOfProtein);
         }
         dietsCreator.setUserDiet(myDiet);
 
@@ -94,7 +94,7 @@ public class EcoFragment extends Fragment {
                         .show();
                 Toast.makeText(getActivity(), R.string.highMeatButtonChange, Toast.LENGTH_SHORT)
                         .show();
-                if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, highMeat));
+                if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, highMeat));
             }
         });
 
@@ -105,7 +105,7 @@ public class EcoFragment extends Fragment {
                         .show();
                 Toast.makeText(getActivity(), R.string.lowMeatButtonChange, Toast.LENGTH_LONG)
                         .show();
-                if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, lowMeat));
+                if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, lowMeat));
             }
         });
         onlyFishButton.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ public class EcoFragment extends Fragment {
                         .show();
                 Toast.makeText(getActivity(), R.string.onlyFishButtonChange, Toast.LENGTH_SHORT)
                         .show();
-                if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, onlyFish));
+                if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, onlyFish));
             }
         });
         vegetarianButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +125,7 @@ public class EcoFragment extends Fragment {
                         .show();
                 Toast.makeText(getActivity(), R.string.vegetarianButtonChange, Toast.LENGTH_SHORT)
                         .show();
-                if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, vegetarian));
+                if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, vegetarian));
             }
         });
         veganButton.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +134,7 @@ public class EcoFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.veganButtonInfo, Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), R.string.veganButtonChange, Toast.LENGTH_SHORT)
                         .show();
-                if(UserDietInfo.getInstance().getTotalAmountOfProtein() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, vegan));
+                if(UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) dietTextView.setText(dietComparer.getChangeReport(myDiet, vegan));
             }
         });
         return ecoView;

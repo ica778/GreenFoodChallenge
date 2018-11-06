@@ -25,4 +25,13 @@ public class UserDietInfo {
     public int getAmountOfProteinGrams(String typeOfProtein) {
         return amountOfProteinMap.get(typeOfProtein);
     }
+
+    // Returns sum of all proteins in grams
+    public int getTotalAmountOfProteinGrams() {
+        int sumOfAllProteinGrams = 0;
+        for (int amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
+            sumOfAllProteinGrams += (int)amountOfCurrentProteinGrams;
+        }
+        return sumOfAllProteinGrams;
+    }
 }
