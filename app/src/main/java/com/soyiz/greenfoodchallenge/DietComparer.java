@@ -50,20 +50,20 @@ public class DietComparer {
     // Compares the diets and produces a report.
     public String getChangeReport(Diet oldDiet, Diet newDiet) {
         String report = "Changes:\n\nBeef/Pork/Chicken/Fish/Egg/Beans/Vegetables\n" + (
-                newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet
+                (float) Math.round(newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet
                         .getProteinPercent(ProteinSource.Beef)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet
-                        .getProteinPercent(ProteinSource.Pork)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet
-                        .getProteinPercent(ProteinSource.Chicken)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet
-                        .getProteinPercent(ProteinSource.Fish)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet
-                        .getProteinPercent(ProteinSource.Eggs)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet
-                        .getProteinPercent(ProteinSource.Beans)) + "%/" +
-                (newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet
-                        .getProteinPercent(ProteinSource.Vegetables)) + "%/\n\n" +
+                        (float) Math.round((newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet
+                                .getProteinPercent(ProteinSource.Pork))) + "%/" +
+                        (float) Math.round((newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet
+                                .getProteinPercent(ProteinSource.Chicken)))) + "%/" +
+                (float) Math.round((newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet
+                        .getProteinPercent(ProteinSource.Fish))) + "%/" +
+                (float) Math.round((newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet
+                        .getProteinPercent(ProteinSource.Eggs))) + "%/" +
+                (float) Math.round((newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet
+                        .getProteinPercent(ProteinSource.Beans))) + "%/" +
+                (float) Math.round((newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet
+                        .getProteinPercent(ProteinSource.Vegetables))) + "%/\n\n" +
                 "You will save " + this.compareCO2ePercent(oldDiet, newDiet)
                 + "% CO2e which is about " +
                 this.compareCO2eKilos(oldDiet, newDiet) + "kg per year.";
@@ -72,6 +72,7 @@ public class DietComparer {
         }
         return report;
     }
+
 
     // Compares current C02e in diet and returns how it compares to average
     public static String getHowWellC02eComparesToAverage
