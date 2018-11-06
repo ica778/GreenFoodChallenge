@@ -98,6 +98,14 @@ class UserDietInfo {
     public void setAmountOfEgg(int valueToSet) {
         amountOfEgg = valueToSet;
     }
+
+    public int getTotalAmountOfProtein(){
+
+        return getAmountOfBeef() + getAmountOfChicken() +
+                getAmountOfPork() + getAmountOfFish() +
+                + getAmountOfBean() + getAmountOfVegetable() + getAmountOfEgg();
+
+    }
 }
 
 public class MainActivity extends AppCompatActivity {
