@@ -67,7 +67,10 @@
         \n\n\tLet\'s get saving!
     </string>
 
-    <string name="co2_100g_n">This diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
+
+    // Strings for EatingHabitsFragment
+    <string name="calculator_toast">Please enter at least one amount</string>
+    <string name="co2_100g_n">\nThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
         litres of gasoline. Think about how much gas you use to commute!
         \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
         \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
