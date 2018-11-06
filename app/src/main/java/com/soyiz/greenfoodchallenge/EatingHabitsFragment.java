@@ -154,8 +154,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                     mScrollView.smoothScrollBy(0, 10000);
                 }
             }.start();
-        }
-        else {
+        } else {
             Toast.makeText(getContext(), getResources().getString(R.string.calculator_toast), Toast.LENGTH_SHORT).show();
         }
     }

@@ -30,7 +30,7 @@ public class UserDietInfo {
     public int getTotalAmountOfProteinGrams() {
         int sumOfAllProteinGrams = 0;
         for (int amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
-            sumOfAllProteinGrams += (int)amountOfCurrentProteinGrams;
+            sumOfAllProteinGrams += (int) amountOfCurrentProteinGrams;
         }
         return sumOfAllProteinGrams;
     }
