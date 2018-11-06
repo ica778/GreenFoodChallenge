@@ -6,9 +6,59 @@
     tools:context=".PledgeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+        <TextView
+                android:text="List Of Pledges"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" android:id="@+id/textView14"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        <ScrollView
+                android:layout_width="295dp"
+                android:layout_height="204dp" android:id="@+id/listOfPledges">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@android:color/holo_green_light"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:text="TextView \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s \n s"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textView12"/>
+            </LinearLayout>
+        </ScrollView>
+        <TextView
+                android:text="Current Pledge:"
+                android:gravity="center"
+                android:layout_width="168dp"
+                android:layout_height="30dp" android:id="@+id/textView8"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        <TextView
+                android:text="TextView"
+                android:gravity="center"
+                android:layout_width="323dp"
+                android:layout_height="32dp" android:id="@+id/textViewCurrentPledge"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <Button
+                    android:text="Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/button5" android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="134dp"
+                    android:layout_height="wrap_content" android:id="@+id/textViewEmptySpace"
+                    android:layout_weight="1"/>
+            <Button
+                    android:text="Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/button6" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>
