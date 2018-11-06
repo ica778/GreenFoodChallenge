@@ -10,7 +10,6 @@ public class User {
     private Diet currentDiet = null;
     private Diet goalDiet = null;
     private Pledge currentPledge = null;
-    private int municipalityStringId = R.string.no_municipality;
 
     private FirebaseUser firebaseUser = null;
     private Map<String, Object> userDocument = null;
@@ -212,11 +211,8 @@ public class User {
         currentPledge = pledge;
     }
 
-    public int getMunicipalityStringId() {
-        return municipalityStringId;
+    public void removePledge() {
+        currentPledge = null;
     }
 
-    public void setMunicipalityStringId(int municipality) {
-        municipalityStringId = municipality;
-    }
 }
