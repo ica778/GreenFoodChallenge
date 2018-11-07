@@ -116,4 +116,10 @@
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
 
+    <string name="sign_in_btn_txt">Sign in</string>
+    <string name="sign_out_btn_txt">Sign out</string>
+    <string name="delete_user_btn_txt">Delete user</string>
+    <string name="sign_in_cancelled">Sign in cancelled.</string>
+    <string name="no_internet_connection">No internet connection</string>
+
 </resources>
