@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        //To set a picture on the login page
+                        //.setLogo(R.drawable.)
                         .build(),
                 RC_SIGN_IN);
     }
@@ -63,39 +65,22 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 startActivity(new Intent (this, MainActivity.class));
-                return;
             } else {
                 if (response == null) {
                     // User canceled sign in
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.sign_in_cancelled)
                             , Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent (this, MainActivity.class));
                     return;
                 }
                 if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_connection)
-                            ,Toast.LENGTH_SHORT);
+                            ,Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    return;
                 }
             }
         }
-    }
-
-    //to customize theme and logo
-    public void themeAndLogo() {
-        List<AuthUI.IdpConfig> providers = Collections.emptyList();
-
-        // [START auth_fui_theme_logo]
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                       // .setLogo(R.drawable.my_great_logo)      // Set logo drawable
-                       // .setTheme(R.style.MySuperAppTheme)      // Set theme
-                        .build(),
-                RC_SIGN_IN);
-        // [END auth_fui_theme_logo]
     }
 }
