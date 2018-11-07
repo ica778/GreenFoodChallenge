@@ -63,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.bottom_nav);
         disableShiftMode(bottomNavigationView);
 
-        /* To be uncommented out after bug fix, will open to log in page when app opens
-            and not logged in
+        /* TODO be uncommented out after bug fix, will open to log in page when app opens if that is what we want
         FirebaseUser currentUser =
                 FirebaseAuth.getInstance().getCurrentUser();
 

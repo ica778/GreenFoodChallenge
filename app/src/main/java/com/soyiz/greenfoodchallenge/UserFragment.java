@@ -44,10 +44,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_btn) {
+            //However sign in is implemented, just put this line when called and it should take care of the rest
             getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+            ////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         if (view.getId() == R.id.sign_out_btn) {
+            //However sign out is implemented, just put these lines when called and it should take care of the rest
             AuthUI.getInstance()
                     .signOut(getActivity())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -57,9 +60,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                             getActivity().finish();
                         }
                     });
+            /////////////////////////////////////////////////////////////////////////////////////
         }
 
         if (view.getId() == R.id.delete_user_btn) {
+            //However delete user is implemented, just put these lines when called and it should take care of the rest
             AuthUI.getInstance()
                     .delete(getActivity())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -71,6 +76,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                             getActivity().finish();
                         }
                     });
+            ///////////////////////////////////////////////////////////////////////////////////////
         }
     }
 }

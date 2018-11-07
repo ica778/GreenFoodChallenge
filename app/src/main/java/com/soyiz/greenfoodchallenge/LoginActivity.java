@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this layout can be empty, FirebaseUI takes care of it
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
 
@@ -36,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             createSignInIntent();
         }
-       //createSignInIntent();
     }
 
     public void createSignInIntent() {
