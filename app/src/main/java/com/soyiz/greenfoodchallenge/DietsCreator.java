@@ -11,8 +11,7 @@ public class DietsCreator {
     private float userDietBeans;
     private float userDietVegetables;
 
-
-    public DietsCreator() {}
+    DietsCreator() {}
 
     // Sets the base diet to work with
     public void setUserDiet(Diet diet) {
@@ -39,17 +38,17 @@ public class DietsCreator {
         Diet meatEaterDiet = new Diet();
 
         // Give 25% of user beef proportions to final beef proportions
-        float beefInDiet = (float) Math.ceil(userDietBeef*1/4);
+        float beefInDiet = (float) Math.ceil(userDietBeef * 1 / 4);
 
         /* Leftover of user beef proportions added with user pork proportions
          * Give 50% of these proportions to final pork proportions */
         float tempPork = userDietBeef - beefInDiet + userDietPork;
-        float porkInDiet = (float) Math.ceil(tempPork*1/2);
+        float porkInDiet = (float) Math.ceil(tempPork * 1 / 2);
 
         /* Leftover of previous proportions added with user chicken proportions
          * Give 75% of these proportions to final chicken proportions */
         float tempChicken = tempPork - porkInDiet + userDietChicken;
-        float chickenInDiet = (float) Math.ceil(tempChicken*3/4);
+        float chickenInDiet = (float) Math.ceil(tempChicken * 3 / 4);
 
         /* Add leftover of previous proportions with user fish proportions
          * Give these proportions to final fish proportions */
@@ -64,7 +63,6 @@ public class DietsCreator {
         meatEaterDiet.setProteinPercent(ProteinSource.Eggs, userDietEggs);
         meatEaterDiet.setProteinPercent(ProteinSource.Beans, userDietBeans);
         meatEaterDiet.setProteinPercent(ProteinSource.Vegetables, userDietVegetables);
-
         return meatEaterDiet;
     }
 
@@ -82,36 +80,41 @@ public class DietsCreator {
         /* Add user beef proportions with user pork proportions
          * Give 25% of these proportions to final pork proportions */
         float tempPork = userDietBeef + userDietPork;
-        float porkInDiet = (float) Math.ceil(tempPork*1/4);
+        float porkInDiet = (float) Math.ceil(tempPork * 1 / 4);
 
-        /*Add user chicken proportions with leftover proportions
+        /* Add user chicken proportions with leftover proportions
          * Give 50% of these proportions to final chicken proportions
          * Give remaining 50% as leftovers(1) to be split among final fish and egg proportions*/
         float tempChicken = tempPork - porkInDiet + userDietChicken;
-        float chickenInDiet = (float) Math.ceil(tempChicken*1/2);
+        float chickenInDiet = (float) Math.ceil(tempChicken * 1 / 2);
         float proportionLeavingChicken = tempChicken - chickenInDiet;
 
         /* Add user fish proportions with 25% of leftovers(1)
          * Give 75% of these proportions to final fish proportions
          * Remaining 25% is leftovers(2) to be split among final beans and vegetable proportions */
-        float tempFish = (float) Math.ceil(proportionLeavingChicken*1/4) + userDietFish;
-        float fishInDiet = (float) Math.ceil(tempFish*3/4);
+        float tempFish = (float) Math.ceil(proportionLeavingChicken * 1 / 4) + userDietFish;
+        float fishInDiet = (float) Math.ceil(tempFish * 3 / 4);
         float proportionLeavingFish = tempFish - fishInDiet;
 
-        /*Add user egg proportions with the remaining 75% of leftovers(1)
+        /* Add user egg proportions with the remaining 75% of leftovers(1)
          * Give 75% of these proportions to final eggs proportions
          * Give remaining 25% as leftovers(3) to be split among final beans and vegetable proportions*/
-        float tempEggs = proportionLeavingChicken - (float) Math.ceil(proportionLeavingChicken*1/4) + userDietEggs;
-        float eggsInDiet = (float) Math.ceil(tempEggs*3/4);
+        float tempEggs =
+                proportionLeavingChicken - (float) Math.ceil(proportionLeavingChicken * 1 / 4)
+                        + userDietEggs;
+        float eggsInDiet = (float) Math.ceil(tempEggs * 3 / 4);
         float proportionLeavingEggs = tempEggs - eggsInDiet;
 
         /* Take 50% of leftovers(2) and (3) and add it with user bean proportions summing to
          * final bean proportions
          * Add remaining 50% of leftovers (2) and (3) with user vegetable proportions summing
          * to final vegetable proportions */
-        float beansInDiet = (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish)*1/2) + userDietBeans;
+        float beansInDiet =
+                (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2)
+                        + userDietBeans;
         float vegetablesInDiet = proportionLeavingEggs + proportionLeavingFish
-                - (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish)*1/2) + userDietVegetables;
+                - (float) Math.ceil((proportionLeavingEggs + proportionLeavingFish) * 1 / 2)
+                + userDietVegetables;
 
         // Set final proportions
         lowMeatDiet.setProteinPercent(ProteinSource.Beef, beefInDiet);
@@ -121,12 +124,12 @@ public class DietsCreator {
         lowMeatDiet.setProteinPercent(ProteinSource.Eggs, eggsInDiet);
         lowMeatDiet.setProteinPercent(ProteinSource.Beans, beansInDiet);
         lowMeatDiet.setProteinPercent(ProteinSource.Vegetables, vegetablesInDiet);
-
         return lowMeatDiet;
     }
 
     // Create diet with lower overall meat and fish being only meat
     public Diet createOnlyFishDiet() {
+
         /* 100% of all meat but fish get split
          * (40/25/25/10) fish, eggs, beans, and veg */
         Diet onlyFishDiet = new Diet();
@@ -136,18 +139,17 @@ public class DietsCreator {
 
         /* Make the fish share 40% of total extra proportions
          * Subtract fish share from the extra proportions */
-        float fishShare = (float) Math.ceil(proportionToSplit*2/5);
+        float fishShare = (float) Math.ceil(proportionToSplit * 2 / 5);
         proportionToSplit = proportionToSplit - fishShare;
 
         /* Make the egg share 25/60 of remaining 60% of extra proportions
          * Subtract egg share from the extra proportions */
-        float eggsShare = (float) Math.ceil(proportionToSplit*5/12);
+        float eggsShare = (float) Math.ceil(proportionToSplit * 5 / 12);
         proportionToSplit = proportionToSplit - eggsShare;
 
-        /* Make beans share also 25/60 of the previous 60% of extra proportions
+        /* Make beans share the same as eggsshare
          * Subtract beans share from the extra proportions */
-        float beansShare = eggsShare;
-        proportionToSplit = proportionToSplit - beansShare;
+        proportionToSplit = proportionToSplit - eggsShare;
 
         // Make vegetable share the remaining extra proportions
         float vegetableShare = proportionToSplit;
@@ -156,17 +158,19 @@ public class DietsCreator {
         onlyFishDiet.setProteinPercent(ProteinSource.Beef, 0);
         onlyFishDiet.setProteinPercent(ProteinSource.Pork, 0);
         onlyFishDiet.setProteinPercent(ProteinSource.Chicken, 0);
+
         // Set final proportions to the sum of their respective extra proportion shares and user proportions
         onlyFishDiet.setProteinPercent(ProteinSource.Fish, fishShare + userDietFish);
         onlyFishDiet.setProteinPercent(ProteinSource.Eggs, eggsShare + userDietEggs);
-        onlyFishDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
-        onlyFishDiet.setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
-
+        onlyFishDiet.setProteinPercent(ProteinSource.Beans, eggsShare + userDietBeans);
+        onlyFishDiet
+                .setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
         return onlyFishDiet;
     }
 
     // Creates diet with no meat
     public Diet createVegetarianDiet() {
+
         /* 100% of all beef, pork, chicken, and fish
          * gets split (40/40/20) with eggs, beans and veg */
         Diet vegetarianDiet = new Diet();
@@ -176,12 +180,12 @@ public class DietsCreator {
 
         /* Make the eggs share 40% of total extra proportions
          * Subtract the eggs share from the extra proportions */
-        float eggsShare = (float) Math.ceil(proportionToSplit*2/5);
+        float eggsShare = (float) Math.ceil(proportionToSplit * 2 / 5);
         proportionToSplit = proportionToSplit - eggsShare;
 
         /* Make the beans share 40/60 of the remaining 60% of extra proportions
          * Subtract beans share from extra proportions */
-        float beansShare = (float) Math.ceil(proportionToSplit*2/3);
+        float beansShare = (float) Math.ceil(proportionToSplit * 2 / 3);
         proportionToSplit = proportionToSplit - beansShare;
 
         //Make vegetable share the remaining extra proportions
@@ -192,16 +196,19 @@ public class DietsCreator {
         vegetarianDiet.setProteinPercent(ProteinSource.Pork, 0);
         vegetarianDiet.setProteinPercent(ProteinSource.Chicken, 0);
         vegetarianDiet.setProteinPercent(ProteinSource.Fish, 0);
+
         // Set final proportions to the sum of their respective extra proportion shares and user proportions
         vegetarianDiet.setProteinPercent(ProteinSource.Eggs, eggsShare + userDietEggs);
         vegetarianDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
-        vegetarianDiet.setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
+        vegetarianDiet
+                .setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
 
         return vegetarianDiet;
     }
 
     // Creates diet with no meat or eggs
     public Diet createVeganDiet() {
+
         /* 100% of all meats and eggs gets split
          * (80/20) with beans and veg */
         Diet veganDiet = new Diet();
@@ -211,7 +218,7 @@ public class DietsCreator {
                 + userDietEggs;
 
         // Make beans share 80% of extra proportions
-        float beansShare = (float) Math.ceil(proportionToSplit*4/5);
+        float beansShare = (float) Math.ceil(proportionToSplit * 4 / 5);
 
         // Make vegetable share the remaining 20% of extra proportions
         float vegetableShare = proportionToSplit - beansShare;
@@ -222,11 +229,10 @@ public class DietsCreator {
         veganDiet.setProteinPercent(ProteinSource.Chicken, 0);
         veganDiet.setProteinPercent(ProteinSource.Fish, 0);
         veganDiet.setProteinPercent(ProteinSource.Eggs, 0);
+
         // Set final proportions to the sum of their respective extra proportion shares and user proportions
         veganDiet.setProteinPercent(ProteinSource.Beans, beansShare + userDietBeans);
         veganDiet.setProteinPercent(ProteinSource.Vegetables, vegetableShare + userDietVegetables);
-
         return veganDiet;
     }
-
 }

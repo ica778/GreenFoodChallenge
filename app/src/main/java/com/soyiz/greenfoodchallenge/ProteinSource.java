@@ -3,8 +3,7 @@ package com.soyiz.greenfoodchallenge;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ProteinSource
-{
+public enum ProteinSource {
     Beef,
     Pork,
     Chicken,
@@ -12,10 +11,9 @@ public enum ProteinSource
     Eggs,
     Beans,
     Vegetables;
-
     private static final Map<ProteinSource, Float> proteinC02eMap;
-    static
-    {
+
+    static {
         proteinC02eMap = new HashMap<>();
         proteinC02eMap.put(ProteinSource.Beef, 27f);
         proteinC02eMap.put(ProteinSource.Pork, 12.1f);
@@ -26,13 +24,50 @@ public enum ProteinSource
         proteinC02eMap.put(ProteinSource.Vegetables, 2f);
     }
 
-    public float getCO2e()
+    // Converts a string input to the enum equivalent
+    // Can't use a switch statement because they only work on constant expressions :(
+    public static ProteinSource stringToEnumValue(String input)
     {
+        if (input.equals(Beef.toString()))
+        {
+            return Beef;
+        }
+        else if (input.equals(Pork.toString()))
+        {
+            return Pork;
+        }
+        else if (input.equals(Chicken.toString()))
+        {
+            return Chicken;
+        }
+        else if (input.equals(Fish.toString()))
+        {
+            return Fish;
+        }
+        else if (input.equals(Eggs.toString()))
+        {
+            return Eggs;
+        }
+        else if (input.equals(Beans.toString()))
+        {
+            return Beans;
+        }
+        else if (input.equals(Vegetables.toString()))
+        {
+            return Vegetables;
+        }
+        else
+        {
+            // Literally can't happen, unless we give it bad input
+            return null;
+        }
+    }
+
+    public float getCO2e() {
         return proteinC02eMap.get(this);
     }
 
-    public static float getDailyServing()
-    {
+    public static float getDailyServing() {
         return 187.5f;
     }
 }

@@ -14,7 +14,7 @@ public class DietComparerTest {
     private Diet newer = new Diet();
 
     public void setOlder() {
-        older.setProteinPercent(ProteinSource.Beef,35);
+        older.setProteinPercent(ProteinSource.Beef, 35);
         older.setProteinPercent(ProteinSource.Pork, 10);
         older.setProteinPercent(ProteinSource.Chicken, 35);
         older.setProteinPercent(ProteinSource.Fish, 10);
@@ -38,9 +38,10 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2ePercent(older,newer);
+        float CO2e = comparer.compareCO2ePercent(older, newer);
         float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
-        float expected = (float)Math.round(100*difference/older.getYearlyCO2e());
+        float expected = (float) Math.round(100 * difference / older.getYearlyCO2e());
+
         // Assert CO2e saved is calculated correctly ((older-newer)/older*100)
         assertEquals(expected, CO2e, 0);
     }
@@ -50,10 +51,11 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2eKilos(older,newer);
+        float CO2e = comparer.compareCO2eKilos(older, newer);
         float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+
         // Assert CO2e saved is calculated correctly (older diet - newer diet)
-        assertEquals((float)Math.round(difference), CO2e, 0);
+        assertEquals((float) Math.round(difference), CO2e, 0);
     }
 
     @Test
@@ -63,7 +65,8 @@ public class DietComparerTest {
         setOlder();
         float CO2eVancouver = comparer.getCO2eSavedInVancouver(older, newer);
         float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
-        float expected = (float)Math.round(22.167f*difference);
+        float expected = (float) Math.round(22.167f * difference);
+
         /* Assert CO2e saved in Vancouver is correct (~22.167 million non vegetarians
          * who can change to new diet) */
         assertEquals(expected, CO2eVancouver, 0);
@@ -76,19 +79,51 @@ public class DietComparerTest {
         setOlder();
         float litresOfGasoline = comparer.getEquivalentLitresOfGasoline(older, newer);
         float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
-        float expected = (float)Math.round(difference/2.31f);
+        float expected = (float) Math.round(difference / 2.31f);
+
         // Assert proper amount of equivalent gas (2.31 kg of CO2 per L of gas burned)
         assertEquals(expected, litresOfGasoline, 0);
     }
 
     @Test
+    public void testGetChangeReport() {
+        DietComparer comparer = new DietComparer();
+        Diet dietTestOne = new Diet();
+        Diet dietTestTwo = new Diet();
+        Diet dietTestThree = new Diet();
+        dietTestOne.setProteinPercent(ProteinSource.Beef, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Pork, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Chicken, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Fish, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Eggs, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Beans, 0);
+        dietTestOne.setProteinPercent(ProteinSource.Vegetables, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Beef, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Pork, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Chicken, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Fish, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Eggs, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Beans, 0);
+        dietTestTwo.setProteinPercent(ProteinSource.Vegetables, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Beef, 1);
+        dietTestThree.setProteinPercent(ProteinSource.Pork, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Chicken, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Fish, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Eggs, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Beans, 0);
+        dietTestThree.setProteinPercent(ProteinSource.Vegetables, 0);
+        assertEquals("Original diet is good enough!", comparer.getChangeReport(dietTestOne, dietTestTwo));
+        assertNotEquals("Original diet is good enough!", comparer.getChangeReport(dietTestTwo, dietTestThree));
+    }
+
+    @Test
     public void testGetHowWellUserComparesToRegion() {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "Much better than regional average",
-                "Better than regional average",
-                "Average",
-                "Worse than average",
-                "Much worse than average"
+                "much less C02e",
+                "less C02e",
+                "about the same C02e",
+                "more C02e",
+                "much more C02e"
         ));
         DietComparer comparer = new DietComparer();
         float averageC02eInDietForArea = 1000f;
@@ -98,23 +133,28 @@ public class DietComparerTest {
              amountOfC02eToTest = amountOfC02eToTest + 0.1f) {
             if (amountOfC02eToTest <= averageC02eInDietForArea * 0.75) {
                 actualAnswer = 0;
-            }
-            else if (amountOfC02eToTest <= averageC02eInDietForArea * 0.9) {
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 0.9) {
                 actualAnswer = 1;
-            }
-            else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.1) {
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.1) {
                 actualAnswer = 2;
-            }
-            else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.25) {
+            } else if (amountOfC02eToTest <= averageC02eInDietForArea * 1.25) {
                 actualAnswer = 3;
-            }
-            else {
+            } else {
                 actualAnswer = 4;
             }
-            assertEquals
-                (comparer.getHowWellUserComparesToRegion(amountOfC02eToTest, averageC02eInDietForArea)
-                , howWellDietC02eCompares.get(actualAnswer));
+            assertEquals(DietComparer
+                            .getHowWellC02eComparesToAverage(amountOfC02eToTest, averageC02eInDietForArea)
+                    , howWellDietC02eCompares.get(actualAnswer));
+        }
+    }
 
+    @Test
+    public void testGetLitresOfGasolineEquivalentToDietC02e() {
+        DietComparer comparer = new DietComparer();
+        float expectedTestOutput;
+        for (int amountOfC02eToTest = 0; amountOfC02eToTest < 1000; amountOfC02eToTest++) {
+            expectedTestOutput = amountOfC02eToTest / 2.3f;
+            assertEquals(expectedTestOutput, comparer.getLitresOfGasolineEquivalentToDietC02e(amountOfC02eToTest), 0.1);
         }
     }
 }

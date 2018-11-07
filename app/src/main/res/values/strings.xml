@@ -1,33 +1,46 @@
 <resources>
+
     <string name="app_name">GreenFoodChallenge</string>
-    <string name="eating_habits_name">Eating Habits</string>
-    <string name="eco_name">Eco</string>
+    <string name="eating_habits_name">Diet</string>
+    <string name="eco_name">Eco Eating</string>
+    <string name="user_name">User</string>
+    <string name="pledge_name">Pledge</string>
+
+
     //Strings for Eco
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
     <string name="onlyFish">Only Fish</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
-    <string name="BetterPercentage">Better CO2e than current Diet </string>
+    <string name="BetterPercentage">Better CO2e than current Diet</string>
     <string name="dietInfo">Please enter your diet in Eating Habits Page.\nAfter that, You
-    can chose the diets above.</string>
-    <string name="highMeatButtonInfo"> Diet with same overall meat proportions, but different proportions of each meat type.</string>
+        can chose the diets above.
+    </string>
+    <string name="highMeatButtonInfo">Diet with same overall meat proportions, but different proportions of each meat
+        type.
+    </string>
     <string name="highMeatButtonChange">75% of beef proportions to pork\n50% of new pork proportions to chicken
-         \n25% of new chicken proportions to fish.</string>
-    <string name="lowMeatButtonInfo"> Diet with lowered proportions of overall meat.</string>
+        \n25% of new chicken proportions to fish.
+    </string>
+    <string name="lowMeatButtonInfo">Diet with lowered proportions of overall meat.</string>
     <string name="lowMeatButtonChange">100% of beef proportions moved to pork
-         \n75% of new pork proportions moved to chicken
-         \n50% of new chicken proportions moved to fish and eggs (25/75)
-         \n25% of each of new fish and eggs proportions go to beans and veg (50/50).</string>
-    <string name="onlyFishButtonInfo"> Diet with lower overall meat and fish being only meat.</string>
+        \n75% of new pork proportions moved to chicken
+        \n50% of new chicken proportions moved to fish and eggs (25/75)
+        \n25% of each of new fish and eggs proportions go to beans and veg (50/50).
+    </string>
+    <string name="onlyFishButtonInfo">Diet with lower overall meat and fish being only meat.</string>
     <string name="onlyFishButtonChange">100% of all meat but fish get split\n
-         \n(40/25/25/10) fish, eggs, beans, and veg.</string>
+        \n(40/25/25/10) fish, eggs, beans, and veg.
+    </string>
     <string name="vegetarianButtonInfo">Diet with no meat.</string>
     <string name="vegetarianButtonChange">100% of all beef, pork, chicken, and fish
-         gets split \n(40/40/20) with eggs, beans and veg.</string>
-    <string name="veganButtonInfo"> Diet with no meat or eggs.</string>
+        gets split \n(40/40/20) with eggs, beans and veg.
+    </string>
+    <string name="veganButtonInfo">Diet with no meat or eggs.</string>
     <string name="veganButtonChange">100% of all meats and eggs gets split
-         \n(80/20) with beans and veg.</string>
+        \n(80/20) with beans and veg.
+    </string>
 
     <string name="info_name">About</string>
     <string name="info">\tThe reason we made this app is to help people
@@ -39,19 +52,74 @@
         many CO2e contributors. Most people are aware of contributors such as
         burning fuel and natural gas, but it comes as a surprise to many that
         food production and transportation (livestock in particular) accounts
-        for 20% of a person\'s greenhouse gas emissions!
+        for 20%% of a person\'s greenhouse gas emissions!
         \n\n\tWhat Can We Do?
         \n\n\tWe can be more aware of what we eat and change our diets to reduce greenhouse
         gas emissions, and it does not even have to be an extreme dietary change. If people
         in the Metro Vancouver area reduced their beef/lamb consumption by 20% and replaced
-        it with chicken, Vancouver could save up to 1 million tonnes of CO2e per year!
+        it with chicken, we could save up to 1 million tonnes of CO2e per year!
         \n\n\tWhere Does the Green Food Challenge Come In?
         \n\n\tThe Green Food Challenge aims to reduce our individual and collective carbon
         footprints by raising awareness and making it easy for users to adopt more
         environmentally friendly, lower carbon diets. Simply enter an estimate of how much
         meat and alternatives you eat and the app will make new, eco-friendly diets for you
         to choose from. It\'s that easy, so what are you waiting for?
-        \n\n\tLet\'s get saving!</string>
+        \n\n\tLet\'s get saving!
+    </string>
 
-    <string name="co2_100g_n">%1$s kg/year CO2e\n %2$s regional average.</string>
+
+    // Strings for EatingHabitsFragment
+    <string name="calculator_toast">Please enter at least one amount</string>
+    <string name="co2_100g_n">\nThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
+        litres of gasoline. Think about how much gas you use to commute!
+        \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
+        \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
+        which is %6$s than the current %7$d tonnes.
+        \n\nAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can affect
+        these numbers.
+    </string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //Municipalities
+    <string name="no_municipality">No municipality chosen</string>
+    <string name="anmore">Anmore</string>
+    <string name="belcarra">Belcarra</string>
+    <string name="bowen_island">Bowen Island</string>
+    <string name="burnaby">Burnaby</string>
+    <string name="coquitlam">Coquitlam</string>
+    <string name="delta">Delta</string>
+    <string name="langley">Langley</string>
+    <string name="lions_bay">Lions Bay</string>
+    <string name="maple_ridge">Maple Ridge</string>
+    <string name="new_westminster">New Westminster</string>
+    <string name="north_vancouver">North Vancouver</string>
+    <string name="pitt_meadows">Pitt Meadows</string>
+    <string name="port_coquitlam">Port Coquitlam</string>
+    <string name="port_moody">Port Moody</string>
+    <string name="richmond">Richmond</string>
+    <string name="surrey">Surrey</string>
+    <string name="university_endowment_lands">University Endowment Lands</string>
+    <string name="vancouver">Vancouver</string>
+    <string name="west_vancouver">West Vancouver</string>
+    <string name="white_rock">White Rock</string>
+
+    //No user name
+    <string name="no_user_name">No name given</string>
+
+    <string name="facebook_application_id" translatable="false">254721118525412</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb254721118525412</string>
+
+    <!-- TODO: add consumer key and secret when available -->
+    <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
+    <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+
+    <string name="sign_in_btn_txt">Sign in</string>
+    <string name="sign_out_btn_txt">Sign out</string>
+    <string name="delete_user_btn_txt">Delete user</string>
+    <string name="sign_in_cancelled">Sign in cancelled.</string>
+    <string name="no_internet_connection">No internet connection</string>
+
 </resources>

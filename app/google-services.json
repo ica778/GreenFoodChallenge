@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "676494696812",
+    "firebase_url": "https://greenfoodchallenge-soyiz.firebaseio.com",
+    "project_id": "greenfoodchallenge-soyiz",
+    "storage_bucket": "greenfoodchallenge-soyiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676494696812:android:fa63193a598b4346",
+        "android_client_info": {
+          "package_name": "com.soyiz.greenfoodchallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676494696812-pj7niducrp8qrdp36pi22d7ilao9ubua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soyiz.greenfoodchallenge",
+            "certificate_hash": "38536605ffa9cb793a2a697023c93ffdfc7e4460"
+          }
+        },
+        {
+          "client_id": "676494696812-2e6bv1shrc1fnmtbmq0eso89iopi2b1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKAkNIulnPFkOacWAMWKu2XkxhW9PvFqU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676494696812-2e6bv1shrc1fnmtbmq0eso89iopi2b1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
