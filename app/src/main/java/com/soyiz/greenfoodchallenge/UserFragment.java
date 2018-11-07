@@ -44,7 +44,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_btn) {
-            getActivity().startActivity(new Intent(getActivity(), SignInActivity.class));
+            getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
         }
 
         if (view.getId() == R.id.sign_out_btn) {
@@ -53,7 +53,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
                             // user is now signed out
-                            startActivity(new Intent(getActivity(), SignInActivity.class));
+                            startActivity(new Intent(getActivity(), LoginActivity.class));
                             getActivity().finish();
                         }
                     });
@@ -67,7 +67,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         public void onComplete(@NonNull Task<Void> task) {
                             // ...
                             startActivity(new Intent(getActivity(),
-                                    SignInActivity.class));
+                                    LoginActivity.class));
                             getActivity().finish();
                         }
                     });

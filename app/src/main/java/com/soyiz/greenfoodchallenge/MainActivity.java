@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
-        }
-        */
+        }*/
+
 
         fragmentManager = getSupportFragmentManager();
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);

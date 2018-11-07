@@ -19,7 +19,7 @@ import java.util.List;
 
 import static java.security.AccessController.getContext;
 
-public class SignInActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 111;
     private FirebaseAuth auth;
@@ -36,6 +36,7 @@ public class SignInActivity extends AppCompatActivity {
         } else {
             createSignInIntent();
         }
+       //createSignInIntent();
     }
 
     public void createSignInIntent() {
