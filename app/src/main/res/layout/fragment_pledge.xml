@@ -12,6 +12,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal">
+        <Spinner
+                android:layout_width="232dp"
+                android:layout_height="wrap_content" android:id="@+id/selectRegionSpinner"/>
         <TextView
                 android:text="List Of Pledges"
                 android:gravity="center"
@@ -20,7 +23,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
         <ScrollView
                 android:layout_width="295dp"
-                android:background="@drawable/customborder"
+                android:background="@drawable/custom_border"
                 android:layout_height="204dp" android:id="@+id/listOfPledges">
             <LinearLayout
                     android:orientation="vertical"
@@ -28,7 +31,11 @@
                     android:layout_height="wrap_content">
                 <ListView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/pledgeListView"/>
+                        android:layout_height="wrap_content" android:id="@+id/listView"/>
+                <TextView
+                        android:text="asdadsada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/textView5"/>
             </LinearLayout>
         </ScrollView>
         <android.support.design.widget.TextInputLayout
@@ -37,13 +44,12 @@
                 android:gravity="center_horizontal">
 
         </android.support.design.widget.TextInputLayout>
-        <EditText
-                android:layout_width="295dp"
-                android:layout_height="wrap_content"
+        <TextView
+                android:hint="Select A Pledge"
                 android:gravity="center"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editText2" android:hint="Select A Pledge"/>
+                android:layout_width="295dp"
+                android:layout_height="wrap_content" android:id="@+id/textView4"
+                android:textAppearance="@android:style/TextAppearance.Material.SearchResult.Title"/>
         <Button
                 android:text="View"
                 android:layout_width="wrap_content"
