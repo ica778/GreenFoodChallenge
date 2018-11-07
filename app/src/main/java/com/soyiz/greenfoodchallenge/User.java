@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Map;
 
-public class User {
+public class   User {
 
     private Diet currentDiet = null;
     private Diet goalDiet = null;
