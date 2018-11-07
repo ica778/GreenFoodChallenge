@@ -20,4 +20,8 @@ public class PledgeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_pledge, container, false);
     }
 
+    private void listOfPledges() {
+
+    }
+
 }
