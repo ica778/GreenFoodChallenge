@@ -1,6 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Field;
 
@@ -59,6 +62,17 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(
                 R.id.bottom_nav);
         disableShiftMode(bottomNavigationView);
+
+        /* TODO be uncommented out after bug fix, will open to log in page when app opens if that is what we want
+        FirebaseUser currentUser =
+                FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }*/
+
 
         fragmentManager = getSupportFragmentManager();
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
