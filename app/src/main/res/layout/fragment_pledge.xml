@@ -44,12 +44,12 @@
         <TextView
                 android:hint="Select A Pledge"
                 android:gravity="center"
-                android:layout_width="295dp"
+                android:layout_width="365dp"
                 android:layout_height="wrap_content" android:id="@+id/showMunicipality"
-                android:textAppearance="@android:style/TextAppearance.Material.SearchResult.Title"/>
-        <Button
-                android:text="View"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/button2"/>
+                android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content" android:id="@+id/textViewShowInformationAboutPledge"/>
     </LinearLayout>
 </FrameLayout>
