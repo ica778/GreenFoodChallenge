@@ -52,10 +52,10 @@ public class DietComparer {
         String report = "Changes:\n\nBeef/Pork/Chicken/Fish/Egg/Beans/Vegetables\n" + (
                 (float) Math.round(newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet
                         .getProteinPercent(ProteinSource.Beef)) + "%/" +
-                        (float) Math.round((newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet
-                                .getProteinPercent(ProteinSource.Pork))) + "%/" +
-                        (float) Math.round((newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet
-                                .getProteinPercent(ProteinSource.Chicken)))) + "%/" +
+                (float) Math.round((newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet
+                        .getProteinPercent(ProteinSource.Pork))) + "%/" +
+               (float) Math.round((newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet
+                       .getProteinPercent(ProteinSource.Chicken)))) + "%/" +
                 (float) Math.round((newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet
                         .getProteinPercent(ProteinSource.Fish))) + "%/" +
                 (float) Math.round((newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet
@@ -63,10 +63,13 @@ public class DietComparer {
                 (float) Math.round((newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet
                         .getProteinPercent(ProteinSource.Beans))) + "%/" +
                 (float) Math.round((newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet
-                        .getProteinPercent(ProteinSource.Vegetables))) + "%/\n\n" +
+                        .getProteinPercent(ProteinSource.Vegetables))) + "%\n\n" +
                 "You will save " + this.compareCO2ePercent(oldDiet, newDiet)
-                + "% CO2e which is about " +
-                this.compareCO2eKilos(oldDiet, newDiet) + "kg per year.";
+                         + "% CO2e which is about " +
+                this.compareCO2eKilos(oldDiet, newDiet) + "kg per year" +"(CO2 of  "
+                + getEquivalentLitresOfGasoline(oldDiet, newDiet) +"L gas)."
+                + " If everyone in Vancouver made the same changes, "
+                + "the city will save " + getCO2eSavedInVancouver(oldDiet,newDiet) +" millions kg CO2e.";
         if (this.compareCO2ePercent(oldDiet, newDiet) == 0) {
             return "Original diet is good enough!";
         }
