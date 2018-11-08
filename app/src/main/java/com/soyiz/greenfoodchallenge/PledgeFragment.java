@@ -36,7 +36,6 @@ public class PledgeFragment extends Fragment {
 
         initView(view);
         spinnerActions(view);
-        populateListView();
         return view;
     }
 
@@ -62,8 +61,7 @@ public class PledgeFragment extends Fragment {
                 //listOfPledgesToShow.add((String) userPledgeInformation.get("FIRST_NAME"));
 
                 // Updates scrollview to show correct pledges
-                listOfPledgesToShow.add("s");
-                populateListView();
+                populateListView(parent.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -77,12 +75,24 @@ public class PledgeFragment extends Fragment {
         showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
     }
 
-    // Put pledges on ListView
-    private void populateListView() {
+    // updates listOfPledgesToShow list to have correct pledges
+    private void populateListView(String municipalityPicked) {
+        if (municipalityPicked.equals("No municipality chosen")) {
+            listOfPledgesToShow.clear();
+        }
+        else if (municipalityPicked.equals("Metro Vancouver")) {
+            // show all pledges if this condition true
+            //listOfPledgesToShow.clear();
+
+        }
+        else {
+            //listOfPledgesToShow.clear();
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
                 listOfPledgesToShow);
+        listOfPledgesToShow.add(municipalityPicked);
         pledgeListView.setAdapter(adapter);
         registerClickCallBackListView();
     }
