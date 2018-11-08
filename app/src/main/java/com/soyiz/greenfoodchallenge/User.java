@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Map;
 
-public class   User {
+public class User {
 
     private Diet currentDiet = null;
     private Diet goalDiet = null;
@@ -14,6 +14,9 @@ public class   User {
     private FirebaseUser firebaseUser = null;
     private Map<String, Object> userDocument = null;
 
+    public User() {
+    }
+
     public User(Diet current, Diet goal, Pledge pledge) {
         currentDiet = current;
         goalDiet = goal;
@@ -21,15 +24,13 @@ public class   User {
     }
 
     // In addition to simply returning the user document, it'll fully update it with diet
-    public Map<String, Object> getUserDocument()
-    {
+    public Map<String, Object> getUserDocument() {
         userDocument.put(FirestoreHelper.DIET, currentDiet.exportToStringMap());
         return userDocument;
     }
 
-    public void setUserDocument(Map<String, Object> document)
-    {
-        currentDiet.loadFromStringMap((Map<String, Float>)document.get(FirestoreHelper.DIET));
+    public void setUserDocument(Map<String, Object> document) {
+        currentDiet.loadFromStringMap((Map<String, Float>) document.get(FirestoreHelper.DIET));
 
         // Doing this since we don't want to mess with the raw map and expect useful side effects
         document.remove(FirestoreHelper.DIET);
@@ -43,18 +44,15 @@ public class   User {
 //        }
     }
 
-    public void setPledgeDocument(Map<String, Object> document)
-    {
+    public void setPledgeDocument(Map<String, Object> document) {
         currentPledge.loadFromStringMap(document);
     }
 
-    public FirebaseUser getFirebaseUser()
-    {
+    public FirebaseUser getFirebaseUser() {
         return firebaseUser;
     }
 
-    public void setFirebaseUser(FirebaseUser user)
-    {
+    public void setFirebaseUser(FirebaseUser user) {
         firebaseUser = user;
     }
 
@@ -64,126 +62,102 @@ public class   User {
     // Otherwise, I'd do a public map (albeit with a wrapper of some sort).
 
     // region userDocument getters/setters
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return (String) userDocument.get(FirestoreHelper.FIRST_NAME);
     }
 
-    public void setFirstName(String name)
-    {
+    public void setFirstName(String name) {
         userDocument.put(FirestoreHelper.FIRST_NAME, name);
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return (String) userDocument.get(FirestoreHelper.LAST_NAME);
     }
 
-    public void setLastName(String name)
-    {
+    public void setLastName(String name) {
         userDocument.put(FirestoreHelper.LAST_NAME, name);
     }
 
-    public String getAlias()
-    {
+    public String getAlias() {
         return (String) userDocument.get(FirestoreHelper.ALIAS);
     }
 
-    public void setAlias(String alias)
-    {
+    public void setAlias(String alias) {
         userDocument.put(FirestoreHelper.ALIAS, alias);
     }
 
-    public Boolean getUseAliasForName()
-    {
+    public Boolean getUseAliasForName() {
         return (Boolean) userDocument.get(FirestoreHelper.USE_ALIAS_FOR_NAME);
     }
 
-    public void setUseAliasForName(Boolean value)
-    {
+    public void setUseAliasForName(Boolean value) {
         userDocument.put(FirestoreHelper.USE_ALIAS_FOR_NAME, value);
     }
 
     // TODO: @Sahaj make this consistent with however you did the municipality ID thing
-    public String getCity()
-    {
+    public String getCity() {
         return (String) userDocument.get(FirestoreHelper.CITY);
     }
 
     // TODO: @Sahaj make this consistent with however you did the municipality ID thing
-    public void setCity(String city)
-    {
+    public void setCity(String city) {
         userDocument.put(FirestoreHelper.CITY, city);
     }
 
-    public Boolean getAnonymousPledge()
-    {
+    public Boolean getAnonymousPledge() {
         return (Boolean) userDocument.get(FirestoreHelper.ANONYMOUS_PLEDGE);
     }
 
-    public void setAnonymousPledge(Boolean value)
-    {
+    public void setAnonymousPledge(Boolean value) {
         userDocument.put(FirestoreHelper.ANONYMOUS_PLEDGE, value);
     }
 
-    public Boolean getShowFirstName()
-    {
+    public Boolean getShowFirstName() {
         return (Boolean) userDocument.get(FirestoreHelper.SHOW_FIRST_NAME);
     }
 
-    public void setShowFirstName(Boolean value)
-    {
+    public void setShowFirstName(Boolean value) {
         userDocument.put(FirestoreHelper.SHOW_FIRST_NAME, value);
     }
 
-    public Boolean getShowLastName()
-    {
+    public Boolean getShowLastName() {
         return (Boolean) userDocument.get(FirestoreHelper.SHOW_LAST_NAME);
     }
 
-    public void setShowLastName(Boolean value)
-    {
+    public void setShowLastName(Boolean value) {
         userDocument.put(FirestoreHelper.SHOW_LAST_NAME, value);
     }
 
-    public Boolean getShowLastInitialForLastName()
-    {
+    public Boolean getShowLastInitialForLastName() {
         return (Boolean) userDocument.get(FirestoreHelper.SHOW_LAST_INITIAL_FOR_LAST_NAME);
     }
 
-    public void setShowLastInitialForLastName(Boolean value)
-    {
+    public void setShowLastInitialForLastName(Boolean value) {
         userDocument.put(FirestoreHelper.SHOW_LAST_INITIAL_FOR_LAST_NAME, value);
     }
 
-    public Boolean getShowCity()
-    {
+    public Boolean getShowCity() {
         return (Boolean) userDocument.get(FirestoreHelper.SHOW_CITY);
     }
 
-    public void setShowCity(Boolean value)
-    {
+    public void setShowCity(Boolean value) {
         userDocument.put(FirestoreHelper.SHOW_CITY, value);
     }
 
-    public DocumentReference getPledgeReference()
-    {
+    public DocumentReference getPledgeReference() {
         return (DocumentReference) userDocument.get(FirestoreHelper.PLEDGE);
     }
 
-    public void setPledgeReference(DocumentReference pledge)
-    {
+    public void setPledgeReference(DocumentReference pledge) {
         userDocument.put(FirestoreHelper.PLEDGE, pledge);
     }
     // endregion
 
-    public Float getCurrentCO2e()
-    {
+    public Float getCurrentCO2e() {
         return currentPledge.getCurrentCO2eSavings();
     }
 
-    public Float getGoalCO2e()
-    {
+    public Float getGoalCO2e() {
         return currentPledge.getGoalCO2eSavings();
     }
 
