@@ -14,6 +14,7 @@
             android:gravity="center_horizontal">
         <Spinner
                 android:layout_width="232dp"
+                android:gravity="center"
                 android:layout_height="wrap_content" android:id="@+id/selectRegionSpinner"/>
         <TextView
                 android:text="List Of Pledges"
@@ -31,11 +32,7 @@
                     android:layout_height="wrap_content">
                 <ListView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/listView"/>
-                <TextView
-                        android:text="asdadsada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:id="@+id/textView5"/>
+                        android:layout_height="wrap_content" android:id="@+id/listViewPledges"/>
             </LinearLayout>
         </ScrollView>
         <android.support.design.widget.TextInputLayout
@@ -48,7 +45,7 @@
                 android:hint="Select A Pledge"
                 android:gravity="center"
                 android:layout_width="295dp"
-                android:layout_height="wrap_content" android:id="@+id/textView4"
+                android:layout_height="wrap_content" android:id="@+id/showMunicipality"
                 android:textAppearance="@android:style/TextAppearance.Material.SearchResult.Title"/>
         <Button
                 android:text="View"

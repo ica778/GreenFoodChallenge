@@ -106,6 +106,32 @@
     <string name="west_vancouver">West Vancouver</string>
     <string name="white_rock">White Rock</string>
 
+
+    <string-array name="municipalities_spinner">
+        <item name="no_municipality">No municipality chosen</item>
+        <item name="metro_vancouver">Metro Vancouver</item>
+        <item name="anmore">Anmore</item>
+        <item name="belcarra">Belcarra</item>
+        <item name="bowen_island">Bowen Island</item>
+        <item name="burnaby">Burnaby</item>
+        <item name="coquitlam">Coquitlam</item>
+        <item name="delta">Delta</item>
+        <item name="langley">Langley</item>
+        <item name="lions_bay">Lions Bay</item>
+        <item name="maple_ridge">Maple Ridge</item>
+        <item name="new_westminster">New Westminster</item>
+        <item name="north_vancouver">North Vancouver</item>
+        <item name="pitt_meadows">Pitt Meadows</item>
+        <item name="port_coquitlam">Port Coquitlam</item>
+        <item name="port_moody">Port Moody</item>
+        <item name="richmond">Richmond</item>
+        <item name="surrey">Surrey</item>
+        <item name="university_endowment_lands">University Endowment Lands</item>
+        <item name="vancouver">Vancouver</item>
+        <item name="west_vancouver">West Vancouver</item>
+        <item name="white_rock">White Rock</item>
+    </string-array>
+
     //No user name
     <string name="no_user_name">No name given</string>
 
