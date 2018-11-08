@@ -106,6 +106,32 @@
     <string name="west_vancouver">West Vancouver</string>
     <string name="white_rock">White Rock</string>
 
+    <!--city array-->
+    <array name="city_array">
+        <item>Anmore</item>
+        <item>Belcarra</item>
+        <item>Bowen Island</item>
+        <item>Burnaby</item>
+        <item>Coquitlam</item>
+        <item>Delta</item>
+        <item>Langley</item>
+        <item>Lions Bay</item>
+        <item>Maple Ridge</item>
+        <item>New Westminster</item>
+        <item>North Vancouver</item>
+        <item>Pitt Meadows</item>
+        <item>Port Coquitlam</item>
+        <item>Port Moody</item>
+        <item>Richmond</item>
+        <item>Surrey</item>
+        <item>University Endowment Lands</item>
+        <item>Vancouver</item>
+        <item>West Vancouver</item>
+        <item>Vancouver</item>
+        <item>West Vancouver</item>
+        <item>White Rock</item>
+    </array>
+
     //No user name
     <string name="no_user_name">No name given</string>
 
@@ -121,5 +147,9 @@
     <string name="delete_user_btn_txt">Delete user</string>
     <string name="sign_in_cancelled">Sign in cancelled.</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="alias">Alias</string>
+    <string name="choose_city">Choose City</string>
 
 </resources>
