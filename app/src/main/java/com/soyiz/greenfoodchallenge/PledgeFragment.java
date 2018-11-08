@@ -59,7 +59,11 @@ public class PledgeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
                 userPledgeInformation = accessPledges.getUserTemplate();
-                listOfPledgesToShow.add((String) userPledgeInformation.get("FIRST_NAME"));
+                //listOfPledgesToShow.add((String) userPledgeInformation.get("FIRST_NAME"));
+
+                // Updates scrollview to show correct pledges
+                listOfPledgesToShow.add("s");
+                populateListView();
             }
 
             @Override
@@ -75,7 +79,6 @@ public class PledgeFragment extends Fragment {
 
     // Put pledges on ListView
     private void populateListView() {
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
