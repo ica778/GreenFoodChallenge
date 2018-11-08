@@ -42,14 +42,9 @@
 
         </android.support.design.widget.TextInputLayout>
         <TextView
-                android:hint="Select A Pledge"
-                android:gravity="center"
+                android:hint="Select A Municipality"
                 android:layout_width="365dp"
-                android:layout_height="wrap_content" android:id="@+id/showMunicipality"
+                android:layout_height="wrap_content" android:id="@+id/showInformationAboutPledge"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="365dp"
-                android:layout_height="wrap_content" android:id="@+id/textViewShowInformationAboutPledge"/>
     </LinearLayout>
 </FrameLayout>

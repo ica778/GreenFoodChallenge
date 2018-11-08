@@ -19,7 +19,7 @@ public class PledgeFragment extends Fragment {
     private ListView pledgeListView;
     private Spinner regionShowSpinner;
     private ArrayAdapter adapter;
-    private TextView selectAPledgeText;
+    private TextView showInformationAboutPledgesInMunicipality;
     private FirestoreHelper accessPledges = new FirestoreHelper();
     private Map<String, Object> userPledgeInformation;
     private List<String> listOfPledgesToShow;
@@ -42,7 +42,7 @@ public class PledgeFragment extends Fragment {
 
     // assigns values to variables
     private void initView(View view) {
-        selectAPledgeText = view.findViewById(R.id.showMunicipality);
+        showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
         pledgeListView = (ListView) view.findViewById(R.id.listViewPledges);
         listOfPledgesToShow = new ArrayList<String>();
     }
@@ -58,7 +58,8 @@ public class PledgeFragment extends Fragment {
         regionShowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
-                //listOfPledgesToShow.add(accessPledges.)
+                userPledgeInformation = accessPledges.getUserTemplate();
+                listOfPledgesToShow.add((String) userPledgeInformation.get("FIRST_NAME"));
             }
 
             @Override
@@ -66,6 +67,10 @@ public class PledgeFragment extends Fragment {
 
             }
         });
+        String stringToShow = getResources().getString(R.string.show_pledge_information);
+        // String, int, float, float, float
+        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(10), getAverageC02Pledged() );
+        showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
     }
 
     // Put pledges on ListView
@@ -87,6 +92,23 @@ public class PledgeFragment extends Fragment {
                 //selectAPledgeText.setText((String) parent.getItemAtPosition(position));
             }
         });
+    }
+
+    private int getCountOfPeoplePledged() {
+        return 10;
+    }
+
+    private float getTonnesOfC02Pledged() {
+        return 10f;
+    }
+
+    private float getAmountOfGasolineInC02Saved(int amountOfC02eInKG) {
+        float amountOfGasolineEquivalent = amountOfC02eInKG / 2.3f;
+        return amountOfGasolineEquivalent;
+    }
+
+    private float getAverageC02Pledged() {
+        return 10f;
     }
 
 }

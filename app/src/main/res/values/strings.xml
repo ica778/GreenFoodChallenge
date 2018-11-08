@@ -79,6 +79,10 @@
         these numbers.
     </string>
 
+    <string name="show_pledge_information">%1$d people and %2$.2f tonnes of C02e have been pledged in total.\nThis is
+        equivalent to %3$.2f barrels of gasoline.\n\nThe average C02e saved per person is %4$.2f tonnes.
+    </string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
