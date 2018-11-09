@@ -25,7 +25,7 @@ public class PledgeFragment extends Fragment {
     private FirestoreHelper accessPledges = new FirestoreHelper();
     private Map<String, Object> userPledgeInformation;
     private List<String> listOfPledgesToShow;
-    private float totalGoalC02e;
+    private double totalGoalC02e;
     private int amountOfPeoplePledged;
 
     public PledgeFragment() {
@@ -48,8 +48,10 @@ public class PledgeFragment extends Fragment {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
         pledgeListView = (ListView) view.findViewById(R.id.listViewPledges);
         listOfPledgesToShow = new ArrayList<String>();
-        totalGoalC02e = 0f;
+        totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
+
+        accessPledges.queryPledgesForViewer(this);
     }
 
     // Handles events on spinner
@@ -65,7 +67,8 @@ public class PledgeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
 
                 // Updates scrollview to show correct pledges
-                populateListView(parent.getItemAtPosition(position).toString());
+//                populateListView(parent.getItemAtPosition(position).toString());
+
 
             }
 
@@ -120,12 +123,14 @@ public class PledgeFragment extends Fragment {
     // Returns string to show on list_view for pledge
     private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
         String userData = "";
+        Map<String, Object> pledgeMap = (Map<String, Object>)userToShow.get(FirestoreHelper.PLEDGE);
+
         userData = userData +
-                userToShow.get("FIRST_NAME") +
+                userToShow.get(FirestoreHelper.FIRST_NAME) +
                 " " +
-                userToShow.get("LAST_NAME") +
+                userToShow.get(FirestoreHelper.LAST_NAME) +
                 ": " +
-                userToShow.get(accessPledges.PLEDGE).get(accessPledges.CURRENT_CO2E);
+                pledgeMap.get(accessPledges.CURRENT_CO2E);
         return userData;
     }
 
@@ -133,7 +138,7 @@ public class PledgeFragment extends Fragment {
     public void appendList (List<Map<String, Object>> listToAppend) {
         for (Map<String, Object> map : listToAppend) {
             listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
-            totalGoalC02e += map.get(accessPledges.PLEDGE).get(accessPledges. GOAL_CO2E);
+            totalGoalC02e += (Double)(((Map<String, Object>)map.get(accessPledges.PLEDGE)).get(accessPledges. GOAL_CO2E));
             amountOfPeoplePledged++;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -158,7 +163,7 @@ public class PledgeFragment extends Fragment {
         return amountOfPeoplePledged;
     }
 
-    private float getTonnesOfC02Pledged() {
+    private double getTonnesOfC02Pledged() {
         return totalGoalC02e;
     }
 
@@ -167,7 +172,7 @@ public class PledgeFragment extends Fragment {
         return amountOfGasolineEquivalent;
     }
 
-    private float getAverageC02Pledged() {
+    private double getAverageC02Pledged() {
         return totalGoalC02e / amountOfPeoplePledged;
     }
 
