@@ -62,6 +62,7 @@ public class PledgeFragment extends Fragment {
 
                 // Updates scrollview to show correct pledges
                 populateListView(parent.getItemAtPosition(position).toString());
+
             }
 
             @Override
@@ -94,14 +95,12 @@ public class PledgeFragment extends Fragment {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
             // get information from firebase
-            if (userPledgeInformation.get("CITY") != null) {
-                individualPledgeInformation =
-                        individualPledgeInformation +
-                        ((String) userPledgeInformation.get("FIRST_NAME")) +
-                        ((String) userPledgeInformation.get("LAST_NAME"));
-                listOfPledgesToShow.add(individualPledgeInformation);
-            }
+
         }
+
+        //appendList();
+
+        /*
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
@@ -111,6 +110,19 @@ public class PledgeFragment extends Fragment {
 
         pledgeListView.setAdapter(adapter);
         registerClickCallBackListView();
+        */
+    }
+
+
+    // Appends list in argument to listOfPledgesToShow and updates list_view
+    public void appendList (List<String> listToAppend) {
+        listOfPledgesToShow.addAll(listToAppend);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.list_view,
+                listOfPledgesToShow);
+        userPledgeInformation = accessPledges.getUserTemplate();
+        pledgeListView.setAdapter(adapter);
     }
 
     // Handles click events on ListView
