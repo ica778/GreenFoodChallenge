@@ -73,9 +73,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == R.id.sign_in_btn) {
             //However sign in is implemented, just put this line when called and it should take care of the rest
-            //signIn();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
+            Update();
+            //startActivity(new Intent(getActivity(), LoginActivity.class));
+            //getActivity().finish();
 
             ////////////////////////////////////////////////////////////////////////////////////////////
         }
@@ -120,32 +120,34 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void signIn() {
+    private void Update() {
         String firstName = etFirstName.getText().toString();
         String lastName = etLastName.getText().toString();
         String alias = etAlias.getText().toString();
         String city = (String) spinnerCity.getSelectedItem();
         String bio = etBio.getText().toString();
         if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(getContext(), "First Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter First Name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(getContext(), "Last Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Last Name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(alias)) {
-            Toast.makeText(getContext(), "Alias", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Alias", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(city)) {
-            Toast.makeText(getContext(), "City", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter City", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(bio)) {
-            Toast.makeText(getContext(), "Bio", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Bio", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
 
         //TODO passing when sign in
         User user = new User();
@@ -156,11 +158,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user.setLastName(lastName);
         user.setAlias(alias);
         user.setCity(city);
-//        FirestoreHelper helper = new FirestoreHelper();
-//        helper.getUserTemplate();
-//        helper.pullUserDocument(user);
-        //TODO
-        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+
+      FirestoreHelper helper = new FirestoreHelper();
+        helper.getUserTemplate();
+      helper.pushUserDocument(user);
+
+        //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 
