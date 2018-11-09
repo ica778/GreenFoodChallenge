@@ -101,23 +101,7 @@ public class PledgeFragment extends Fragment {
         else {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
-            // get information from firebase
-
         }
-
-        //appendList();
-
-        /*
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.list_view,
-                listOfPledgesToShow);
-        userPledgeInformation = accessPledges.getUserTemplate();
-
-
-        pledgeListView.setAdapter(adapter);
-        registerClickCallBackListView();
-        */
     }
 
     // Returns string to show on list_view for pledge
