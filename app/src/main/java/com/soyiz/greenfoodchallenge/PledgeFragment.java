@@ -113,10 +113,24 @@ public class PledgeFragment extends Fragment {
         */
     }
 
+    // Returns string to show on list_view for pledge
+    private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
+        String userData = "";
+        userData = userData +
+                userToShow.get("FIRST_NAME") +
+                " " +
+                userToShow.get("LAST_NAME") +
+                ": " +
+                userToShow.get(accessPledges.PLEDGE).get(accessPledges.CURRENT_CO2E);
+        return userData;
+    }
+
 
     // Appends list in argument to listOfPledgesToShow and updates list_view
-    public void appendList (List<String> listToAppend) {
-        listOfPledgesToShow.addAll(listToAppend);
+    public void appendList (List<Map<String, Object>> listToAppend) {
+        for (Map<String, Object> map : listToAppend) {
+            listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
