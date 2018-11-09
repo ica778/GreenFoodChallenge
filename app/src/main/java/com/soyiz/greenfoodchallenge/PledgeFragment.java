@@ -71,7 +71,7 @@ public class PledgeFragment extends Fragment {
         });
         String stringToShow = getResources().getString(R.string.show_pledge_information);
         // String, int, float, float, float
-        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(10), getAverageC02Pledged() );
+        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(0), getAverageC02Pledged() );
         showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
     }
 
@@ -93,11 +93,14 @@ public class PledgeFragment extends Fragment {
         else {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
-            individualPledgeInformation =
-                    individualPledgeInformation +
-                            ((String) userPledgeInformation.get("FIRST_NAME")) +
-                            ((String) userPledgeInformation.get("LAST_NAME"));
-            listOfPledgesToShow.add(individualPledgeInformation);
+            // get information from firebase
+            if (userPledgeInformation.get("CITY") != null) {
+                individualPledgeInformation =
+                        individualPledgeInformation +
+                        ((String) userPledgeInformation.get("FIRST_NAME")) +
+                        ((String) userPledgeInformation.get("LAST_NAME"));
+                listOfPledgesToShow.add(individualPledgeInformation);
+            }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
@@ -121,11 +124,11 @@ public class PledgeFragment extends Fragment {
     }
 
     private int getCountOfPeoplePledged() {
-        return 10;
+        return 0;
     }
 
     private float getTonnesOfC02Pledged() {
-        return 10f;
+        return 0f;
     }
 
     private float getAmountOfGasolineInC02Saved(int amountOfC02eInKG) {
@@ -134,7 +137,7 @@ public class PledgeFragment extends Fragment {
     }
 
     private float getAverageC02Pledged() {
-        return 10f;
+        return 0f;
     }
 
 }
