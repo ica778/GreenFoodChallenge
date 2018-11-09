@@ -29,9 +29,9 @@ import java.util.HashMap;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
-    private Button signInButton;
+    private Button   updateprofile;
     private Button signOutButton;
-    private Button deleteUserButton;
+    private Button signInButton;
     private Button aboutPageBtn;
     private ImageView ivHead;
     private EditText etFirstName, etLastName, etAlias, etBio;
@@ -52,12 +52,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
-        signInButton = view.findViewById(R.id.sign_in_btn);
-        signInButton.setOnClickListener(this);
+        updateprofile = view.findViewById(R.id.update_profile_btn);
+        updateprofile.setOnClickListener(this);
         signOutButton = view.findViewById(R.id.sign_out_btn);
         signOutButton.setOnClickListener(this);
-        deleteUserButton = view.findViewById(R.id.delete_user_btn);
-        deleteUserButton.setOnClickListener(this);
+        signInButton = view.findViewById(R.id.sign_in_btn);
+        signInButton.setOnClickListener(this);
         aboutPageBtn = view.findViewById(R.id.about_page_btn);
         aboutPageBtn.setOnClickListener(this);
 
@@ -71,11 +71,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.sign_in_btn) {
+        if (view.getId() == R.id.update_profile_btn) {
             //However sign in is implemented, just put this line when called and it should take care of the rest
-            //signIn();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
+            Update();
+            //startActivity(new Intent(getActivity(), LoginActivity.class));
+            //getActivity().finish();
 
             ////////////////////////////////////////////////////////////////////////////////////////////
         }
@@ -94,7 +94,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             /////////////////////////////////////////////////////////////////////////////////////
         }
 
-        if (view.getId() == R.id.delete_user_btn) {
+        if (view.getId() == R.id.sign_in_btn) {
             //However delete user is implemented, just put these lines when called and it should take care of the rest
             AuthUI.getInstance()
                     .delete(getActivity())
@@ -120,32 +120,34 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void signIn() {
+    private void Update() {
         String firstName = etFirstName.getText().toString();
         String lastName = etLastName.getText().toString();
         String alias = etAlias.getText().toString();
         String city = (String) spinnerCity.getSelectedItem();
         String bio = etBio.getText().toString();
         if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(getContext(), "First Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter First Name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(getContext(), "Last Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Last Name", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(alias)) {
-            Toast.makeText(getContext(), "Alias", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Alias", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(city)) {
-            Toast.makeText(getContext(), "City", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter City", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(bio)) {
-            Toast.makeText(getContext(), "Bio", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter Bio", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
 
         //TODO passing when sign in
         User user = new User();
@@ -156,11 +158,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user.setLastName(lastName);
         user.setAlias(alias);
         user.setCity(city);
-//        FirestoreHelper helper = new FirestoreHelper();
-//        helper.getUserTemplate();
-//        helper.pullUserDocument(user);
-        //TODO
-        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+
+      FirestoreHelper helper = new FirestoreHelper();
+        helper.getUserTemplate();
+      helper.pushUserDocument(user);
+
+        //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 
 
