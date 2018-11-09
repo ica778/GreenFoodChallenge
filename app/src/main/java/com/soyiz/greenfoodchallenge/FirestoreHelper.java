@@ -2,13 +2,21 @@ package com.soyiz.greenfoodchallenge;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // Note: this is not a singleton because it can cause a memory leak due to holding the
@@ -39,16 +47,10 @@ public class FirestoreHelper {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference userCollection = db.collection("users");
-    private final CollectionReference pledgeCollection = db.collection("pledges");
 
     public CollectionReference getUserCollectionReference()
     {
         return userCollection;
-    }
-
-    public CollectionReference getPledgeCollectionReference()
-    {
-        return pledgeCollection;
     }
 
     public Map<String, Object> getUserTemplate() {
@@ -78,7 +80,10 @@ public class FirestoreHelper {
         user.put(SHOW_CITY, false);
 
         // A reference (in the database) to the pledge for this user
-        user.put(PLEDGE, pledgeCollection.document("template"));
+        // user.put(PLEDGE, pledgeCollection.document("template"));
+
+        // A map representing pledge info
+        user.put(PLEDGE, getPledgeTemplate());
 
         // A map of the string equivalent of a ProteinSource (via .toString) to the float percentage.
         // Essentially, a string keyed version of the internal map of a diet.
@@ -137,40 +142,75 @@ public class FirestoreHelper {
         userCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
     }
 
-    // Given a user, will set its pledgeDocument to the latest on the server, but does it asynchronously
-    // Would recommend running this as soon as the user pull is done so this pull can resolve by the time it's needed
-    public void pullPledgeDocument(final User user)
+//    // Given a user, will set its pledgeDocument to the latest on the server, but does it asynchronously
+//    // Would recommend running this as soon as the user pull is done so this pull can resolve by the time it's needed
+//    public void pullPledgeDocument(final User user)
+//    {
+//        FirebaseUser firebaseUser = user.getFirebaseUser();
+//
+//        user.getPledgeReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful())
+//                {
+//                    DocumentSnapshot document = task.getResult();
+//
+//                    if (document == null)
+//                    {
+//                        // Yes, this silently fails, but throwing will just get more problematic.
+//                        // Logging is about as useful as we can get here.
+//                        Log.d("pullPledgeDocument", "[ERROR] onComplete: grabbed document was null. Pledge was never created for this user!");
+//                        return;
+//                    }
+//
+//                    if (document.exists())
+//                    {
+//                        user.setPledgeDocument(document.getData());
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
+//
+//    // Given a user, will send its pledge (as a document) to the server as an update
+//    public void pushPledgeDocument(User user)
+//    {
+//        user.getPledgeReference().set(user.getCurrentPledge().exportToStringMap());
+//    }
+
+    public void queryPledgesForViewer(final PledgeFragment fragment)
     {
-        FirebaseUser firebaseUser = user.getFirebaseUser();
-
-        user.getPledgeReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful())
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    List<Map<String, Object>> outputList = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot document : task.getResult())
+                    {
+                        if (document == null)
+                        {
+                            Log.d("queryPledgesForViewer", "[ERROR] onComplete: grabbed a document which null");
+                            return;
+                        }
+
+                        if (document.exists()) {
+                            String TAG = "queryPledgesForViewer";
+                            Log.d(TAG, "onComplete: Got a user!");
+                            Log.d(TAG, "onComplete: user first name: " + document.getData().get(FIRST_NAME));
+                            outputList.add(document.getData());
+                        }
+                    }
+
+                    fragment.appendList(outputList);
+                }
+                else
                 {
-                    DocumentSnapshot document = task.getResult();
-
-                    if (document == null)
-                    {
-                        // Yes, this silently fails, but throwing will just get more problematic.
-                        // Logging is about as useful as we can get here.
-                        Log.d("pullPledgeDocument", "[ERROR] onComplete: grabbed document was null. Pledge was never created for this user!");
-                        return;
-                    }
-
-                    if (document.exists())
-                    {
-                        user.setPledgeDocument(document.getData());
-                    }
+                    // Error doing query
                 }
             }
         });
-
-    }
-
-    // Given a user, will send its pledge (as a document) to the server as an update
-    public void pushPledgeDocument(User user)
-    {
-        user.getPledgeReference().set(user.getCurrentPledge().exportToStringMap());
     }
 }

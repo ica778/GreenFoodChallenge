@@ -25,6 +25,8 @@ public class PledgeFragment extends Fragment {
     private FirestoreHelper accessPledges = new FirestoreHelper();
     private Map<String, Object> userPledgeInformation;
     private List<String> listOfPledgesToShow;
+    private double totalGoalC02e;
+    private int amountOfPeoplePledged;
 
     public PledgeFragment() {
         // Required empty public constructor
@@ -46,6 +48,10 @@ public class PledgeFragment extends Fragment {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
         pledgeListView = (ListView) view.findViewById(R.id.listViewPledges);
         listOfPledgesToShow = new ArrayList<String>();
+        totalGoalC02e = 0.0;
+        amountOfPeoplePledged = 0;
+
+        accessPledges.queryPledgesForViewer(this);
     }
 
     // Handles events on spinner
@@ -61,7 +67,9 @@ public class PledgeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
 
                 // Updates scrollview to show correct pledges
-                populateListView(parent.getItemAtPosition(position).toString());
+//                populateListView(parent.getItemAtPosition(position).toString());
+
+
             }
 
             @Override
@@ -94,14 +102,12 @@ public class PledgeFragment extends Fragment {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
             // get information from firebase
-            if (userPledgeInformation.get("CITY") != null) {
-                individualPledgeInformation =
-                        individualPledgeInformation +
-                        ((String) userPledgeInformation.get("FIRST_NAME")) +
-                        ((String) userPledgeInformation.get("LAST_NAME"));
-                listOfPledgesToShow.add(individualPledgeInformation);
-            }
+
         }
+
+        //appendList();
+
+        /*
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
@@ -111,6 +117,36 @@ public class PledgeFragment extends Fragment {
 
         pledgeListView.setAdapter(adapter);
         registerClickCallBackListView();
+        */
+    }
+
+    // Returns string to show on list_view for pledge
+    private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
+        String userData = "";
+        Map<String, Object> pledgeMap = (Map<String, Object>)userToShow.get(FirestoreHelper.PLEDGE);
+
+        userData = userData +
+                userToShow.get(FirestoreHelper.FIRST_NAME) +
+                " " +
+                userToShow.get(FirestoreHelper.LAST_NAME) +
+                ": " +
+                pledgeMap.get(accessPledges.CURRENT_CO2E);
+        return userData;
+    }
+
+    // Appends list in argument to listOfPledgesToShow and updates list_view
+    public void appendList (List<Map<String, Object>> listToAppend) {
+        for (Map<String, Object> map : listToAppend) {
+            listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
+            totalGoalC02e += (Double)(((Map<String, Object>)map.get(accessPledges.PLEDGE)).get(accessPledges. GOAL_CO2E));
+            amountOfPeoplePledged++;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.list_view,
+                listOfPledgesToShow);
+        userPledgeInformation = accessPledges.getUserTemplate();
+        pledgeListView.setAdapter(adapter);
     }
 
     // Handles click events on ListView
@@ -124,11 +160,11 @@ public class PledgeFragment extends Fragment {
     }
 
     private int getCountOfPeoplePledged() {
-        return 0;
+        return amountOfPeoplePledged;
     }
 
-    private float getTonnesOfC02Pledged() {
-        return 0f;
+    private double getTonnesOfC02Pledged() {
+        return totalGoalC02e;
     }
 
     private float getAmountOfGasolineInC02Saved(int amountOfC02eInKG) {
@@ -136,8 +172,8 @@ public class PledgeFragment extends Fragment {
         return amountOfGasolineEquivalent;
     }
 
-    private float getAverageC02Pledged() {
-        return 0f;
+    private double getAverageC02Pledged() {
+        return totalGoalC02e / amountOfPeoplePledged;
     }
 
 }
