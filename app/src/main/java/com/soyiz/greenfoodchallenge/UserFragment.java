@@ -165,8 +165,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
 
     private void selectImage() {
-        final Integer[] resIds = new Integer[]{R.mipmap.ic_head1, R.mipmap.ic_head2,
-                R.mipmap.ic_head3, R.mipmap.ic_head4, R.mipmap.ic_head5};
+        final Integer[] resIds = new Integer[]{R.drawable.ic_head1, R.drawable.ic_head2,
+                R.drawable.ic_head3, R.drawable.ic_head4, R.drawable.ic_head5};
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         ListView listView = new ListView(getContext());
 
