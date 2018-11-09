@@ -65,7 +65,7 @@ public class Diet {
         for (Map.Entry<ProteinSource, Float> pair : proteinPercentMap.entrySet()) {
 
             // Weekly serving in grams for a specific protein
-            float proteinWeeklyServing = pair.getValue() * weeklyServing;
+            float proteinWeeklyServing = pair.getValue()/100 * weeklyServing;
 
             // Puts the serving into KG and multiplies by CO2e for the protein
             output += (proteinWeeklyServing / 1000f) * pair.getKey().getCO2e();
