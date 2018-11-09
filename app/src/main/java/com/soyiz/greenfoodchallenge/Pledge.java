@@ -12,20 +12,18 @@ public class Pledge {
     private float goalCO2eSavingsTonnes = -1f;
     private float currentCO2eSavingsTonnes = -1f;
 
-    Pledge(){}
+    Pledge() {
+    }
 
     // Used to load a map from Firebase into a pledge object
-    public void loadFromStringMap(Map<String, Object> map)
-    {
-        for (Map.Entry<String, Object> entry : map.entrySet())
-        {
-            switch (entry.getKey())
-            {
+    public void loadFromStringMap(Map<String, Object> map) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            switch (entry.getKey()) {
                 case "currentCO2e":
-                    currentCO2eSavingsTonnes = (Float)entry.getValue();
+                    currentCO2eSavingsTonnes = (Float) entry.getValue();
                     break;
                 case "goalCO2e":
-                    goalCO2eSavingsTonnes = (Float)entry.getValue();
+                    goalCO2eSavingsTonnes = (Float) entry.getValue();
                     break;
 
                 default:
@@ -36,8 +34,7 @@ public class Pledge {
     }
 
     // Used to turn a pledge into a string keyed map for saving with Firebase
-    public Map<String, Object> exportToStringMap()
-    {
+    public Map<String, Object> exportToStringMap() {
         Map<String, Object> outputMap = new HashMap<>();
 
         outputMap.put("currentCO2e", currentCO2eSavingsTonnes);
@@ -63,6 +60,6 @@ public class Pledge {
     }
 
     public float getCompletionPercentage() {
-        return (float)Math.round(100*currentCO2eSavingsTonnes/goalCO2eSavingsTonnes);
+        return (float) Math.round(100 * currentCO2eSavingsTonnes / goalCO2eSavingsTonnes);
     }
 }
