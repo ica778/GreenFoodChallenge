@@ -113,7 +113,6 @@
 
     <string-array name="municipalities_spinner">
         <item name="no_municipality">No municipality chosen</item>
-        <item name="metro_vancouver">Metro Vancouver</item>
         <item name="anmore">Anmore</item>
         <item name="belcarra">Belcarra</item>
         <item name="bowen_island">Bowen Island</item>

@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.soyiz.greenfoodchallenge.FirestoreHelper.FIRST_NAME;
+
 public class PledgeFragment extends Fragment {
 
     private ListView pledgeListView;
@@ -57,8 +59,6 @@ public class PledgeFragment extends Fragment {
         regionShowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
-                userPledgeInformation = accessPledges.getUserTemplate();
-                //listOfPledgesToShow.add((String) userPledgeInformation.get("FIRST_NAME"));
 
                 // Updates scrollview to show correct pledges
                 populateListView(parent.getItemAtPosition(position).toString());
@@ -75,24 +75,37 @@ public class PledgeFragment extends Fragment {
         showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
     }
 
-    // updates listOfPledgesToShow list to have correct pledges
+    // updates listOfPledgesToShow list to have correct pledges and returns whether no municipality was chosen
     private void populateListView(String municipalityPicked) {
         if (municipalityPicked.equals("No municipality chosen")) {
             listOfPledgesToShow.clear();
-        }
-        else if (municipalityPicked.equals("Metro Vancouver")) {
-            // show all pledges if this condition true
-            //listOfPledgesToShow.clear();
-
+            userPledgeInformation = accessPledges.getUserTemplate();
+            listOfPledgesToShow.add("Please Choose a municipality");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    getActivity(),
+                    R.layout.list_view,
+                    listOfPledgesToShow);
+            userPledgeInformation = accessPledges.getUserTemplate();
+            pledgeListView.setAdapter(adapter);
+            registerClickCallBackListView();
+            return;
         }
         else {
-            //listOfPledgesToShow.clear();
+            listOfPledgesToShow.clear();
+            String individualPledgeInformation = "";
+            individualPledgeInformation =
+                    individualPledgeInformation +
+                            ((String) userPledgeInformation.get("FIRST_NAME")) +
+                            ((String) userPledgeInformation.get("LAST_NAME"));
+            listOfPledgesToShow.add(individualPledgeInformation);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_view,
                 listOfPledgesToShow);
-        listOfPledgesToShow.add(municipalityPicked);
+        userPledgeInformation = accessPledges.getUserTemplate();
+
+
         pledgeListView.setAdapter(adapter);
         registerClickCallBackListView();
     }
