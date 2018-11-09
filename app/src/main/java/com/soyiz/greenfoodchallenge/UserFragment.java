@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
-    private Button updateprofile;
+    private Button   updateprofile;
     private Button signOutButton;
     private Button signInButton;
     private Button aboutPageBtn;
