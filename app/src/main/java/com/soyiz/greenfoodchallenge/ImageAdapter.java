@@ -1,12 +1,12 @@
 package com.soyiz.greenfoodchallenge;
 
-        import android.content.Context;
-        import android.view.Gravity;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.BaseAdapter;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
+import android.content.Context;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;

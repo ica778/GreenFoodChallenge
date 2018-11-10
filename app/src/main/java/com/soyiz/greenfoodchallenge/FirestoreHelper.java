@@ -2,17 +2,10 @@ package com.soyiz.greenfoodchallenge;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,8 +41,7 @@ public class FirestoreHelper {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference userCollection = db.collection("users");
 
-    public CollectionReference getUserCollectionReference()
-    {
+    public CollectionReference getUserCollectionReference() {
         return userCollection;
     }
 
@@ -110,105 +102,60 @@ public class FirestoreHelper {
         FirebaseUser firebaseUser = user.getFirebaseUser();
 
         userCollection.document(firebaseUser.getUid())
-            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful())
-                    {
-                        DocumentSnapshot document = task.getResult();
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
 
-                        if (document == null)
-                        {
-                            // Yes, this silently fails, but throwing will just get more problematic.
-                            // Logging is about as useful as we can get here.
-                            Log.d("pullUserDocument", "[ERROR] onComplete: grabbed document was null. User was never created!");
-                            return;
-                        }
+                    if (document == null) {
+                        // Yes, this silently fails, but throwing will just get more problematic.
+                        // Logging is about as useful as we can get here.
+                        Log.d("pullUserDocument", "[ERROR] onComplete: grabbed document was null. User was never created!");
+                        return;
+                    }
 
-                        if (document.exists())
-                        {
-                            user.setUserDocument(document.getData());
-                        }
+                    if (document.exists()) {
+                        user.setUserDocument(document.getData());
                     }
                 }
-            });
+            }
+        });
 
     }
 
     // Given a user, will send its userDocument to the server as an update
-    public void pushUserDocument(User user)
-    {
+    public void pushUserDocument(User user) {
         FirebaseUser firebaseUser = user.getFirebaseUser();
         userCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
     }
 
-//    // Given a user, will set its pledgeDocument to the latest on the server, but does it asynchronously
-//    // Would recommend running this as soon as the user pull is done so this pull can resolve by the time it's needed
-//    public void pullPledgeDocument(final User user)
-//    {
-//        FirebaseUser firebaseUser = user.getFirebaseUser();
-//
-//        user.getPledgeReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful())
-//                {
-//                    DocumentSnapshot document = task.getResult();
-//
-//                    if (document == null)
-//                    {
-//                        // Yes, this silently fails, but throwing will just get more problematic.
-//                        // Logging is about as useful as we can get here.
-//                        Log.d("pullPledgeDocument", "[ERROR] onComplete: grabbed document was null. Pledge was never created for this user!");
-//                        return;
-//                    }
-//
-//                    if (document.exists())
-//                    {
-//                        user.setPledgeDocument(document.getData());
-//                    }
-//                }
-//            }
-//        });
-//
-//    }
-//
-//    // Given a user, will send its pledge (as a document) to the server as an update
-//    public void pushPledgeDocument(User user)
-//    {
-//        user.getPledgeReference().set(user.getCurrentPledge().exportToStringMap());
-//    }
-
-    public void queryPledgesForViewer(final PledgeFragment fragment)
-    {
+    public void queryPledgesForViewer(final PledgeFragment fragment) {
         userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
+                String TAG = "queryPledgesForViewer";
 
+                if (task.isSuccessful()) {
                     List<Map<String, Object>> outputList = new ArrayList<>();
 
-                    for (QueryDocumentSnapshot document : task.getResult())
-                    {
-                        if (document == null)
-                        {
-                            Log.d("queryPledgesForViewer", "[ERROR] onComplete: grabbed a document which null");
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document == null) {
+                            // Failing silently, since it's the best we can hope for
+                            Log.d(TAG, "[ERROR] onComplete: grabbed a document which was null");
                             return;
                         }
 
                         if (document.exists()) {
-                            String TAG = "queryPledgesForViewer";
-                            Log.d(TAG, "onComplete: Got a user!");
                             Log.d(TAG, "onComplete: user first name: " + document.getData().get(FIRST_NAME));
                             outputList.add(document.getData());
                         }
                     }
 
                     fragment.appendList(outputList);
-                }
-                else
-                {
-                    // Error doing query
+                } else {
+                    // More silent fails...
+                    Log.d(TAG, "[ERROR] onComplete: task unsuccessful");
                 }
             }
         });

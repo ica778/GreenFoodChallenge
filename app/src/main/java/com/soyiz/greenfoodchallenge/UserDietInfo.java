@@ -5,15 +5,14 @@ import java.util.Map;
 
 public class UserDietInfo {
     private static final UserDietInfo ourInstance = new UserDietInfo();
-
-    public static UserDietInfo getInstance() {
-        return ourInstance;
-    }
-
     private Map<String, Integer> amountOfProteinMap;
 
     private UserDietInfo() {
         amountOfProteinMap = new HashMap<>();
+    }
+
+    public static UserDietInfo getInstance() {
+        return ourInstance;
     }
 
     // Sets the amount in grams of a given protein
@@ -30,7 +29,7 @@ public class UserDietInfo {
     public int getTotalAmountOfProteinGrams() {
         int sumOfAllProteinGrams = 0;
         for (int amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
-            sumOfAllProteinGrams += (int) amountOfCurrentProteinGrams;
+            sumOfAllProteinGrams += amountOfCurrentProteinGrams;
         }
         return sumOfAllProteinGrams;
     }

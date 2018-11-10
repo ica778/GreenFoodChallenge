@@ -11,14 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +22,7 @@ import java.util.HashMap;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
-    private Button   updateprofile;
+    private Button updateprofile;
     private Button signOutButton;
     private Button signInButton;
     private Button aboutPageBtn;
@@ -148,7 +141,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
 
 
-
         //TODO passing when sign in
         User user = new User();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -159,9 +151,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user.setAlias(alias);
         user.setCity(city);
 
-      FirestoreHelper helper = new FirestoreHelper();
+        FirestoreHelper helper = new FirestoreHelper();
         helper.getUserTemplate();
-      helper.pushUserDocument(user);
+        helper.pushUserDocument(user);
 
         //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
