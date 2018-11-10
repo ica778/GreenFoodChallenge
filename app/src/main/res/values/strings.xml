@@ -118,8 +118,9 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb254721118525412</string>
 
     <!-- TODO: add consumer key and secret when available -->
-    <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
-    <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+    <string name="twitter_consumer_key" translatable="false">6hAtWCzYmqeZ9Ec0pQqxbysrr</string>
+    <string name="twitter_consumer_secret" translatable="false">cXrj3MUjnD2ETeXgXcAZ1DmKxkA7upIBlYiD4a0DgJjrrRQFtc
+    </string>
 
     <string name="sign_in_btn_txt">Sign in</string>
     <string name="sign_out_btn_txt">Sign out</string>
@@ -130,5 +131,8 @@
     <string name="last_name">Last Name</string>
     <string name="alias">Alias</string>
     <string name="choose_city">Choose City</string>
+
+    <string name="toast_sign_out">Signed out!</string>
+    <string name="toast_already_signed_in">Already signed in!</string>
 
 </resources>
