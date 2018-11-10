@@ -1,6 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -13,18 +14,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-    private FragmentManager fragmentManager;
+    public static final int RC_LOGIN_ACTIVITY = 123;
+
+    public static final String TAG = "MainActivity";
+    public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
+    public static final String FRAGMENT_ECO = "fragment_Eco";
+    public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
 
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
     private Fragment userFragment = null;
+    public static final String FRAGMENT_USER = "fragment_User";
+    public static final String CURRENT_FRAGMENT = "current_Fragment";
+    private static String previousFragment = null;
+    private FragmentManager fragmentManager = null;
+    private BottomNavigationView bottomNavigationView = null;
+    private String currentFragment = null;
 
     @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
@@ -51,52 +64,104 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void startLogin() {
+        startActivityForResult(new Intent(this, LoginActivity.class), RC_LOGIN_ACTIVITY);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(TAG, "onDestroy: saving current fragment as " + currentFragment);
+        previousFragment = currentFragment;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d(TAG, "onCreate");
+
+//        Debug code for getting facebook login hash
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(
+//                    "com.soyiz.greenfoodchallenge",
+//                    PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d(TAG, Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Log.d(TAG, "onCreate: name not found exception");
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.d(TAG, "onCreate: no such algorithm exception");
+//        }
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser == null) {
+            Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
+            startLogin();
+
+            return;
+        }
+
+        if (User.getCurrent().getFirebaseUser() == null) {
+            User.getCurrent().setFirebaseUser(currentUser);
+        }
+
+        if (previousFragment != null) {
+            currentFragment = previousFragment;
+            Log.d(TAG, "onCreate: currentFragment set as " + previousFragment);
+        } else {
+            currentFragment = FRAGMENT_PLEDGE;
+            Log.d(TAG, "onCreate: currentFragment defaulting to " + FRAGMENT_PLEDGE);
+        }
+
+        setContentView(R.layout.activity_main);
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
-        setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-        disableShiftMode(bottomNavigationView);
-
-        /* TODO be uncommented out after bug fix, will open to log in page when app opens if that is what we want
-        FirebaseUser currentUser =
-                FirebaseAuth.getInstance().getCurrentUser();
-
-        if (currentUser == null) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return;
-        }*/
-
         fragmentManager = getSupportFragmentManager();
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+
+        disableShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottom_nav_item_EatingHabits:
-                        changeToEatingHabitsFragment();
+                        changeFragment(FRAGMENT_EATING_HABITS);
                         return true;
                     case R.id.bottom_nav_item_Eco:
-                        changeToEcoFragment();
+                        changeFragment(FRAGMENT_ECO);
                         return true;
                     case R.id.bottom_nav_item_Pledge:
-                        changeToPledgeFragment();
+                        changeFragment(FRAGMENT_PLEDGE);
                         return true;
                     case R.id.bottom_nav_item_User:
-                        changeToUserFragment();
+                        changeFragment(FRAGMENT_USER);
                         return true;
                 }
                 return false;
             }
         });
 
-        bottomNavigationView.getMenu().findItem(R.id.bottom_nav_item_Pledge).setChecked(true);
-        changeToPledgeFragment();
+        changeFragment(currentFragment);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_LOGIN_ACTIVITY) {
+            Log.d(TAG, "onActivityResult: successful login");
+        } else {
+            Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
+        }
     }
 
     private void fragmentReplaceTransaction(Fragment fragment) {
@@ -110,44 +175,57 @@ public class MainActivity extends AppCompatActivity {
                 .setText(id);
     }
 
-    // Can't make these one function, due to having to call a specific constructor for each one
-    private void changeToEatingHabitsFragment() {
+    private void changeFragment(String fragment) {
         if (eatingHabitsFragment == null) {
             eatingHabitsFragment = new EatingHabitsFragment();
         }
 
-        Log.d(TAG, "changing to EatingHabits fragment");
-        fragmentReplaceTransaction(eatingHabitsFragment);
-        setActionBarTitle(R.string.eating_habits_name);
-    }
-
-    private void changeToEcoFragment() {
         if (ecoFragment == null) {
             ecoFragment = new EcoFragment();
         }
 
-        Log.d(TAG, "changing to Eco fragment");
-        fragmentReplaceTransaction(ecoFragment);
-        setActionBarTitle(R.string.eco_name);
-    }
-
-    private void changeToPledgeFragment() {
         if (pledgeFragment == null) {
             pledgeFragment = new PledgeFragment();
         }
 
-        Log.d(TAG, "changing to Pledge fragment");
-        fragmentReplaceTransaction(pledgeFragment);
-        setActionBarTitle(R.string.pledge_name);
-    }
-
-    private void changeToUserFragment() {
         if (userFragment == null) {
             userFragment = new UserFragment();
         }
 
-        Log.d(TAG, "changing to User fragment");
-        fragmentReplaceTransaction(userFragment);
-        setActionBarTitle(R.string.user_name);
+        Fragment newFragment = null;
+        int newFragmentNavID = 0;
+        int newFragmentNameID = 0;
+
+        switch (fragment) {
+            case FRAGMENT_EATING_HABITS:
+                newFragment = eatingHabitsFragment;
+                newFragmentNavID = R.id.bottom_nav_item_EatingHabits;
+                newFragmentNameID = R.string.eating_habits_name;
+                break;
+
+            case FRAGMENT_ECO:
+                newFragment = ecoFragment;
+                newFragmentNavID = R.id.bottom_nav_item_Eco;
+                newFragmentNameID = R.string.eco_name;
+                break;
+
+            case FRAGMENT_PLEDGE:
+                newFragment = pledgeFragment;
+                newFragmentNavID = R.id.bottom_nav_item_Pledge;
+                newFragmentNameID = R.string.pledge_name;
+                break;
+
+            case FRAGMENT_USER:
+                newFragment = userFragment;
+                newFragmentNavID = R.id.bottom_nav_item_User;
+                newFragmentNameID = R.string.user_name;
+                break;
+        }
+
+        Log.d(TAG, "changing to " + fragment + " fragment");
+        currentFragment = fragment;
+        fragmentReplaceTransaction(newFragment);
+        bottomNavigationView.getMenu().findItem(newFragmentNavID).setChecked(true);
+        setActionBarTitle(newFragmentNameID);
     }
 }

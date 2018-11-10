@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,52 +65,44 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.update_profile_btn) {
-            //However sign in is implemented, just put this line when called and it should take care of the rest
-            Update();
-            //startActivity(new Intent(getActivity(), LoginActivity.class));
-            //getActivity().finish();
 
-            ////////////////////////////////////////////////////////////////////////////////////////////
-        }
+        switch (view.getId()) {
+            case R.id.update_profile_btn:
+                Update();
+                break;
 
-        if (view.getId() == R.id.sign_out_btn) {
-            //However sign out is implemented, just put these lines when called and it should take care of the rest
-            AuthUI.getInstance()
-                    .signOut(getActivity())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // user is now signed out
-                            startActivity(new Intent(getActivity(), LoginActivity.class));
-                            getActivity().finish();
-                        }
-                    });
-            /////////////////////////////////////////////////////////////////////////////////////
-        }
+            case R.id.sign_out_btn:
+                AuthUI.getInstance()
+                        .signOut(getActivity())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // user is now signed out
+                                Log.d(MainActivity.TAG, "UserFragment: user signed out");
+                                Toast.makeText(getContext(), getResources().getString(R.string.toast_sign_out)
+                                        , Toast.LENGTH_SHORT).show();
 
-        if (view.getId() == R.id.sign_in_btn) {
-            //However delete user is implemented, just put these lines when called and it should take care of the rest
-            AuthUI.getInstance()
-                    .delete(getActivity())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // ...
-                            startActivity(new Intent(getActivity(),
-                                    LoginActivity.class));
-                            getActivity().finish();
-                        }
-                    });
-            ///////////////////////////////////////////////////////////////////////////////////////
-        }
+                                ((MainActivity) getActivity()).startLogin();
+                            }
+                        });
+                break;
 
-        if (view.getId() == R.id.about_page_btn) {
-            startActivity(new Intent(getContext(), AboutActivity.class));
+            case R.id.sign_in_btn:
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    ((MainActivity) getActivity()).startLogin();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.toast_already_signed_in), Toast.LENGTH_SHORT).show();
+                }
 
-        }
+                break;
 
-        if (view.getId() == R.id.iv_head) {
-            selectImage();
+            case R.id.about_page_btn:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
+                break;
+
+            case R.id.iv_head:
+                selectImage();
+                break;
+
         }
     }
 
@@ -151,7 +144,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user.setAlias(alias);
         user.setCity(city);
 
-        FirestoreHelper helper = new FirestoreHelper();
+        FirebaseHelper helper = new FirebaseHelper();
         helper.getUserTemplate();
         helper.pushUserDocument(user);
 

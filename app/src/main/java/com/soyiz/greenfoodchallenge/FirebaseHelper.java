@@ -16,7 +16,7 @@ import java.util.Map;
 // database reference for a long time. Usage case is then to instantiate a helper object for usage
 // whenever it's needed. Since it only grabs reference, it's cheap to create.
 
-public class FirestoreHelper {
+public class FirebaseHelper {
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
@@ -138,6 +138,12 @@ public class FirestoreHelper {
 
                 if (task.isSuccessful()) {
                     List<Map<String, Object>> outputList = new ArrayList<>();
+
+                    QuerySnapshot result = task.getResult();
+                    if (result == null) {
+                        Log.d(TAG, "[ERROR] onComplete: task result was null!");
+                        return;
+                    }
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document == null) {

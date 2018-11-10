@@ -45,7 +45,7 @@ public class PledgeFragment extends Fragment {
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
 
-        (new FirestoreHelper()).queryPledgesForViewer(this);
+        (new FirebaseHelper()).queryPledgesForViewer(this);
     }
 
     // Handles events on spinner
@@ -97,14 +97,14 @@ public class PledgeFragment extends Fragment {
     // Returns string to show on list_view for pledge
     private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
         String userData = "";
-        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirestoreHelper.PLEDGE);
+        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirebaseHelper.PLEDGE);
 
         userData = userData +
-                userToShow.get(FirestoreHelper.FIRST_NAME) +
+                userToShow.get(FirebaseHelper.FIRST_NAME) +
                 " " +
-                userToShow.get(FirestoreHelper.LAST_NAME) +
+                userToShow.get(FirebaseHelper.LAST_NAME) +
                 ": " +
-                pledgeMap.get(FirestoreHelper.CURRENT_CO2E);
+                pledgeMap.get(FirebaseHelper.CURRENT_CO2E);
         return userData;
     }
 
@@ -113,8 +113,8 @@ public class PledgeFragment extends Fragment {
         for (Map<String, Object> map : listToAppend) {
             listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
 
-            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirestoreHelper.PLEDGE);
-            totalGoalC02e += (Double) pledgeMap.get(FirestoreHelper.GOAL_CO2E);
+            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirebaseHelper.PLEDGE);
+            totalGoalC02e += (Double) pledgeMap.get(FirebaseHelper.GOAL_CO2E);
             amountOfPeoplePledged += 1;
         }
 
