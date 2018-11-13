@@ -57,10 +57,10 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         mScrollView.smoothScrollBy(0, 10000);
     }
 
-    /* This method checks if user has entered at least one input. If they have we set the blank spots to 0 and
-     * the part the user inputted as the number they entered. Returns true if they entered at least one input and
-     * false otherwise. */
-    private boolean hasUserInputed() {
+    /* This method checks if user has entered at least one valid input which is at least 1 number greater than 0.
+     * If they have we set the blank spots to 0 and the part the user inputted as the number they entered. Returns
+     * true if they entered at least one valid input and false otherwise. */
+    private boolean userInput() {
         String beef = et_beef.getText().toString().trim();
         String chicken = et_chicken.getText().toString().trim();
         String pork = et_pork.getText().toString().trim();
@@ -69,43 +69,43 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         String vegetable = et_vegetable.getText().toString().trim();
         String egg = et_egg.getText().toString().trim();
         boolean userHasEnteredInput = false;
-        if (TextUtils.isEmpty(beef)) {
+        if (TextUtils.isEmpty(beef) || Integer.parseInt(beef) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("beef", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("beef", Integer.parseInt(beef));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(chicken)) {
+        if (TextUtils.isEmpty(chicken) || Integer.parseInt(chicken) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", Integer.parseInt(chicken));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(pork)) {
+        if (TextUtils.isEmpty(pork) || Integer.parseInt(pork) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("pork", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("pork", Integer.parseInt(pork));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(fish)) {
+        if (TextUtils.isEmpty(fish) || Integer.parseInt(fish) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("fish", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("fish", Integer.parseInt(fish));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(bean)) {
+        if (TextUtils.isEmpty(bean) || Integer.parseInt(bean) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("bean", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("bean", Integer.parseInt(bean));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(vegetable)) {
+        if (TextUtils.isEmpty(vegetable) || Integer.parseInt(vegetable) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", Integer.parseInt(vegetable));
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(egg)) {
+        if (TextUtils.isEmpty(egg) || Integer.parseInt(egg) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("egg", 0);
         } else {
             UserDietInfo.getInstance().setAmountOfProteinGrams("egg", Integer.parseInt(egg));
@@ -115,7 +115,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     }
 
     // This method calculates the C02e from the user's input.
-    private boolean calculateUserInput() {
+    private void calculateUserInput() {
         double total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
                 + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
                 + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
@@ -125,7 +125,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
         long kgOfC02eInDiet = Math.round(total);
         double tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
-        String stringToShow = getResources().getString(R.string.co2_100g_n);
+        String stringToShow = getResources().getString(R.string.calculator_results);
         double regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
         double litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
         int currentPopulationOfArea = 2463000; // Current population of metro vancouver
@@ -138,12 +138,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonnesC02e * currentPopulationOfArea),
                 Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
         tv_result.setText(howDoesUsersDietCompare);
-        return true;
     }
 
     @Override
     public void onClick(View view) {
-        if (hasUserInputed() == true) {
+        if (userInput() == true) {
             calculateUserInput();
             new CountDownTimer(100, 100) {
                 public void onTick(long millisUntilFinished) {
@@ -155,7 +154,8 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 }
             }.start();
         } else {
-            Toast.makeText(getContext(), getResources().getString(R.string.calculator_toast), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

@@ -18,11 +18,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/eatingHabitsCalculatorTitle"
                 android:layout_width="match_parent"
                 android:layout_height="67dp"
                 android:gravity="center"
-                android:text="Enter the amount of each food you eat below to calculate the C02e produced"
+                android:text="Enter the amount of each food you eat below to calculate the C02e "
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <LinearLayout
@@ -241,9 +241,19 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_result_title"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\n\nYour Carbon Footprint:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
                 android:id="@+id/tv_result"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         </LinearLayout>
     </ScrollView>
