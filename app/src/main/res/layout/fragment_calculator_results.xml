@@ -5,9 +5,16 @@
              android:layout_height="match_parent"
              tools:context=".CalculatorResultsFragment">
 
-    <com.github.mikephil.charting.charts.PieChart
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/pieChartDietProportions"></com.github.mikephil.charting.charts.PieChart>
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChartDietProportions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
