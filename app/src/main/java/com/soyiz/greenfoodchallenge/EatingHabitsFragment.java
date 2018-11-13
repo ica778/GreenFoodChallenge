@@ -146,9 +146,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
             calculateUserInput();
             new CountDownTimer(100, 100) {
                 public void onTick(long millisUntilFinished) {
-
                 }
-
                 public void onFinish() {
                     mScrollView.smoothScrollBy(0, 10000);
                 }
