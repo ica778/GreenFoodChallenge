@@ -1,6 +1,5 @@
 package com.soyiz.greenfoodchallenge;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,12 +60,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
 
         if (userInput() == true) {
-            CalculatorResultsFragment nextFrag= new CalculatorResultsFragment();
+            CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(((ViewGroup)getView().getParent()).getId(), nextFrag,"findThisFragment")
+                    .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
                     .addToBackStack(null)
                     .commit();
-
             calculateUserInput();
         } else {
             Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
