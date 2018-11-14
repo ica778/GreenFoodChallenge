@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -20,15 +21,12 @@ import java.util.ArrayList;
  */
 public class CalculatorResultsFragment extends Fragment {
 
-    private PieChart dietProportionsPieChart;
-    private float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-    private String[] xData = {"Mitch", "Jessica" , "Mohammad" , "Kelsey", "Sam", "Robert", "Ashley"};
+    private PieChart dietProportionsPieChartView;
+    private PieChart dietC02ePercentsPieChartView;
 
     public CalculatorResultsFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,18 +35,90 @@ public class CalculatorResultsFragment extends Fragment {
         initView(view);
         createDietProportionsPieChart(view);
 
-
         return view;
     }
 
     private void initView(View view) {
-        dietProportionsPieChart = view.findViewById(R.id.pieChartDietProportions);
+        dietProportionsPieChartView = view.findViewById(R.id.pieChartDietProportions);
     }
 
-    private void createDietProportionsPieChart(View view) {
+    private void createDietC02ePercents(View view) {
+
+        float totalC02eFootprintKG = ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2) +
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2) / 1000);
+
+        float[] yData = {
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2) / 1000) / totalC02eFootprintKG,
+                ((UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2) / 1000) / totalC02eFootprintKG
+        };
+        String[] xData = {
+                "beef",
+                "chicken",
+                "pork",
+                "fish",
+                "bean",
+                "vegetable",
+                "egg"
+        };
+
         ArrayList<PieEntry> yEntries = new ArrayList<>();
         ArrayList<String> xEntries = new ArrayList<>();
 
+        for (int i = 0; i < yData.length; i++) {
+            yEntries.add(new PieEntry(yData[i], i));
+        }
+        for (int i = 1; i < xData.length; i++) {
+            xEntries.add(xData[i]);
+        }
+
+        PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "Protein Quantity");
+        dietC02ePercentsPieDataSet.setSliceSpace(1);
+        dietC02ePercentsPieDataSet.setValueTextSize(15);
+        Description description = new Description();
+        description.setTextColor(ColorTemplate.VORDIPLOM_COLORS[2]);
+        description.setText("Protein proportions %");
+        dietC02ePercentsPieChartView.setDescription(description);
+        dietC02ePercentsPieChartView.setCenterText("C02e Footprint Proportions");
+        dietC02ePercentsPieChartView.setRotationEnabled(false);
+
+        PieData pieData = new PieData(dietC02ePercentsPieDataSet);
+        dietC02ePercentsPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        dietC02ePercentsPieChartView.setData(pieData);
+        dietC02ePercentsPieChartView.invalidate();
+    }
+
+    private void createDietProportionsPieChart(View view) {
+        float totalProteinGrams = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+        float[] yData = {
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") / totalProteinGrams) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") / totalProteinGrams) * 100
+        };
+        String[] xData = {
+                "beef",
+                "chicken",
+                "pork",
+                "fish",
+                "bean",
+                "vegetable",
+                "egg"
+        };
+        ArrayList<PieEntry> yEntries = new ArrayList<>();
+        ArrayList<String> xEntries = new ArrayList<>();
 
         for (int i = 0; i < yData.length; i++) {
             yEntries.add(new PieEntry(yData[i], i));
@@ -60,14 +130,17 @@ public class CalculatorResultsFragment extends Fragment {
         PieDataSet dietProportionsPieDataSet = new PieDataSet(yEntries, "Protein Quantity");
         dietProportionsPieDataSet.setSliceSpace(1);
         dietProportionsPieDataSet.setValueTextSize(15);
+        Description description = new Description();
+        description.setTextColor(ColorTemplate.VORDIPLOM_COLORS[2]);
+        description.setText("C02e Footprint Of Each Protein");
+        dietProportionsPieChartView.setDescription(description);
+        dietProportionsPieChartView.setCenterText("C02e Footprint Of Each Protein");
+        dietProportionsPieChartView.setRotationEnabled(false);
 
         PieData pieData = new PieData(dietProportionsPieDataSet);
-
         dietProportionsPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        
-        dietProportionsPieChart.setData(pieData);
-        dietProportionsPieChart.invalidate();
-
+        dietProportionsPieChartView.setData(pieData);
+        dietProportionsPieChartView.invalidate();
     }
 
 
