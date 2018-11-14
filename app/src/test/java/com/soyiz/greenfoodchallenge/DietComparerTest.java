@@ -38,8 +38,8 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2ePercent(older, newer);
-        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float CO2e = (float)comparer.compareCO2ePercent(older, newer);
+        float difference = (float)(older.getYearlyCO2e() - newer.getYearlyCO2e());
         float expected = (float) Math.round(100 * difference / older.getYearlyCO2e());
 
         // Assert CO2e saved is calculated correctly ((older-newer)/older*100)
@@ -51,8 +51,8 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2e = comparer.compareCO2eKilos(older, newer);
-        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float CO2e = (float)comparer.compareCO2eKilos(older, newer);
+        float difference = (float)(older.getYearlyCO2e() - newer.getYearlyCO2e());
 
         // Assert CO2e saved is calculated correctly (older diet - newer diet)
         assertEquals((float) Math.round(difference), CO2e, 0);
@@ -63,8 +63,8 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float CO2eVancouver = comparer.getCO2eSavedInVancouver(older, newer);
-        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float CO2eVancouver = (float)comparer.getCO2eSavedInVancouver(older, newer);
+        float difference = (float)(older.getYearlyCO2e() - newer.getYearlyCO2e());
         float expected = (float) Math.round(22.167f * difference);
 
         /* Assert CO2e saved in Vancouver is correct (~22.167 million non vegetarians
@@ -77,8 +77,8 @@ public class DietComparerTest {
         DietComparer comparer = new DietComparer();
         setNewer();
         setOlder();
-        float litresOfGasoline = comparer.getEquivalentLitresOfGasoline(older, newer);
-        float difference = older.getYearlyCO2e() - newer.getYearlyCO2e();
+        float litresOfGasoline = (float)comparer.getEquivalentLitresOfGasoline(older, newer);
+        float difference = (float)(older.getYearlyCO2e() - newer.getYearlyCO2e());
         float expected = (float) Math.round(difference / 2.31f);
 
         // Assert proper amount of equivalent gas (2.31 kg of CO2 per L of gas burned)
