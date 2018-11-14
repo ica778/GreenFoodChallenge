@@ -43,17 +43,17 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView(View view) {
-        et_beef = (EditText) view.findViewById(R.id.et_beef);
-        et_chicken = (EditText) view.findViewById(R.id.et_chicken);
-        et_pork = (EditText) view.findViewById(R.id.et_pork);
-        et_fish = (EditText) view.findViewById(R.id.et_fish);
-        et_bean = (EditText) view.findViewById(R.id.et_beans);
-        et_vegetable = (EditText) view.findViewById(R.id.et_vegetables);
-        et_egg = (EditText) view.findViewById(R.id.et_egg);
+        et_beef = view.findViewById(R.id.et_beef);
+        et_chicken = view.findViewById(R.id.et_chicken);
+        et_pork = view.findViewById(R.id.et_pork);
+        et_fish = view.findViewById(R.id.et_fish);
+        et_bean = view.findViewById(R.id.et_beans);
+        et_vegetable = view.findViewById(R.id.et_vegetables);
+        et_egg = view.findViewById(R.id.et_egg);
         btn_total = view.findViewById(R.id.btn_total);
         tv_result = view.findViewById(R.id.tv_result);
         btn_total.setOnClickListener(this);
-        mScrollView = (ScrollView) view.findViewById(R.id.mScrollView);
+        mScrollView = view.findViewById(R.id.mScrollView);
         mScrollView.smoothScrollBy(0, 10000);
     }
 
@@ -116,18 +116,18 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     // This method calculates the C02e from the user's input.
     private boolean calculateUserInput() {
-        float total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+        double total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
                 + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
                 + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
                 + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
                 + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
                 + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
                 + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
-        Integer kgOfC02eInDiet = Math.round(total);
-        float tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
+        long kgOfC02eInDiet = Math.round(total);
+        double tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
         String stringToShow = getResources().getString(R.string.co2_100g_n);
-        float regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
-        float litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
+        double regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
+        double litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
         int currentPopulationOfArea = 2463000; // Current population of metro vancouver
         String howDoesUsersDietCompare = String.format(stringToShow,
                 tonnesOfC02eInDiet,

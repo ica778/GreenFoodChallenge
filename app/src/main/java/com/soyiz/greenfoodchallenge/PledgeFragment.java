@@ -3,18 +3,14 @@ package com.soyiz.greenfoodchallenge;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.soyiz.greenfoodchallenge.FirestoreHelper.FIRST_NAME;
 
 public class PledgeFragment extends Fragment {
 
@@ -22,8 +18,6 @@ public class PledgeFragment extends Fragment {
     private Spinner regionShowSpinner;
     private ArrayAdapter adapter;
     private TextView showInformationAboutPledgesInMunicipality;
-    private FirestoreHelper accessPledges = new FirestoreHelper();
-    private Map<String, Object> userPledgeInformation;
     private List<String> listOfPledgesToShow;
     private double totalGoalC02e;
     private int amountOfPeoplePledged;
@@ -46,12 +40,12 @@ public class PledgeFragment extends Fragment {
     // assigns values to variables
     private void initView(View view) {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
-        pledgeListView = (ListView) view.findViewById(R.id.listViewPledges);
+        pledgeListView = view.findViewById(R.id.listViewPledges);
         listOfPledgesToShow = new ArrayList<String>();
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
 
-        accessPledges.queryPledgesForViewer(this);
+        (new FirebaseHelper()).queryPledgesForViewer(this);
     }
 
     // Handles events on spinner
@@ -60,7 +54,7 @@ public class PledgeFragment extends Fragment {
                 getActivity(),
                 R.array.municipalities_spinner,
                 android.R.layout.simple_spinner_item);
-        regionShowSpinner = (Spinner) view.findViewById(R.id.selectRegionSpinner);
+        regionShowSpinner = view.findViewById(R.id.selectRegionSpinner);
         regionShowSpinner.setAdapter(adapter);
         regionShowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -79,26 +73,22 @@ public class PledgeFragment extends Fragment {
         });
         String stringToShow = getResources().getString(R.string.show_pledge_information);
         // String, int, float, float, float
-        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(0), getAverageC02Pledged() );
+        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(0), getAverageC02Pledged());
         showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
+    }
+
+    private ArrayAdapter<String> makeAdapterForList() {
+        return new ArrayAdapter<String>(getActivity(), R.layout.list_view, listOfPledgesToShow);
     }
 
     // updates listOfPledgesToShow list to have correct pledges and returns whether no municipality was chosen
     private void populateListView(String municipalityPicked) {
         if (municipalityPicked.equals("No municipality chosen")) {
             listOfPledgesToShow.clear();
-            userPledgeInformation = accessPledges.getUserTemplate();
             listOfPledgesToShow.add("Please Choose a municipality");
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    getActivity(),
-                    R.layout.list_view,
-                    listOfPledgesToShow);
-            userPledgeInformation = accessPledges.getUserTemplate();
-            pledgeListView.setAdapter(adapter);
-            registerClickCallBackListView();
-            return;
-        }
-        else {
+
+            pledgeListView.setAdapter(makeAdapterForList());
+        } else {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
         }
@@ -107,30 +97,28 @@ public class PledgeFragment extends Fragment {
     // Returns string to show on list_view for pledge
     private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
         String userData = "";
-        Map<String, Object> pledgeMap = (Map<String, Object>)userToShow.get(FirestoreHelper.PLEDGE);
+        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirebaseHelper.PLEDGE);
 
         userData = userData +
-                userToShow.get(FirestoreHelper.FIRST_NAME) +
+                userToShow.get(FirebaseHelper.FIRST_NAME) +
                 " " +
-                userToShow.get(FirestoreHelper.LAST_NAME) +
+                userToShow.get(FirebaseHelper.LAST_NAME) +
                 ": " +
-                pledgeMap.get(accessPledges.CURRENT_CO2E);
+                pledgeMap.get(FirebaseHelper.CURRENT_CO2E);
         return userData;
     }
 
     // Appends list in argument to listOfPledgesToShow and updates list_view
-    public void appendList (List<Map<String, Object>> listToAppend) {
+    public void appendList(List<Map<String, Object>> listToAppend) {
         for (Map<String, Object> map : listToAppend) {
             listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
-            totalGoalC02e += (Double)(((Map<String, Object>)map.get(accessPledges.PLEDGE)).get(accessPledges. GOAL_CO2E));
-            amountOfPeoplePledged++;
+
+            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirebaseHelper.PLEDGE);
+            totalGoalC02e += (Double) pledgeMap.get(FirebaseHelper.GOAL_CO2E);
+            amountOfPeoplePledged += 1;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.list_view,
-                listOfPledgesToShow);
-        userPledgeInformation = accessPledges.getUserTemplate();
-        pledgeListView.setAdapter(adapter);
+
+        pledgeListView.setAdapter(makeAdapterForList());
     }
 
     // Handles click events on ListView
