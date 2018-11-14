@@ -25,27 +25,26 @@ import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
 public class MainActivity extends AppCompatActivity {
 
     // Set to true to disable mandatory logins and enable facebook hash printing
-
     public static final boolean DEBUG_MODE = true;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
 
     public static final String TAG = "MainActivity";
-    public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
-    public static final String FRAGMENT_ECO = "fragment_Eco";
-    public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
 
+    public static final String CURRENT_FRAGMENT = "current_Fragment";
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
     private Fragment userFragment = null;
+    public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
+    public static final String FRAGMENT_ECO = "fragment_Eco";
+    public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
     public static final String FRAGMENT_USER = "fragment_User";
-    public static final String CURRENT_FRAGMENT = "current_Fragment";
     private static String previousFragment = null;
+
     private FragmentManager fragmentManager = null;
     private BottomNavigationView bottomNavigationView = null;
     private String currentFragment = null;
@@ -123,14 +122,17 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // Sets the top bar such that we can change the text
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
         fragmentManager = getSupportFragmentManager();
         bottomNavigationView = findViewById(R.id.bottom_nav);
 
+        // Stops the bottom nav bar from behaving weirdly
         disableShiftMode(bottomNavigationView);
 
+        // Sets up transitions when the user taps on the bottom nav buttons
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
