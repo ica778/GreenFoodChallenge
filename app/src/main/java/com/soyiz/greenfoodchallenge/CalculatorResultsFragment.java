@@ -31,7 +31,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calculator_results, container, false);
         initView(view);
-        createDietProportionsPieChart(view);
+        //createDietProportionsPieChart(view);
 
 
         return view;

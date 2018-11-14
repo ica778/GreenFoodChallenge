@@ -1,7 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -55,6 +55,22 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         btn_total.setOnClickListener(this);
         mScrollView = view.findViewById(R.id.mScrollView);
         mScrollView.smoothScrollBy(0, 10000);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (userInput() == true) {
+            CalculatorResultsFragment nextFrag= new CalculatorResultsFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup)getView().getParent()).getId(), nextFrag,"findThisFragment")
+                    .addToBackStack(null)
+                    .commit();
+
+            calculateUserInput();
+        } else {
+            Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /* This method checks if user has entered at least one valid input which is at least 1 number greater than 0.
@@ -140,20 +156,5 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         tv_result.setText(howDoesUsersDietCompare);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (userInput() == true) {
-            calculateUserInput();
-            new CountDownTimer(100, 100) {
-                public void onTick(long millisUntilFinished) {
-                }
-                public void onFinish() {
-                    mScrollView.smoothScrollBy(0, 10000);
-                }
-            }.start();
-        } else {
-            Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }
