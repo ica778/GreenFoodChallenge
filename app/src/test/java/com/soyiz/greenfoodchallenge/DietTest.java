@@ -83,7 +83,7 @@ public class DietTest {
         proteinPercentMap.put(ProteinSource.Fish, 1.0f);
 
         // Weekly serving in grams for protein
-        float weeklyServing = ProteinSource.getDailyServing() * 7;
+        float weeklyServing = (float)ProteinSource.getDailyServing() * 7;
         for (Map.Entry<ProteinSource, Float> pair : proteinPercentMap.entrySet()) {
 
             // Weekly serving in grams for a specific protein
