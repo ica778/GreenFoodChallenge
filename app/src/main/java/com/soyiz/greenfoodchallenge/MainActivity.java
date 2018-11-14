@@ -19,7 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Field;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final boolean DEBUG_MODE = true;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
 
@@ -100,11 +103,13 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (currentUser == null) {
-            Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
-            startLogin();
+        if (DEBUG_MODE == false) {
+            if (currentUser == null) {
+                Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
+                startLogin();
 
-            return;
+                return;
+            }
         }
 
         if (User.getCurrent().getFirebaseUser() == null) {
