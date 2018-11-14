@@ -30,10 +30,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
     public static final String FRAGMENT_ECO = "fragment_Eco";
     public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
+    public static final String FRAGMENT_RESTAURANT = "fragment_Restaurant";
 
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
+    private Fragment restaurantFragment = null;
     private Fragment userFragment = null;
     public static final String FRAGMENT_USER = "fragment_User";
     public static final String CURRENT_FRAGMENT = "current_Fragment";
@@ -147,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_nav_item_Pledge:
                         changeFragment(FRAGMENT_PLEDGE);
                         return true;
+                    case R.id.bottom_nav_item_Restaurant:
+                        changeFragment(FRAGMENT_RESTAURANT);
+                        return true;
                     case R.id.bottom_nav_item_User:
                         changeFragment(FRAGMENT_USER);
                         return true;
@@ -193,6 +198,10 @@ public class MainActivity extends AppCompatActivity {
             pledgeFragment = new PledgeFragment();
         }
 
+        if (restaurantFragment == null) {
+            restaurantFragment = new RestaurantFragment();
+        }
+
         if (userFragment == null) {
             userFragment = new UserFragment();
         }
@@ -218,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
                 newFragment = pledgeFragment;
                 newFragmentNavID = R.id.bottom_nav_item_Pledge;
                 newFragmentNameID = R.string.pledge_name;
+                break;
+
+            case FRAGMENT_RESTAURANT:
+                newFragment = restaurantFragment;
+                newFragmentNavID = R.id.bottom_nav_item_Restaurant;
+                newFragmentNameID = R.string.restaurant_name;
                 break;
 
             case FRAGMENT_USER:
