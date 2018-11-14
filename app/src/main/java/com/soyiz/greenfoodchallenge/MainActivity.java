@@ -2,6 +2,9 @@ package com.soyiz.greenfoodchallenge;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -11,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,28 +22,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Field;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Set to true to disable mandatory logins and enable facebook hash printing
     public static final boolean DEBUG_MODE = true;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
 
     public static final String TAG = "MainActivity";
-    public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
-    public static final String FRAGMENT_ECO = "fragment_Eco";
-    public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
-    public static final String FRAGMENT_RESTAURANT = "fragment_Restaurant";
 
+    public static final String CURRENT_FRAGMENT = "current_Fragment";
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
     private Fragment restaurantFragment = null;
     private Fragment userFragment = null;
+    public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
+    public static final String FRAGMENT_ECO = "fragment_Eco";
+    public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
     public static final String FRAGMENT_USER = "fragment_User";
-    public static final String CURRENT_FRAGMENT = "current_Fragment";
     private static String previousFragment = null;
+
     private FragmentManager fragmentManager = null;
     private BottomNavigationView bottomNavigationView = null;
     private String currentFragment = null;
@@ -88,24 +94,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
 //        Debug code for getting facebook login hash
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "com.soyiz.greenfoodchallenge",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d(TAG, Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//            Log.d(TAG, "onCreate: name not found exception");
-//        } catch (NoSuchAlgorithmException e) {
-//            Log.d(TAG, "onCreate: no such algorithm exception");
-//        }
+        if (DEBUG_MODE) {
+            getHashForFacebook();
+        }
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (DEBUG_MODE == false) {
+        if (!DEBUG_MODE) {
             if (currentUser == null) {
                 Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
                 startLogin();
@@ -128,14 +123,17 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // Sets the top bar such that we can change the text
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
         fragmentManager = getSupportFragmentManager();
         bottomNavigationView = findViewById(R.id.bottom_nav);
 
+        // Stops the bottom nav bar from behaving weirdly
         disableShiftMode(bottomNavigationView);
 
+        // Sets up transitions when the user taps on the bottom nav buttons
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -171,6 +169,23 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onActivityResult: successful login");
         } else {
             Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
+        }
+    }
+
+    private void getHashForFacebook() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.soyiz.greenfoodchallenge",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d(TAG, "Facebook hash: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d(TAG, "onCreate: name not found exception");
+        } catch (NoSuchAlgorithmException e) {
+            Log.d(TAG, "onCreate: no such algorithm exception");
         }
     }
 
