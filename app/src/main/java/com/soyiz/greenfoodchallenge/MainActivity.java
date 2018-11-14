@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
+    private Fragment restaurantFragment = null;
     private Fragment userFragment = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.bottom_nav_item_Pledge:
                             changeToPledgeFragment();
+                            return true;
+                        case R.id.bottom_nav_item_Restaurant:
+                            changeToRestaurantFragment();
                             return true;
                         case R.id.bottom_nav_item_User:
                             changeToUserFragment();
@@ -121,6 +125,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "changing to Pledge fragment");
         fragmentReplaceTransaction(pledgeFragment);
         setActionBarTitle(R.string.pledge_name);
+    }
+
+    private void changeToRestaurantFragment() {
+        if (restaurantFragment == null) {
+            restaurantFragment = new RestaurantFragment();
+        }
+
+        Log.d(TAG, "changing to Restaurant fragment");
+        fragmentReplaceTransaction(restaurantFragment);
+        setActionBarTitle(R.string.restaurant_name);
     }
 
     private void changeToUserFragment() {
