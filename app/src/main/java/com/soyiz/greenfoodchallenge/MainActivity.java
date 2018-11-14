@@ -2,6 +2,9 @@ package com.soyiz.greenfoodchallenge;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -11,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,9 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    // Set to true to disable mandatory logins and enable facebook hash printing
 
     public static final boolean DEBUG_MODE = true;
 
@@ -86,24 +94,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
 
 //        Debug code for getting facebook login hash
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "com.soyiz.greenfoodchallenge",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d(TAG, Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//            Log.d(TAG, "onCreate: name not found exception");
-//        } catch (NoSuchAlgorithmException e) {
-//            Log.d(TAG, "onCreate: no such algorithm exception");
-//        }
+        if (DEBUG_MODE) {
+            getHashForFacebook();
+        }
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (DEBUG_MODE == false) {
+        if (!DEBUG_MODE) {
             if (currentUser == null) {
                 Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
                 startLogin();
@@ -166,6 +163,23 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onActivityResult: successful login");
         } else {
             Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
+        }
+    }
+
+    private void getHashForFacebook() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.soyiz.greenfoodchallenge",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d(TAG, "Facebook hash: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.d(TAG, "onCreate: name not found exception");
+        } catch (NoSuchAlgorithmException e) {
+            Log.d(TAG, "onCreate: no such algorithm exception");
         }
     }
 
