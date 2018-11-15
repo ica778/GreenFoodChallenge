@@ -21,12 +21,12 @@
                     android:layout_gravity="center"
                     android:id="@+id/pieChartDietProportions"
                     android:layout_width="350dp"
-                    android:layout_height="200dp"/>
+                    android:layout_height="350dp"/>
             <com.github.mikephil.charting.charts.PieChart
                     android:layout_gravity="center"
                     android:id="@+id/pieChartDietC02ePercents"
                     android:layout_width="350dp"
-                    android:layout_height="200dp"/>
+                    android:layout_height="350dp"/>
         </LinearLayout>
     </ScrollView>
 
