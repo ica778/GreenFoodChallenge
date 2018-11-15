@@ -144,6 +144,9 @@ public class CalculatorResultsFragment extends Fragment {
         dietC02ePercentsPieChartView.setEntryLabelColor(Color.BLACK);
         dietC02ePercentsPieChartView.setEntryLabelTextSize(10f);
 
+        // Show x axis text
+        dietC02ePercentsPieChartView.setDrawEntryLabels(false);
+
         // Show pie chart
         dietC02ePercentsPieChartView.setData(pieData);
         dietC02ePercentsPieChartView.invalidate();
@@ -212,7 +215,7 @@ public class CalculatorResultsFragment extends Fragment {
         dietProportionsPieChartView.setEntryLabelTextSize(10f);
 
         // Show x axis text
-        dietC02ePercentsPieChartView.setDrawEntryLabels(true);
+        dietProportionsPieChartView.setDrawEntryLabels(false);
 
         // Show pie chart
         dietProportionsPieChartView.setData(pieData);

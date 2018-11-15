@@ -20,6 +20,7 @@
             <TextView
                     android:text="@string/calculator_text1"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content" android:id="@+id/textView1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
@@ -39,6 +40,12 @@
                     android:id="@+id/pieChartDietC02ePercents"
                     android:layout_width="350dp"
                     android:layout_height="350dp"/>
+            <TextView
+                    android:text="@string/calculator_text3"
+                    android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </LinearLayout>
     </ScrollView>
 

@@ -86,10 +86,12 @@
     </string>
 
     // Strings for calculator results
-    <string name="calculator_text1">This is the proportion of proteins your diet consists of.</string>
+    <string name="calculator_text1">This is the proportion of foods in your diet by weight.</string>
     <string name="calculator_text2">The total C02e emissions from your diet is %1.2f tonnes per year! This is equivalent
-        to %2.2f barrels of gasoline.
-        \n\nShown below is the total C02e footprint for each protein in your diet.</string>
+        to burning %2.2f barrels of gasoline.
+        \n\nShown below is the total C02e footprint for each food in your diet.</string>
+    <string name="calculator_text3">Every food has its own C02e footprint which is why the two pie charts above
+        do not seem to be consistent.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
