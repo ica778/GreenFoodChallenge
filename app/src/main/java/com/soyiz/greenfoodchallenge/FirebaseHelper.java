@@ -198,6 +198,8 @@ public class FirebaseHelper {
     final class Functions {
 
         public static final String IDENTIFER = "identifier";
+        public static final String FIELD_NAME = "fieldName";
+        public static final String FIELD_VALUE = "fieldValue";
 
         private Task<HttpsCallableResult> makeCall(String functionName, Map<String, Object> data) {
             return functions.getHttpsCallable(functionName).call(data).continueWith(new Continuation<HttpsCallableResult, HttpsCallableResult>() {
@@ -208,16 +210,7 @@ public class FirebaseHelper {
             });
         }
 
-        // Given a FirebaseUser (from a User instance) will return the data to display on the user fragment
-        public void getUserInfoForDisplay(FirebaseUser user, final UserFragment fragment) {
-
-            if (user == null) {
-                Log.d(TAG, "getUserInfoForDisplay: user is null! User likely not logged in");
-                return;
-            }
-
-            String userEmail = null;
-
+        private String findUserEmail(FirebaseUser user) throws Exception {
             // Get the user email by looping over the providers and grabbing the first email listed there
             for (UserInfo profile : user.getProviderData()) {
                 // Skip firebase as a provider
@@ -226,14 +219,46 @@ public class FirebaseHelper {
                 }
 
                 if (profile.getEmail() != null) {
-                    userEmail = profile.getEmail();
-                    Log.d(TAG, "getUserInfoForDisplay: user email '" + userEmail + "' found on provider '" + profile.getProviderId() + "'");
-                    break;
+                    Log.d(TAG, "findUserEmail: user email '" + profile.getEmail() + "' found on provider '" + profile.getProviderId() + "'");
+                    return profile.getEmail();
                 }
             }
 
-            if (userEmail == null) {
-                Log.e(TAG, "getUserInfoForDisplay: no valid user email found! Bad bad things are happening!");
+            Log.e(TAG, "findUserEmail: no valid user email found! Bad bad things are happening!");
+            throw new Exception();
+        }
+
+        private FirebaseUser safeGetFirebaseUser() {
+            User user = User.getCurrent();
+            if (user == null) {
+                Log.e(TAG, "getUserInfoForDisplay: user is null! Something isn't setup right...");
+                throw new NullPointerException();
+            }
+
+            FirebaseUser firebaseUser = user.getFirebaseUser();
+            if (firebaseUser == null) {
+                Log.e(TAG, "getUserInfoForDisplay: Firebase user is null! User likely not logged in...");
+                throw new NullPointerException();
+            }
+
+            return firebaseUser;
+        }
+
+        // Will grab the user information to display on the user fragment and set it
+        public void getUserInfoForDisplay(final UserFragment userFragment) {
+
+            FirebaseUser firebaseUser;
+            try {
+                firebaseUser = safeGetFirebaseUser();
+            } catch (Exception e) {
+                return;
+            }
+
+            String userEmail;
+            try {
+                userEmail = findUserEmail(firebaseUser);
+            } catch (Exception e) {
+                return;
             }
 
             Map<String, Object> data = new HashMap<>();
@@ -244,10 +269,35 @@ public class FirebaseHelper {
                 @Override
                 public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                     Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
-                    Log.d(TAG, "onComplete: data map: '" + data + "'");
-                    fragment.setDisplayInfo(data);
+                    Log.d(TAG, "getUserInfoForDisplay.onComplete: data map: '" + data + "'");
+                    userFragment.setDisplayInfo(data);
                 }
             });
+        }
+
+        public void updateUserField(String fieldToChange, Object newFieldValue) {
+            Log.d(TAG, "updateUserField: changing field '" + fieldToChange + "' to value '" + newFieldValue + "'");
+
+            FirebaseUser firebaseUser;
+            try {
+                firebaseUser = safeGetFirebaseUser();
+            } catch (Exception e) {
+                return;
+            }
+
+            String userEmail;
+            try {
+                userEmail = findUserEmail(firebaseUser);
+            } catch (Exception e) {
+                return;
+            }
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(IDENTIFER, userEmail);
+            data.put(FIELD_NAME, fieldToChange);
+            data.put(FIELD_VALUE, newFieldValue);
+
+            makeCall("updateUserField", data);
         }
     }
 

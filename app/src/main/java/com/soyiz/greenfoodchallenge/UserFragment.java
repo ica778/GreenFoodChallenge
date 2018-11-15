@@ -42,7 +42,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
-        (new FirebaseHelper()).getFunctions().getUserInfoForDisplay(User.getCurrent().getFirebaseUser(), this);
+        (new FirebaseHelper()).getFunctions().getUserInfoForDisplay(this);
 
         initView(view);
         return view;
@@ -65,6 +65,19 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         etAlias = view.findViewById(R.id.et_alias);
         etBio = view.findViewById(R.id.et_bio);
         spinnerCity = view.findViewById(R.id.spinner_city);
+
+        //TODO: example implementation, should be updated to match how the rest is implemented
+        etFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == false) {
+                    String newValue = etFirstName.getText().toString();
+                    Log.d("MainActivity", "onFocusChange: new field value: '" + newValue + "'");
+
+                    (new FirebaseHelper()).getFunctions().updateUserField(FirebaseHelper.Firestore.FIRST_NAME, etFirstName.getText().toString());
+                }
+            }
+        });
     }
 
     public void onClick(View view) {
