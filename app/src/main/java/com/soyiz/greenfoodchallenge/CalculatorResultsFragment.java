@@ -36,7 +36,6 @@ public class CalculatorResultsFragment extends Fragment {
         initView(view);
         createDietProportionsPieChart(view);
         createDietC02ePercents(view);
-
         return view;
     }
 
@@ -88,14 +87,18 @@ public class CalculatorResultsFragment extends Fragment {
             }
         }
 
-        PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "Protein Quantity");
+        PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "C02e");
         dietC02ePercentsPieDataSet.setSliceSpace(1);
         dietC02ePercentsPieDataSet.setValueTextSize(15);
         dietC02ePercentsPieChartView.setRotationEnabled(false);
         dietC02ePercentsPieChartView.setDrawHoleEnabled(false);
 
+        dietC02ePercentsPieChartView.getLegend().setEnabled(false);
+        dietC02ePercentsPieChartView.getDescription().setText("");
+
         PieData pieData = new PieData(dietC02ePercentsPieDataSet);
         dietC02ePercentsPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+        pieData.setValueTextSize(10f);
         dietC02ePercentsPieChartView.setData(pieData);
         dietC02ePercentsPieChartView.invalidate();
     }
@@ -134,24 +137,14 @@ public class CalculatorResultsFragment extends Fragment {
             }
         }
 
-        PieDataSet dietProportionsPieDataSet = new PieDataSet(yEntries, "Protein Quantity");
+        PieDataSet dietProportionsPieDataSet = new PieDataSet(yEntries, "Proportions");
         dietProportionsPieDataSet.setSliceSpace(1);
         dietProportionsPieDataSet.setValueTextSize(15);
         dietProportionsPieChartView.setRotationEnabled(false);
         dietProportionsPieChartView.setDrawHoleEnabled(false);
 
-        Legend legend = dietProportionsPieChartView.getLegend();
-        legend.setEnabled(true);
-        legend.setWordWrapEnabled(true);
-        legend.setPosition(Legend.LegendPosition.ABOVE_CHART_LEFT);
-        legend.setTextColor(Color.BLACK);
-
-        String[] legendEntries = new String[xEntries.size()];
-        for (int i = 0; i < xEntries.size(); i++) {
-            legendEntries[i] = xEntries.get(i);
-        }
-
-        //legend.setCustom();
+        dietProportionsPieChartView.getLegend().setEnabled(false);
+        dietProportionsPieChartView.getDescription().setText("");
 
         PieData pieData = new PieData(dietProportionsPieDataSet);
         dietProportionsPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
