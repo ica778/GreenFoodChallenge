@@ -3,6 +3,7 @@ package com.soyiz.greenfoodchallenge;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,11 +42,12 @@ public class PledgeFragment extends Fragment {
     private void initView(View view) {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
         pledgeListView = view.findViewById(R.id.listViewPledges);
-        listOfPledgesToShow = new ArrayList<String>();
+        listOfPledgesToShow = new ArrayList<>();
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
 
-        (new FirebaseHelper()).queryPledgesForViewer(this);
+        //TODO: remove once users work right
+//        (new FirebaseHelper()).getFirestore().queryPledgesForViewer(this);
     }
 
     // Handles events on spinner
@@ -78,7 +80,12 @@ public class PledgeFragment extends Fragment {
     }
 
     private ArrayAdapter<String> makeAdapterForList() {
-        return new ArrayAdapter<String>(getActivity(), R.layout.list_view, listOfPledgesToShow);
+        if (getActivity() == null) {
+            Log.w("PledgeFragment", "makeAdapterForList: NULL THING HAPPENED AND DIDN'T BREAK (HOPEFULLY)");
+            return null;
+        }
+
+        return new ArrayAdapter<>(getActivity(), R.layout.list_view, listOfPledgesToShow);
     }
 
     // updates listOfPledgesToShow list to have correct pledges and returns whether no municipality was chosen
@@ -97,14 +104,14 @@ public class PledgeFragment extends Fragment {
     // Returns string to show on list_view for pledge
     private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
         String userData = "";
-        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirebaseHelper.PLEDGE);
+        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirebaseHelper.Firestore.PLEDGE);
 
         userData = userData +
-                userToShow.get(FirebaseHelper.FIRST_NAME) +
+                userToShow.get(FirebaseHelper.Firestore.FIRST_NAME) +
                 " " +
-                userToShow.get(FirebaseHelper.LAST_NAME) +
+                userToShow.get(FirebaseHelper.Firestore.LAST_NAME) +
                 ": " +
-                pledgeMap.get(FirebaseHelper.CURRENT_CO2E);
+                pledgeMap.get(FirebaseHelper.Firestore.CURRENT_CO2E);
         return userData;
     }
 
@@ -113,8 +120,8 @@ public class PledgeFragment extends Fragment {
         for (Map<String, Object> map : listToAppend) {
             listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
 
-            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirebaseHelper.PLEDGE);
-            totalGoalC02e += (Double) pledgeMap.get(FirebaseHelper.GOAL_CO2E);
+            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirebaseHelper.Firestore.PLEDGE);
+            totalGoalC02e += (Double) pledgeMap.get(FirebaseHelper.Firestore.GOAL_CO2E);
             amountOfPeoplePledged += 1;
         }
 

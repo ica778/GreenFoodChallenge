@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
@@ -40,6 +41,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        (new FirebaseHelper()).getFunctions().getUserInfoForDisplay(User.getCurrent().getFirebaseUser(), this);
 
         initView(view);
         return view;
@@ -145,12 +148,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         user.setCity(city);
 
         FirebaseHelper helper = new FirebaseHelper();
-        helper.getUserTemplate();
-        helper.pushUserDocument(user);
+        helper.getFirestore().getUserTemplate();
+        helper.getFirestore().pushUserDocument(user);
+
 
         //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
-
 
     private void selectImage() {
         final Integer[] resIds = new Integer[]{R.drawable.ic_head1, R.drawable.ic_head2,
@@ -175,5 +178,19 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+
+    public void setDisplayInfo(Map<String, Object> data) {
+        String firstName = (String) data.get(FirebaseHelper.Firestore.FIRST_NAME);
+        String lastName = (String) data.get(FirebaseHelper.Firestore.LAST_NAME);
+        String alias = (String) data.get(FirebaseHelper.Firestore.ALIAS);
+        String city = (String) data.get(FirebaseHelper.Firestore.CITY);
+        String bio = (String) data.get(FirebaseHelper.Firestore.BIO);
+
+//        Log.d("MainActivity", "setDisplayInfo: name from function: " + name);
+        etFirstName.setText(firstName, TextView.BufferType.EDITABLE);
+        etLastName.setText(lastName, TextView.BufferType.EDITABLE);
+        etAlias.setText(alias, TextView.BufferType.EDITABLE);
+        etBio.setText(bio, TextView.BufferType.EDITABLE);
+    }
 
 }
