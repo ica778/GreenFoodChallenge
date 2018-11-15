@@ -64,7 +64,6 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                     .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
                     .addToBackStack(null)
                     .commit();
-            calculateUserInput();
         } else {
             Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
         }
@@ -128,6 +127,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     }
 
     // This method calculates the C02e from the user's input.
+    /*
     private void calculateUserInput() {
         double total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
                 + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
@@ -152,6 +152,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
         tv_result.setText(howDoesUsersDietCompare);
     }
+    */
 
 
 }

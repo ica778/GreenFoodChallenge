@@ -91,7 +91,9 @@
         to burning %2.2f barrels of gasoline.
         \n\nShown below is the total C02e footprint for each food in your diet.</string>
     <string name="calculator_text3">Every food has its own C02e footprint which is why the two pie charts above
-        do not seem to be consistent.</string>
+        do not seem to be consistent.
+        \n\nIt is important to note that for most people, their diet contributes to about 20 percent of their total C02e
+        emissions. Your diet produces %1$s than the Metro Vancouver average of %2$.2f tonnes for food.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

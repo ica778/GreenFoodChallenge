@@ -33,7 +33,7 @@ public class CalculatorResultsFragment extends Fragment {
     private PieChart dietProportionsPieChartView;
     private PieChart dietC02ePercentsPieChartView;
     private List<Integer> colorsToChooseFrom;
-    private TextView textView1, textView2;
+    private TextView textView1, textView2, textView3;
 
     public CalculatorResultsFragment() {
         // Required empty public constructor
@@ -45,8 +45,8 @@ public class CalculatorResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calculator_results, container, false);
         initView(view);
         setStringsToTextViews();
-        createDietProportionsPieChart(view);
-        createDietC02ePercents(view);
+        createDietProportionsPieChart();
+        createDietC02ePercents();
         return view;
     }
 
@@ -55,6 +55,7 @@ public class CalculatorResultsFragment extends Fragment {
         dietC02ePercentsPieChartView = view.findViewById(R.id.pieChartDietC02ePercents);
         textView1 = view.findViewById(R.id.textView1);
         textView2 = view.findViewById(R.id.textView2);
+        textView3 = view.findViewById(R.id.textView3);
 
         colorsToChooseFrom = new ArrayList<>();
         colorsToChooseFrom.add(Color.rgb(204, 102, 0));
@@ -66,6 +67,7 @@ public class CalculatorResultsFragment extends Fragment {
         colorsToChooseFrom.add(Color.rgb(128, 255, 0));
     }
 
+    // handles all text the user will see in the textviews
     private void setStringsToTextViews() {
         String textView2Text = String.format(
                 getResources().getString(R.string.calculator_text2),
@@ -73,10 +75,23 @@ public class CalculatorResultsFragment extends Fragment {
                 DietComparer.getLitresOfGasolineEquivalentToDietC02e((float)DietComparer.getHowManyKGOfC02eAYear())
         );
         textView2.setText(textView2Text);
+
+        float averageC02eEmissionPerCapitaInMetroVancouverTonnes = 7.7f * 0.20f;
+
+        String textView3Text = String.format(
+                getResources().getString(R.string.calculator_text3),
+                DietComparer.getHowWellC02eComparesToAverage(
+                        DietComparer.getHowManyKGOfC02eAYear(),
+                        averageC02eEmissionPerCapitaInMetroVancouverTonnes * 1000),
+                averageC02eEmissionPerCapitaInMetroVancouverTonnes
+        );
+        textView3.setText(textView3Text);
+
+
     }
 
-    private void createDietC02ePercents(View view) {
-
+    // Creates pie chart showing C02e footprint of each protein
+    private void createDietC02ePercents() {
         float totalC02eFootprintGrams = ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) +
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) +
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) +
@@ -152,7 +167,8 @@ public class CalculatorResultsFragment extends Fragment {
         dietC02ePercentsPieChartView.invalidate();
     }
 
-    private void createDietProportionsPieChart(View view) {
+    // Creates pie chart showing proportion of each food in diet
+    private void createDietProportionsPieChart() {
         float totalProteinGrams = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
         Float[] yData = {
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") / totalProteinGrams) * 100,
@@ -220,6 +236,10 @@ public class CalculatorResultsFragment extends Fragment {
         // Show pie chart
         dietProportionsPieChartView.setData(pieData);
         dietProportionsPieChartView.invalidate();
+    }
+
+    private void createC02eEmissionsComparedToAverageBarChart() {
+
     }
 
 

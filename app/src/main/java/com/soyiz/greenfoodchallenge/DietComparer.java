@@ -24,7 +24,7 @@ public class DietComparer {
 
     // Compares current C02e in diet and returns how it compares to average
     public static String getHowWellC02eComparesToAverage
-    (double kgC02e, double averageC02e) {
+    (double kgC02e, double averageC02eKG) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
                 "much less C02e",
                 "less C02e",
@@ -33,13 +33,13 @@ public class DietComparer {
                 "much more C02e"
         ));
 
-        if (kgC02e <= averageC02e * 0.75) {
+        if (kgC02e <= averageC02eKG * 0.75) {
             return howWellDietC02eCompares.get(0);
-        } else if (kgC02e <= averageC02e * 0.9) {
+        } else if (kgC02e <= averageC02eKG * 0.9) {
             return howWellDietC02eCompares.get(1);
-        } else if (kgC02e <= averageC02e * 1.1) {
+        } else if (kgC02e <= averageC02eKG * 1.1) {
             return howWellDietC02eCompares.get(2);
-        } else if (kgC02e <= averageC02e * 1.25) {
+        } else if (kgC02e <= averageC02eKG * 1.25) {
             return howWellDietC02eCompares.get(3);
         } else {
             return howWellDietC02eCompares.get(4);
@@ -47,14 +47,14 @@ public class DietComparer {
     }
 
     public static double getHowManyKGOfC02eAYear() {
-        double totalTonnes = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+        double totalKG = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
                 + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
                 + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
                 + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
                 + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
                 + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
                 + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
-        return totalTonnes;
+        return totalKG;
     }
 
     public static double getHowManyTonnesOfC02eAYear() {
