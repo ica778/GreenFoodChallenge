@@ -2,6 +2,7 @@ package com.soyiz.greenfoodchallenge;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -199,7 +200,12 @@ public class FirebaseHelper {
         public static final String IDENTIFER = "identifier";
 
         private Task<HttpsCallableResult> makeCall(String functionName, Map<String, Object> data) {
-            return functions.getHttpsCallable(functionName).call(data);
+            return functions.getHttpsCallable(functionName).call(data).continueWith(new Continuation<HttpsCallableResult, HttpsCallableResult>() {
+                @Override
+                public HttpsCallableResult then(@NonNull Task<HttpsCallableResult> task) {
+                    return task.getResult();
+                }
+            });
         }
 
         // Given a FirebaseUser (from a User instance) will return the data to display on the user fragment
@@ -229,7 +235,6 @@ public class FirebaseHelper {
             if (userEmail == null) {
                 Log.e(TAG, "getUserInfoForDisplay: no valid user email found! Bad bad things are happening!");
             }
-
 
             Map<String, Object> data = new HashMap<>();
             data.put(IDENTIFER, userEmail);
