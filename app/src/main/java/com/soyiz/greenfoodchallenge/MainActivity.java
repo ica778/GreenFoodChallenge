@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String FRAGMENT_ECO = "fragment_Eco";
     public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
     public static final String FRAGMENT_USER = "fragment_User";
+    public static final String FRAGMENT_RESTAURANT = "fragment_Restaurant";
     private static String previousFragment = null;
 
     private FragmentManager fragmentManager = null;
