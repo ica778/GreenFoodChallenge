@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -19,7 +20,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
+// TODO: code is very messy and needs to be cleaned up. Should fix repetitive code and move some methods in here to another class
+// TODO: CHECK LOGIC IN CALCULATING EMISSIONS
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +32,8 @@ public class CalculatorResultsFragment extends Fragment {
 
     private PieChart dietProportionsPieChartView;
     private PieChart dietC02ePercentsPieChartView;
+    private List<Integer> colorsToChooseFrom;
+    private TextView textView1, textView2;
 
     public CalculatorResultsFragment() {
         // Required empty public constructor
@@ -38,6 +44,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calculator_results, container, false);
         initView(view);
+        setStringsToTextViews();
         createDietProportionsPieChart(view);
         createDietC02ePercents(view);
         return view;
@@ -46,6 +53,26 @@ public class CalculatorResultsFragment extends Fragment {
     private void initView(View view) {
         dietProportionsPieChartView = view.findViewById(R.id.pieChartDietProportions);
         dietC02ePercentsPieChartView = view.findViewById(R.id.pieChartDietC02ePercents);
+        textView1 = view.findViewById(R.id.textView1);
+        textView2 = view.findViewById(R.id.textView2);
+
+        colorsToChooseFrom = new ArrayList<>();
+        colorsToChooseFrom.add(Color.rgb(204, 102, 0));
+        colorsToChooseFrom.add(Color.rgb(204, 0, 102));
+        colorsToChooseFrom.add(Color.rgb(0, 204, 204));
+        colorsToChooseFrom.add(Color.rgb(0, 153, 153));
+        colorsToChooseFrom.add(Color.rgb(255, 0, 0));
+        colorsToChooseFrom.add(Color.rgb(255, 153, 255));
+        colorsToChooseFrom.add(Color.rgb(128, 255, 0));
+    }
+
+    private void setStringsToTextViews() {
+        String textView2Text = String.format(
+                getResources().getString(R.string.calculator_text2),
+                DietComparer.getHowManyTonnesOfC02eAYear(),
+                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float)DietComparer.getHowManyKGOfC02eAYear())
+        );
+        textView2.setText(textView2Text);
     }
 
     private void createDietC02ePercents(View view) {
@@ -103,7 +130,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Set pie chart and its slices
         dietC02ePercentsPieChartView.setUsePercentValues(true);
         dietC02ePercentsPieDataSet.setSliceSpace(1f);
-        dietC02ePercentsPieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dietC02ePercentsPieDataSet.setColors(colorsToChooseFrom);
 
         // Set text in pie chart
         PieData pieData = new PieData(dietC02ePercentsPieDataSet);
@@ -170,7 +197,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Set pie chart and its slices
         dietProportionsPieChartView.setUsePercentValues(true);
         dietProportionsPieDataSet.setSliceSpace(1f);
-        dietProportionsPieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dietProportionsPieDataSet.setColors(colorsToChooseFrom);
 
         // Set text in pie chart
         PieData pieData = new PieData(dietProportionsPieDataSet);

@@ -15,13 +15,25 @@
                     android:textColor="@android:color/holo_green_light"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Your Carbon Footprint:"
+                    android:text="Your Carbon Footprint:\n"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            <TextView
+                    android:text="@string/calculator_text1"
+                    android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <com.github.mikephil.charting.charts.PieChart
                     android:layout_gravity="center"
                     android:id="@+id/pieChartDietProportions"
                     android:layout_width="350dp"
                     android:layout_height="350dp"/>
+            <TextView
+                    android:text="@string/calculator_text2"
+                    android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <com.github.mikephil.charting.charts.PieChart
                     android:layout_gravity="center"
                     android:id="@+id/pieChartDietC02ePercents"

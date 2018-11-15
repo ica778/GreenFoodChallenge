@@ -15,9 +15,9 @@ public class DietComparer {
     }
 
     // Returns the litres of gasoline equivalent to kg of C02e
-    public static double getLitresOfGasolineEquivalentToDietC02e(double kgC02e) {
+    public static float getLitresOfGasolineEquivalentToDietC02e(float kgC02e) {
         // 1 L of gasoline produces approximately 2.3 kg of C02
-        double litresOfGasoline = kgC02e / 2.3f;
+        float litresOfGasoline = kgC02e / 2.3f;
         return litresOfGasoline;
 
     }
@@ -44,6 +44,23 @@ public class DietComparer {
         } else {
             return howWellDietC02eCompares.get(4);
         }
+    }
+
+    public static double getHowManyKGOfC02eAYear() {
+        double totalTonnes = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+                + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
+                + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
+                + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
+                + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
+        return totalTonnes;
+    }
+
+    public static double getHowManyTonnesOfC02eAYear() {
+        double totalTonnes = getHowManyKGOfC02eAYear();
+        totalTonnes = totalTonnes / 1000;
+        return totalTonnes;
     }
 
     //Subtracts new diet from old diet CO2e and returns the % difference of CO2e with new diet
