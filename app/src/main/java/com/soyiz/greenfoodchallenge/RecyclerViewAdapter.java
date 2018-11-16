@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RestaurantViewAdapter extends RecyclerView
-        .Adapter<RestaurantViewAdapter.MealCardViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView
+        .Adapter<RecyclerViewAdapter.MealCardViewHolder> {
 
     public static class MealCardViewHolder extends RecyclerView.ViewHolder {
         CardView mealCardView;
@@ -30,7 +30,7 @@ public class RestaurantViewAdapter extends RecyclerView
     }
 
     List<MealCard> mealCardList;
-    RestaurantViewAdapter(List<MealCard> mealCardList) {
+    RecyclerViewAdapter(List<MealCard> mealCardList) {
         this.mealCardList = mealCardList;
     }
 
