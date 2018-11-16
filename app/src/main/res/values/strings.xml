@@ -86,14 +86,11 @@
     </string>
 
     // Strings for calculator results
-    <string name="calculator_text1">This is the proportion of foods in your diet by weight.</string>
-    <string name="calculator_text2">The total C02e emissions from your diet is %1.2f tonnes per year! This is equivalent
-        to burning %2.2f barrels of gasoline.
-        \n\nShown below is the total C02e footprint for each food in your diet.</string>
-    <string name="calculator_text3">Every food has its own C02e footprint which is why the two pie charts above
-        do not seem to be consistent.
-        \n\nIt is important to note that for most people, their diet contributes to about 20 percent of their total C02e
-        emissions. Your diet produces %1$s than the Metro Vancouver average of %2$.2f tonnes for food.</string>
+    <string name="calculator_text1">This is the proportion of foods in your diet by weight:</string>
+    <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
+    <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
+        \n- Equivalent to burning %2$.2f barrels of gasoline
+        \n- %3$s than the Metro Vancouver average of %4$.2f tonnes</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

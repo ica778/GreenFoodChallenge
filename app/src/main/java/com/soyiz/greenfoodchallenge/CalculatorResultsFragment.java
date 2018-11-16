@@ -12,9 +12,12 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.*;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -73,10 +76,11 @@ public class CalculatorResultsFragment extends Fragment {
 
     // handles all text the user will see in the textviews
     private void setStringsToTextViews() {
+        String textView1Text = String.format(
+                getResources().getString(R.string.calculator_text1)
+        );
         String textView2Text = String.format(
-                getResources().getString(R.string.calculator_text2),
-                DietComparer.getHowManyTonnesOfC02eAYear(),
-                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float)DietComparer.getHowManyKGOfC02eAYear())
+                getResources().getString(R.string.calculator_text2)
         );
         textView2.setText(textView2Text);
 
@@ -85,6 +89,8 @@ public class CalculatorResultsFragment extends Fragment {
 
         String textView3Text = String.format(
                 getResources().getString(R.string.calculator_text3),
+                DietComparer.getHowManyTonnesOfC02eAYear(),
+                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float)DietComparer.getHowManyKGOfC02eAYear()),
                 DietComparer.getHowWellC02eComparesToAverage(
                         DietComparer.getHowManyKGOfC02eAYear(),
                         averageC02eEmissionPerCapitaInMetroVancouverTonnes * 1000),
@@ -278,14 +284,43 @@ public class CalculatorResultsFragment extends Fragment {
         BarData barData = new BarData(compareEmissionsDataSet);
 
         // Set bar chart axis texts
-        barChartCompareEmissionsView.getXAxis().setDrawLabels(false);
+        barChartCompareEmissionsView.getXAxis().setDrawLabels(true);
         barChartCompareEmissionsView.getLegend().setEnabled(false);
+        barChartCompareEmissionsView.setScaleYEnabled(false);
+
+        // Set bar chart bar colors
+        compareEmissionsDataSet.setColor(Color.GREEN);
+
+        // Set y axis
+        YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
+        yAxisLeft.setStartAtZero(true);
+        yAxisLeft.setAxisMaximum(3.5f);
+        yAxisLeft.setDrawGridLines(true);
+        YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
+        yAxisRight.setEnabled(false);
+        yAxisRight.setDrawGridLines(false);
+
+        // Set x axis values
+        XAxis xAxis = barChartCompareEmissionsView.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new MyXAxisValueFormatter(xData));
+        xAxis.setLabelCount(2);
 
         // Show bar chart
         barChartCompareEmissionsView.setData(barData);
         barChartCompareEmissionsView.invalidate();
+    }
 
-
+    // Class needed for putting strings in x axis
+    private class MyXAxisValueFormatter implements IAxisValueFormatter {
+        private String[] xValues;
+        public MyXAxisValueFormatter(String[] xAxisValues) {
+            this.xValues = xAxisValues;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return xValues[(int) value];
+        }
     }
 
 

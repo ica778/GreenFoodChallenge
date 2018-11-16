@@ -26,11 +26,11 @@ public class DietComparer {
     public static String getHowWellC02eComparesToAverage
     (double kgC02e, double averageC02eKG) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "much less C02e",
-                "less C02e",
-                "about the same C02e",
-                "more C02e",
-                "much more C02e"
+                "Much less C02e",
+                "Less C02e",
+                "About the same C02e",
+                "More C02e",
+                "Much more C02e"
         ));
 
         if (kgC02e <= averageC02eKG * 0.75) {
