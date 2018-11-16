@@ -28,13 +28,12 @@ import java.security.NoSuchAlgorithmException;
 public class MainActivity extends AppCompatActivity {
 
     // Set to true to disable mandatory logins and enable facebook hash printing
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = false;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
 
     public static final String TAG = "MainActivity";
 
-    public static final String CURRENT_FRAGMENT = "current_Fragment";
     private Fragment eatingHabitsFragment = null;
     private Fragment ecoFragment = null;
     private Fragment pledgeFragment = null;
@@ -43,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String FRAGMENT_EATING_HABITS = "fragment_EatingHabits";
     public static final String FRAGMENT_ECO = "fragment_Eco";
     public static final String FRAGMENT_PLEDGE = "fragment_Pledge";
-    public static final String FRAGMENT_USER = "fragment_User";
     public static final String FRAGMENT_RESTAURANT = "fragment_Restaurant";
-    private static String previousFragment = null;
+    public static final String FRAGMENT_USER = "fragment_User";
+    private static String previousFragmentTag = null;
 
     private FragmentManager fragmentManager = null;
     private BottomNavigationView bottomNavigationView = null;
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         Log.d(TAG, "onDestroy: saving current fragment as " + currentFragment);
-        previousFragment = currentFragment;
+        previousFragmentTag = currentFragment;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate");
 
-//        Debug code for getting facebook login hash
+        // Debug code for getting facebook login hash
         if (DEBUG_MODE) {
             getHashForFacebook();
         }
@@ -106,20 +105,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
                 startLogin();
 
-                return;
+            } else if (User.getCurrent().getFirebaseUser() == null) {
+                Log.d(TAG, "onCreate: user logged in, but not set on User instance");
+                User.getCurrent().setFirebaseUser(currentUser);
             }
         }
 
-        if (User.getCurrent().getFirebaseUser() == null) {
-            User.getCurrent().setFirebaseUser(currentUser);
-        }
-
-        if (previousFragment != null) {
-            currentFragment = previousFragment;
-            Log.d(TAG, "onCreate: currentFragment set as " + previousFragment);
+        if (previousFragmentTag != null) {
+            currentFragment = previousFragmentTag;
+            Log.d(TAG, "onCreate: currentFragment set as " + previousFragmentTag);
         } else {
             currentFragment = FRAGMENT_PLEDGE;
-            Log.d(TAG, "onCreate: currentFragment defaulting to " + FRAGMENT_PLEDGE);
+            Log.d(TAG, "onCreate: currentFragment defaulting to '" + FRAGMENT_PLEDGE + "'");
         }
 
         setContentView(R.layout.activity_main);
@@ -167,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_LOGIN_ACTIVITY) {
-            Log.d(TAG, "onActivityResult: successful login");
+            Log.d(TAG, "onActivityResult: successful login. Firebase user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            User.getCurrent().setFirebaseUser(FirebaseAuth.getInstance().getCurrentUser());
         } else {
             Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
         }
@@ -202,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeFragment(String fragment) {
+
         if (eatingHabitsFragment == null) {
             eatingHabitsFragment = new EatingHabitsFragment();
         }
@@ -258,9 +257,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        Log.d(TAG, "changing to " + fragment + " fragment");
+        Log.d(TAG, "changing fragment to: '" + fragment + "'");
         currentFragment = fragment;
-        fragmentReplaceTransaction(newFragment);
+        fragmentManager.beginTransaction().replace(R.id.frame_fragment_holder, newFragment).commit();
         bottomNavigationView.getMenu().findItem(newFragmentNavID).setChecked(true);
         setActionBarTitle(newFragmentNameID);
     }
