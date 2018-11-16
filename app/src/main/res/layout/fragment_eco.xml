@@ -29,6 +29,11 @@
             <Space
                     android:layout_width="match_parent"
                     android:layout_height="22dp"/>
+            <com.github.mikephil.charting.charts.PieChart
+                    android:layout_gravity="center"
+                    android:id="@+id/pieChartDietEcoProportions"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"/>
         </LinearLayout>
     </ScrollView>
 
