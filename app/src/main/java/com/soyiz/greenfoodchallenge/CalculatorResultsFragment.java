@@ -43,6 +43,7 @@ public class CalculatorResultsFragment extends Fragment {
     public CalculatorResultsFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class CalculatorResultsFragment extends Fragment {
         String textView3Text = String.format(
                 getResources().getString(R.string.calculator_text3),
                 DietComparer.getHowManyTonnesOfC02eAYear(),
-                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float)DietComparer.getHowManyKGOfC02eAYear()),
+                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float) DietComparer.getHowManyKGOfC02eAYear()),
                 DietComparer.getHowWellC02eComparesToAverage(
                         DietComparer.getHowManyKGOfC02eAYear(),
                         averageC02eEmissionPerCapitaInMetroVancouverTonnes * 1000),
@@ -134,7 +135,7 @@ public class CalculatorResultsFragment extends Fragment {
 
         // Put values into entries that can be put into the pie chart
         for (int i = 0; i < yData.length; i++) {
-            if(yData[i] > 0) {
+            if (yData[i] > 0) {
                 yEntries.add(new PieEntry(yData[i], xData[i]));
             }
         }
@@ -207,7 +208,7 @@ public class CalculatorResultsFragment extends Fragment {
 
         // Put values into entries that can be put into the pie chart
         for (int i = 0; i < yData.length; i++) {
-            if(yData[i] > 0) {
+            if (yData[i] > 0) {
                 yEntries.add(new PieEntry(yData[i], xData[i]));
             }
         }
@@ -286,7 +287,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Set bar chart axis texts
         barChartCompareEmissionsView.getXAxis().setDrawLabels(true);
         barChartCompareEmissionsView.getLegend().setEnabled(false);
-        barChartCompareEmissionsView.setScaleYEnabled(false);
+        barChartCompareEmissionsView.setScaleYEnabled(true);
 
         // Set bar chart bar colors
         compareEmissionsDataSet.setColor(Color.GREEN);
@@ -294,7 +295,7 @@ public class CalculatorResultsFragment extends Fragment {
         // Set y axis
         YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
         yAxisLeft.setStartAtZero(true);
-        yAxisLeft.setAxisMaximum(3.5f);
+        yAxisLeft.setAxisMaximum(3f);
         yAxisLeft.setDrawGridLines(true);
         YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
         yAxisRight.setEnabled(false);
@@ -314,9 +315,11 @@ public class CalculatorResultsFragment extends Fragment {
     // Class needed for putting strings in x axis
     private class MyXAxisValueFormatter implements IAxisValueFormatter {
         private String[] xValues;
+
         public MyXAxisValueFormatter(String[] xAxisValues) {
             this.xValues = xAxisValues;
         }
+
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             return xValues[(int) value];

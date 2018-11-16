@@ -90,7 +90,7 @@
     <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
     <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
         \n- Equivalent to burning %2$.2f barrels of gasoline
-        \n- %3$s than the Metro Vancouver average of %4$.2f tonnes</string>
+        \n- %3$s than the Metro Vancouver average of  %4$.2f tonnes</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
