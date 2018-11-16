@@ -6,10 +6,56 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
+public class EcoFragment extends Fragment {
+
+    private Spinner spinnerShowDifferentDiets;
+    private ArrayAdapter adapter;
+
+    public EcoFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_eco, container, false);
+        initView(view);
+        return view;
+    }
+
+    private void initView(View view) {
+        spinnerActions(view);
+    }
+
+    // Handles events on spinner
+    private void spinnerActions(View view) {
+        adapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.types_of_diet,
+                android.R.layout.simple_spinner_item);
+        spinnerShowDifferentDiets = view.findViewById(R.id.spinnerShowDifferentDiets);
+        spinnerShowDifferentDiets.setAdapter(adapter);
+        spinnerShowDifferentDiets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+}
+
+
+/*
 public class EcoFragment extends Fragment {
 
     public EcoFragment() {
@@ -145,3 +191,4 @@ public class EcoFragment extends Fragment {
         return ecoView;
     }
 }
+ */

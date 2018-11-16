@@ -8,6 +8,18 @@
 
 
     //Strings for EcoFragment
+    <string-array name="types_of_diet">
+        <item name="currentDiet">[Select Diet]</item>
+        <item name="highMeat">Meat eater</item>
+        <item name="lowMeat">Low Meat</item>
+        <item name="onlyFish">Only Fish</item>
+        <item name="vegetarian">Vegetarian</item>
+        <item name="vegan">Vegan</item>
+    </string-array>
+    <string name="titleText">Pick a new diet below to see how your ecological footprint can improve.\n</string>
+
+
+
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
     <string name="onlyFish">Only Fish</string>

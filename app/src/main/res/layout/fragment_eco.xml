@@ -8,142 +8,29 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:text="@string/titleText"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView1"
+                    android:textAppearance="@android:style/TextAppearance.Medium"/>
+            <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/spinnerShowDifferentDiets"/>
+            <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"/>
+        </LinearLayout>
+    </ScrollView>
 
-    <TextView
-        android:id="@+id/BetterPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:text="@string/BetterPercentage"
-        android:textSize="12sp" />
-    <Button
-        android:id="@+id/highMeatButton"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/highMeat"
-        android:textAlignment="center"
-        android:textSize="24sp" />
 
-
-    <TextView
-        android:id="@+id/highMeatBetterPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/loweMeatButton"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/lowMeat"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/lowMeatBetterPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="85dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/onlyFishButton"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/onlyFish"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/onlyFishBetterPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="135dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/vegetarianButton"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/vegetarian"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/vegetarianPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="185dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/veganButton"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/vegan"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/veganBetterPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:layout_marginTop="235dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textSize="24sp" />
-
-    <TextView
-            android:id="@+id/dietInfo"
-            android:layout_width="344dp"
-            android:layout_height="321dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="289dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/dietInfo"
-            android:textSize="15sp"/>
 </FrameLayout>
