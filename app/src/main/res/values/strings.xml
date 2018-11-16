@@ -7,13 +7,13 @@
     <string name="pledge_name">Pledge</string>
 
 
-    //Strings for Eco
+    //Strings for EcoFragment
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
     <string name="onlyFish">Only Fish</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
-    <string name="BetterPercentage">Better CO2e than current Diet</string>
+    <string name="BetterPercentage">Improvement over current diet</string>
     <string name="dietInfo">Please enter your diet in Eating Habits Page.\nAfter that, You
         can chose the diets above.
     </string>
@@ -42,6 +42,7 @@
         \n(80/20) with beans and veg.
     </string>
 
+    // Strings for info fragment
     <string name="info_name">About</string>
     <string name="info">\tThe reason we made this app is to help people
         plan new, eco friendly diets in hopes of reducing greenhouse gas
@@ -91,6 +92,8 @@
     <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
         \n- Equivalent to burning %2$.2f barrels of gasoline
         \n- %3$s than the Metro Vancouver average of  %4$.2f tonnes</string>
+    <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
+        ecological footprint!</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -38,7 +38,7 @@ public class CalculatorResultsFragment extends Fragment {
     private PieChart dietC02ePercentsPieChartView;
     private BarChart barChartCompareEmissionsView;
     private List<Integer> colorsToChooseFrom;
-    private TextView textView1, textView2, textView3;
+    private TextView textView1, textView2, textView3, textView4;
 
     public CalculatorResultsFragment() {
         // Required empty public constructor
@@ -64,6 +64,7 @@ public class CalculatorResultsFragment extends Fragment {
         textView1 = view.findViewById(R.id.textView1);
         textView2 = view.findViewById(R.id.textView2);
         textView3 = view.findViewById(R.id.textView3);
+        textView4 = view.findViewById(R.id.textView4);
 
         colorsToChooseFrom = new ArrayList<>();
         colorsToChooseFrom.add(Color.rgb(204, 102, 0));
@@ -83,7 +84,13 @@ public class CalculatorResultsFragment extends Fragment {
         String textView2Text = String.format(
                 getResources().getString(R.string.calculator_text2)
         );
+        String textView4Text = String.format(
+                getResources().getString(R.string.calculator_text4)
+        );
+        textView1.setText(textView1Text);
         textView2.setText(textView2Text);
+        textView4.setText(textView4Text);
+
 
         // Average emission per capita in Metro Vancouver is 7.7 tonnes. 20% of these emissions is from food
         float averageC02eEmissionPerCapitaInMetroVancouverTonnes = 7.7f * 0.20f;
