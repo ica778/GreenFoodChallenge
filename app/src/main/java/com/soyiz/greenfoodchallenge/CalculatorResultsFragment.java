@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.data.*;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -32,6 +33,7 @@ public class CalculatorResultsFragment extends Fragment {
 
     private PieChart dietProportionsPieChartView;
     private PieChart dietC02ePercentsPieChartView;
+    private BarChart barChartCompareEmissionsView;
     private List<Integer> colorsToChooseFrom;
     private TextView textView1, textView2, textView3;
 
@@ -47,12 +49,14 @@ public class CalculatorResultsFragment extends Fragment {
         setStringsToTextViews();
         createDietProportionsPieChart();
         createDietC02ePercents();
+        createC02eEmissionsComparedToAverageBarChart();
         return view;
     }
 
     private void initView(View view) {
         dietProportionsPieChartView = view.findViewById(R.id.pieChartDietProportions);
         dietC02ePercentsPieChartView = view.findViewById(R.id.pieChartDietC02ePercents);
+        barChartCompareEmissionsView = view.findViewById(R.id.barChartCompareEmissions);
         textView1 = view.findViewById(R.id.textView1);
         textView2 = view.findViewById(R.id.textView2);
         textView3 = view.findViewById(R.id.textView3);
@@ -76,6 +80,7 @@ public class CalculatorResultsFragment extends Fragment {
         );
         textView2.setText(textView2Text);
 
+        // Average emission per capita in Metro Vancouver is 7.7 tonnes. 20% of these emissions is from food
         float averageC02eEmissionPerCapitaInMetroVancouverTonnes = 7.7f * 0.20f;
 
         String textView3Text = String.format(
@@ -92,6 +97,7 @@ public class CalculatorResultsFragment extends Fragment {
 
     // Creates pie chart showing C02e footprint of each protein
     private void createDietC02ePercents() {
+        //Pie chart will show these things
         float totalC02eFootprintGrams = ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) +
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) +
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) +
@@ -170,6 +176,8 @@ public class CalculatorResultsFragment extends Fragment {
     // Creates pie chart showing proportion of each food in diet
     private void createDietProportionsPieChart() {
         float totalProteinGrams = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+
+        // Pie chart will show these things
         Float[] yData = {
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") / totalProteinGrams) * 100,
                 (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") / totalProteinGrams) * 100,
@@ -239,6 +247,44 @@ public class CalculatorResultsFragment extends Fragment {
     }
 
     private void createC02eEmissionsComparedToAverageBarChart() {
+        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
+        float averageC02eFromDietForRegion = 7.7f * 0.2f;
+
+        // Bar chart will show these two things
+        Float[] yData = {
+                tonnesOfC02eFromUser,
+                averageC02eFromDietForRegion
+        };
+
+        String[] xData = {
+                "Your C02e Emissions",
+                "Metro Vancouver Average"
+        };
+
+        ArrayList<BarEntry> yEntries = new ArrayList<>();
+
+        // Put values into entries that can be put into the pie chart
+        for (int i = 0; i < yData.length; i++) {
+            yEntries.add(new BarEntry(i, yData[i]));
+        }
+
+        BarDataSet compareEmissionsDataSet = new BarDataSet(yEntries, "");
+
+        // Set things outside bar chart
+        Legend legend = barChartCompareEmissionsView.getLegend();
+        legend.setEnabled(false);
+        barChartCompareEmissionsView.getDescription().setText("");
+
+        BarData barData = new BarData(compareEmissionsDataSet);
+
+        // Set bar chart axis texts
+        barChartCompareEmissionsView.getXAxis().setDrawLabels(false);
+        barChartCompareEmissionsView.getLegend().setEnabled(false);
+
+        // Show bar chart
+        barChartCompareEmissionsView.setData(barData);
+        barChartCompareEmissionsView.invalidate();
+
 
     }
 

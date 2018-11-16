@@ -27,7 +27,7 @@
             <com.github.mikephil.charting.charts.PieChart
                     android:layout_gravity="center"
                     android:id="@+id/pieChartDietProportions"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="350dp"/>
             <TextView
                     android:text="@string/calculator_text2"
@@ -46,6 +46,11 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content" android:id="@+id/textView3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            <com.github.mikephil.charting.charts.BarChart
+                    android:layout_gravity="center"
+                    android:id="@+id/barChartCompareEmissions"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"/>
         </LinearLayout>
     </ScrollView>
 
