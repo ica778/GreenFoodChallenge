@@ -15,35 +15,52 @@ public class DietComparer {
     }
 
     // Returns the litres of gasoline equivalent to kg of C02e
-    public static double getLitresOfGasolineEquivalentToDietC02e(double kgC02e) {
+    public static float getLitresOfGasolineEquivalentToDietC02e(float kgC02e) {
         // 1 L of gasoline produces approximately 2.3 kg of C02
-        double litresOfGasoline = kgC02e / 2.3f;
+        float litresOfGasoline = kgC02e / 2.3f;
         return litresOfGasoline;
 
     }
 
     // Compares current C02e in diet and returns how it compares to average
     public static String getHowWellC02eComparesToAverage
-    (double kgC02e, double averageC02e) {
+    (double kgC02e, double averageC02eKG) {
         List<String> howWellDietC02eCompares = new ArrayList<>(Arrays.asList(
-                "much less C02e",
-                "less C02e",
-                "about the same C02e",
-                "more C02e",
-                "much more C02e"
+                "Much less C02e",
+                "Less C02e",
+                "About the same C02e",
+                "More C02e",
+                "Much more C02e"
         ));
 
-        if (kgC02e <= averageC02e * 0.75) {
+        if (kgC02e <= averageC02eKG * 0.75) {
             return howWellDietC02eCompares.get(0);
-        } else if (kgC02e <= averageC02e * 0.9) {
+        } else if (kgC02e <= averageC02eKG * 0.9) {
             return howWellDietC02eCompares.get(1);
-        } else if (kgC02e <= averageC02e * 1.1) {
+        } else if (kgC02e <= averageC02eKG * 1.1) {
             return howWellDietC02eCompares.get(2);
-        } else if (kgC02e <= averageC02e * 1.25) {
+        } else if (kgC02e <= averageC02eKG * 1.25) {
             return howWellDietC02eCompares.get(3);
         } else {
             return howWellDietC02eCompares.get(4);
         }
+    }
+
+    public static double getHowManyKGOfC02eAYear() {
+        double totalKG = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+                + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
+                + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
+                + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
+                + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
+                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
+        return totalKG;
+    }
+
+    public static double getHowManyTonnesOfC02eAYear() {
+        double totalTonnes = getHowManyKGOfC02eAYear();
+        totalTonnes = totalTonnes / 1000;
+        return totalTonnes;
     }
 
     //Subtracts new diet from old diet CO2e and returns the % difference of CO2e with new diet

@@ -8,13 +8,25 @@
     <string name="restaurant_name">Restaurants</string>
 
 
-    //Strings for Eco
+    //Strings for EcoFragment
+    <string-array name="types_of_diet">
+        <item name="currentDiet">[Select Diet]</item>
+        <item name="highMeat">Meat eater</item>
+        <item name="lowMeat">Low Meat</item>
+        <item name="onlyFish">Only Fish</item>
+        <item name="vegetarian">Vegetarian</item>
+        <item name="vegan">Vegan</item>
+    </string-array>
+    <string name="titleText">Pick a new diet below to see how your ecological footprint can improve.\n</string>
+
+
+
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
     <string name="onlyFish">Only Fish</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
-    <string name="BetterPercentage">Better CO2e than current Diet</string>
+    <string name="BetterPercentage">Improvement over current diet</string>
     <string name="dietInfo">Please enter your diet in Eating Habits Page.\nAfter that, You
         can chose the diets above.
     </string>
@@ -43,6 +55,7 @@
         \n(80/20) with beans and veg.
     </string>
 
+    // Strings for info fragment
     <string name="info_name">About</string>
     <string name="info">\tThe reason we made this app is to help people
         plan new, eco friendly diets in hopes of reducing greenhouse gas
@@ -70,19 +83,30 @@
 
 
     // Strings for EatingHabitsFragment
-    <string name="calculator_toast">Please enter at least one amount</string>
-    <string name="co2_100g_n">\nThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
+    <string name="calculator_invalid_input_toast">Please enter at least one valid amount</string>
+    <string name="calculator_results">\n\n\t
+        \n\tThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
         litres of gasoline. Think about how much gas you use to commute!
-        \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
-        \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
+        \n\n\tCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
+        \n\n\tIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
         which is %6$s than the current %7$d tonnes.
-        \n\nAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can affect
+        \n\n\tAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can
+        affect
         these numbers.
     </string>
 
     <string name="show_pledge_information">%1$d people and %2$.2f tonnes of C02e have been pledged in total.\nThis is
         equivalent to %3$.2f barrels of gasoline.\n\nThe average C02e saved per person is %4$.2f tonnes.
     </string>
+
+    // Strings for calculator results
+    <string name="calculator_text1">This is the proportion of foods in your diet by weight:</string>
+    <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
+    <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
+        \n- Equivalent to burning %2$.2f barrels of gasoline
+        \n- %3$s than the Metro Vancouver average of  %4$.2f tonnes</string>
+    <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
+        ecological footprint!</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
