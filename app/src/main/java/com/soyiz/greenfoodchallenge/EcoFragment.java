@@ -35,6 +35,7 @@ public class EcoFragment extends Fragment {
     private Diet vegetarian;
     private Diet vegan;
     private DietComparer dietComparer;
+    private TextView textViewEco2;
 
     public EcoFragment() {
     }
@@ -49,6 +50,7 @@ public class EcoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_eco, container, false);
         initView(view);
+        createDietEcoProportionsPieChart(0);
         return view;
     }
 
@@ -62,6 +64,7 @@ public class EcoFragment extends Fragment {
         colorsToChooseFrom.add(Color.rgb(255, 153, 255));
         colorsToChooseFrom.add(Color.rgb(128, 255, 0));
 
+        textViewEco2 = view.findViewById(R.id.textViewEco2);
         dietsCreator = new DietsCreator();
         myDiet = new Diet();
         highMeat = dietsCreator.createMeatEaterDiet();
@@ -76,6 +79,8 @@ public class EcoFragment extends Fragment {
     }
 
     private void createDiet() {
+        //Test User Diet
+        final Diet myDiet = new Diet();
         myDiet.setProteinPercent(ProteinSource.Beef, 0);
         myDiet.setProteinPercent(ProteinSource.Pork, 0);
         myDiet.setProteinPercent(ProteinSource.Chicken, 0);
@@ -95,6 +100,16 @@ public class EcoFragment extends Fragment {
             myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 100 / totalAmountOfProtein);
         }
         dietsCreator.setUserDiet(myDiet);
+
+        /*
+        //Default Diets in Eco Fragment
+        final Diet highMeat = dietsCreator.createMeatEaterDiet();
+        final Diet lowMeat = dietsCreator.createLowMeatDiet();
+        final Diet onlyFish = dietsCreator.createOnlyFishDiet();
+        final Diet vegetarian = dietsCreator.createVegetarianDiet();
+        final Diet vegan = dietsCreator.createVeganDiet();
+        final DietComparer dietComparer = new DietComparer();
+        */
     }
 
     private void createDietEcoProportionsPieChart(int typeOfDiet) {
@@ -134,6 +149,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
+                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, highMeat) + " %");
                 yData.add(0f);
                 yData.add(0f);
                 yData.add(12.1f);
@@ -150,6 +166,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
+                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, lowMeat) + " %");
                 yData.add(12.1f);
                 yData.add(12.1f);
                 yData.add(12.1f);
@@ -166,6 +183,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
+                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, onlyFish) + " %");
                 yData.add(12.1f);
                 yData.add(12.1f);
                 yData.add(12.1f);
@@ -182,6 +200,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
+                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, vegetarian) + " %");
                 yData.add(12.1f);
                 yData.add(12.1f);
                 yData.add(122.1f);
@@ -214,6 +233,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
+                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, vegan) + " %");
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("beef"));
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("chicken"));
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("pork"));
