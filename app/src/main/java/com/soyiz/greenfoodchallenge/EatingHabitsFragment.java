@@ -125,34 +125,4 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         }
         return userHasEnteredInput;
     }
-
-    // This method calculates the C02e from the user's input.
-    /*
-    private void calculateUserInput() {
-        double total = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
-                + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
-                + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
-                + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
-                + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
-                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
-                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
-        long kgOfC02eInDiet = Math.round(total);
-        double tonnesOfC02eInDiet = kgOfC02eInDiet / 1000f;
-        String stringToShow = getResources().getString(R.string.calculator_results);
-        double regionAverageTonnesC02e = 7.7f; // 7.7 tonnes is per capita average for Vancouver according to lecture notes
-        double litresOfGasolineEquivalentToC02e = DietComparer.getLitresOfGasolineEquivalentToDietC02e(kgOfC02eInDiet);
-        int currentPopulationOfArea = 2463000; // Current population of metro vancouver
-        String howDoesUsersDietCompare = String.format(stringToShow,
-                tonnesOfC02eInDiet,
-                litresOfGasolineEquivalentToC02e,
-                regionAverageTonnesC02e,
-                DietComparer.getHowWellC02eComparesToAverage(kgOfC02eInDiet, regionAverageTonnesC02e * 1000),
-                Math.round(currentPopulationOfArea * tonnesOfC02eInDiet),
-                DietComparer.getHowWellC02eComparesToAverage(currentPopulationOfArea * tonnesOfC02eInDiet, regionAverageTonnesC02e * currentPopulationOfArea),
-                Math.round(currentPopulationOfArea * regionAverageTonnesC02e));
-        tv_result.setText(howDoesUsersDietCompare);
-    }
-    */
-
-
 }
