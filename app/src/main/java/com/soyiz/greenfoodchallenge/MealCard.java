@@ -2,10 +2,12 @@ package com.soyiz.greenfoodchallenge;
 
 public class MealCard {
 
-    private String mealName;
-    private String mealProtein;
-    private String restaurantName;
-    private String restaurantLocation;
+    private String mealName = null;
+    private String mealProtein = null;
+    private String restaurantName = null;
+    private String restaurantLocation = null;
+    private int mealImageId;
+    private String description = null;
 
     MealCard() {
 
@@ -41,5 +43,21 @@ public class MealCard {
 
     public void setRestaurantLocation(String restaurantLocation) {
         this.restaurantLocation = restaurantLocation;
+    }
+
+    public int getMealImageId() {
+        return mealImageId;
+    }
+
+    public void setMealImageId(int mealImageId) {
+        this.mealImageId = mealImageId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

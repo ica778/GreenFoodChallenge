@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,12 +14,18 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView
         .Adapter<RecyclerViewAdapter.MealCardViewHolder> {
 
+    private int expandedPosition = -1;
+
     public static class MealCardViewHolder extends RecyclerView.ViewHolder {
         CardView mealCardView;
         TextView mealName;
         TextView mealProtein;
         TextView restaurantName;
         TextView restaurantLocation;
+        ImageView mealImage;
+        TextView description;
+        RelativeLayout expandedArea;
+
 
         MealCardViewHolder(View view) {
             super(view);
@@ -26,6 +34,16 @@ public class RecyclerViewAdapter extends RecyclerView
             mealProtein = (TextView)view.findViewById(R.id.meal_protein);
             restaurantName = (TextView)view.findViewById(R.id.restaurant_name);
             restaurantLocation = (TextView)view.findViewById(R.id.restaurant_location);
+            mealImage = (ImageView)view.findViewById(R.id.meal_image);
+            description = (TextView)view.findViewById(R.id.description);
+            expandedArea = (RelativeLayout)view.findViewById(R.id.expanded_area);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
@@ -40,18 +58,35 @@ public class RecyclerViewAdapter extends RecyclerView
     }
 
     @Override
-    public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.meal_card_view, viewGroup, false);
         MealCardViewHolder mealCardViewHolder = new MealCardViewHolder(view);
+
+        final boolean isExpanded = position==expandedPosition;
+        final int pos = position;
+        mealCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandedPosition = isExpanded ? -1 : pos;
+                notifyItemChanged(pos);
+            }
+        });
+
         return mealCardViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MealCardViewHolder mealCardViewHolder, int i) {
-        mealCardViewHolder.mealName.setText(mealCardList.get(i).getMealName());
-        mealCardViewHolder.mealProtein.setText(mealCardList.get(i).getMealProtein());
-        mealCardViewHolder.restaurantName.setText(mealCardList.get(i).getRestaurantName());
-        mealCardViewHolder.restaurantLocation.setText(mealCardList.get(i).getRestaurantLocation());
+    public void onBindViewHolder(MealCardViewHolder mealCardViewHolder, int position) {
+        mealCardViewHolder.mealName.setText(mealCardList.get(position).getMealName());
+        mealCardViewHolder.mealProtein.setText(mealCardList.get(position).getMealProtein());
+        mealCardViewHolder.restaurantName.setText(mealCardList.get(position).getRestaurantName());
+        mealCardViewHolder.restaurantLocation.setText(mealCardList.get(position).getRestaurantLocation());
+        mealCardViewHolder.mealImage.setImageResource(mealCardList.get(position).getMealImageId());
+        mealCardViewHolder.description.setText(mealCardList.get(position).getDescription());
+
+        final boolean isExpanded = position==expandedPosition;
+        mealCardViewHolder.expandedArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        mealCardViewHolder.itemView.setActivated(isExpanded);
     }
 
     @Override

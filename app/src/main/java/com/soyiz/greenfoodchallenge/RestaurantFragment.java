@@ -17,6 +17,7 @@ public class RestaurantFragment extends Fragment {
 
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
+    private List<MealCard> usersMeals = new ArrayList<>();
 
     public RestaurantFragment() {
     }
@@ -43,6 +44,9 @@ public class RestaurantFragment extends Fragment {
         testMeal1.setMealProtein("Main Protein of Meal 1");
         testMeal1.setRestaurantName("Restaurant Name 1");
         testMeal1.setRestaurantLocation("Restaurant Location 1");
+        testMeal1.setMealImageId(R.drawable.ic_pledge_icon_24dp);
+        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
+                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
         mealCardList.add(testMeal1);
         MealCard testMeal2 = new MealCard();
         testMeal2.setMealName("Meal Name 2");
@@ -61,6 +65,16 @@ public class RestaurantFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    public void postMeal(MealCard mealCard) {
+        usersMeals.add(mealCard);
+        mealCardList.add(mealCard);
+    }
+
+    public void deleteMeal(MealCard mealCard) {
+        usersMeals.remove(mealCard);
+        mealCardList.remove(mealCard);
     }
 
 }
