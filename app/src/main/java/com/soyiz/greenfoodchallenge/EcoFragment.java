@@ -50,6 +50,8 @@ public class EcoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_eco, container, false);
         initView(view);
+        createDiet();
+        spinnerActions(view);
         createDietEcoProportionsPieChart(0);
         return view;
     }
@@ -67,15 +69,9 @@ public class EcoFragment extends Fragment {
         textViewEco2 = view.findViewById(R.id.textViewEco2);
         dietsCreator = new DietsCreator();
         myDiet = new Diet();
-        highMeat = dietsCreator.createMeatEaterDiet();
-        lowMeat = dietsCreator.createLowMeatDiet();
-        onlyFish = dietsCreator.createOnlyFishDiet();
-        vegetarian = dietsCreator.createVegetarianDiet();
-        vegan = dietsCreator.createVeganDiet();
-        dietComparer = new DietComparer();
 
         pieChartDietProportionView = view.findViewById(R.id.pieChartDietEcoProportions);
-        spinnerActions(view);
+        //spinnerActions(view);
     }
 
     private void createDiet() {
@@ -100,16 +96,12 @@ public class EcoFragment extends Fragment {
             myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 100 / totalAmountOfProtein);
         }
         dietsCreator.setUserDiet(myDiet);
-
-        /*
-        //Default Diets in Eco Fragment
-        final Diet highMeat = dietsCreator.createMeatEaterDiet();
-        final Diet lowMeat = dietsCreator.createLowMeatDiet();
-        final Diet onlyFish = dietsCreator.createOnlyFishDiet();
-        final Diet vegetarian = dietsCreator.createVegetarianDiet();
-        final Diet vegan = dietsCreator.createVeganDiet();
-        final DietComparer dietComparer = new DietComparer();
-        */
+        highMeat = dietsCreator.createMeatEaterDiet();
+        lowMeat = dietsCreator.createLowMeatDiet();
+        onlyFish = dietsCreator.createOnlyFishDiet();
+        vegetarian = dietsCreator.createVegetarianDiet();
+        vegan = dietsCreator.createVeganDiet();
+        dietComparer = new DietComparer();
     }
 
     private void createDietEcoProportionsPieChart(int typeOfDiet) {
@@ -142,6 +134,7 @@ public class EcoFragment extends Fragment {
 
         List<Float> yData = new ArrayList<>();
 
+        // high meat diet
         if (typeOfDiet == 1) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
@@ -149,16 +142,18 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, highMeat) + " %");
-                yData.add(0f);
-                yData.add(0f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Beef));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Chicken));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Pork));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Fish));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Beans));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Vegetables));
+                yData.add((float) highMeat.getProteinPercent(ProteinSource.Eggs));
+
             }
         }
+
+        // low meat diet
         else if (typeOfDiet == 2) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
@@ -166,16 +161,17 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, lowMeat) + " %");
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beef));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Pork));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Fish));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beans));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Vegetables));
+                yData.add((float) lowMeat.getProteinPercent(ProteinSource.Eggs));
             }
         }
+
+        // only fish
         else if (typeOfDiet == 3) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
@@ -183,16 +179,17 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, onlyFish) + " %");
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beef));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Pork));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Fish));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beans));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Vegetables));
+                yData.add((float) onlyFish.getProteinPercent(ProteinSource.Eggs));
             }
         }
+
+        // vegetarian
         else if (typeOfDiet == 4) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
@@ -200,16 +197,17 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, vegetarian) + " %");
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(122.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beef));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Pork));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Fish));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beans));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Vegetables));
+                yData.add((float) vegetarian.getProteinPercent(ProteinSource.Eggs));
             }
         }
+
+        // vegan
         else if (typeOfDiet == 5) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
@@ -217,13 +215,13 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
-                yData.add(12.1f);
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Beef));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Chicken));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Pork));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Fish));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Beans));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Vegetables));
+                yData.add((float) vegan.getProteinPercent(ProteinSource.Eggs));
             }
         }
         else {
@@ -233,7 +231,7 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             }
             else {
-                textViewEco2.setText(dietComparer.compareCO2ePercent(myDiet, vegan) + " %");
+                textViewEco2.setText("");
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("beef"));
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("chicken"));
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("pork"));
