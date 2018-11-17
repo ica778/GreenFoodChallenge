@@ -61,17 +61,6 @@ public class RecyclerViewAdapter extends RecyclerView
     public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.meal_card_view, viewGroup, false);
         MealCardViewHolder mealCardViewHolder = new MealCardViewHolder(view);
-
-        final boolean isExpanded = position==expandedPosition;
-        final int pos = position;
-        mealCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                expandedPosition = isExpanded ? -1 : pos;
-                notifyItemChanged(pos);
-            }
-        });
-
         return mealCardViewHolder;
     }
 
@@ -84,9 +73,22 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.mealImage.setImageResource(mealCardList.get(position).getMealImageId());
         mealCardViewHolder.description.setText(mealCardList.get(position).getDescription());
 
-        final boolean isExpanded = position==expandedPosition;
+        boolean value = (position == expandedPosition);
+        final boolean isExpanded = value;
+        // if (isExpanded) {.setVisibility(View.VISIBLE)} else {.setVisibility(View.GONE)}
         mealCardViewHolder.expandedArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         mealCardViewHolder.itemView.setActivated(isExpanded);
+
+        final int pos = position;
+        mealCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if (isExpanded) {expandedPosition = -1} else {expandedPosition = pos}
+                expandedPosition = isExpanded ? -1 : pos;
+                notifyItemChanged(pos);
+            }
+        });
+
     }
 
     @Override
