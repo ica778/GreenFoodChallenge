@@ -17,12 +17,11 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.firestore.util.Consumer;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
+
+    private static final String TAG = "UserFragment";
 
     private Button updateprofile;
     private Button signOutButton;
@@ -42,7 +41,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
-        (new FirebaseHelper()).getFunctions().getUserInfoForDisplay(this);
+        Log.d(TAG, "onCreateView: UserFragment creating");
 
         initView(view);
         return view;
@@ -66,15 +65,68 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         etBio = view.findViewById(R.id.et_bio);
         spinnerCity = view.findViewById(R.id.spinner_city);
 
-        //TODO: example implementation, should be updated to match how the rest is implemented
-        etFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        setInitialEditTextValues();
+
+//        //TODO: example implementation, should be updated to match how the rest is implemented
+//        etFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus == false) {
+//                    String newValue = etFirstName.getText().toString();
+//                    Log.d("MainActivity", "onFocusChange: new field value: '" + newValue + "'");
+//
+//                    (new FirebaseHelper()).getFunctions().setUserField(FirebaseHelper.Firestore.FIRST_NAME, etFirstName.getText().toString());
+//                }
+//            }
+//        });
+
+        setupFocusListener(etFirstName);
+        setupFocusListener(etLastName);
+        setupFocusListener(etAlias);
+        setupFocusListener(etBio);
+    }
+
+    private void setInitialEditTextValues() {
+        etFirstName.setText(User.getCurrent().getFirstName(), TextView.BufferType.EDITABLE);
+        etLastName.setText(User.getCurrent().getLastName(), TextView.BufferType.EDITABLE);
+        etAlias.setText(User.getCurrent().getAlias(), TextView.BufferType.EDITABLE);
+        etBio.setText(User.getCurrent().getBio(), TextView.BufferType.EDITABLE);
+    }
+
+    private void setupFocusListener(EditText editText) {
+        Consumer<String> function;
+        User user = User.getCurrent();
+
+        if (editText == etFirstName) {
+            function = user::setFirstName;
+        } else if (editText == etLastName) {
+            function = user::setLastName;
+        } else if (editText == etAlias) {
+            function = user::setAlias;
+        } else if (editText == etBio) {
+            function = user::setBio;
+        } else {
+            Log.e(TAG, "initView: setting listener on EditText broke!");
+            return;
+        }
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == false) {
-                    String newValue = etFirstName.getText().toString();
-                    Log.d("MainActivity", "onFocusChange: new field value: '" + newValue + "'");
+                if (!hasFocus) {
+                    String newValue = "";
 
-                    (new FirebaseHelper()).getFunctions().updateUserField(FirebaseHelper.Firestore.FIRST_NAME, etFirstName.getText().toString());
+                    if (editText == etFirstName) {
+                        newValue = etFirstName.getText().toString();
+                    } else if (editText == etLastName) {
+                        newValue = etLastName.getText().toString();
+                    } else if (editText == etAlias) {
+                        newValue = etAlias.getText().toString();
+                    } else if (editText == etBio) {
+                        newValue = etBio.getText().toString();
+                    }
+
+                    function.accept(newValue);
                 }
             }
         });
@@ -94,9 +146,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                             public void onComplete(@NonNull Task<Void> task) {
                                 // user is now signed out
                                 Log.d(MainActivity.TAG, "UserFragment: user signed out");
-                                Toast.makeText(getContext(), getResources().getString(R.string.toast_sign_out)
-                                        , Toast.LENGTH_SHORT).show();
-
                                 ((MainActivity) getActivity()).startLogin();
                             }
                         });
@@ -149,20 +198,19 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-
-        //TODO passing when sign in
-        User user = new User();
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        user.setFirebaseUser(firebaseUser);
-        user.setUserDocument(new HashMap<String, Object>());
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setAlias(alias);
-        user.setCity(city);
-
-        FirebaseHelper helper = new FirebaseHelper();
-        helper.getFirestore().getUserTemplate();
-        helper.getFirestore().pushUserDocument(user);
+//        //TODO passing when sign in
+//        User user = new User();
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        user.setFirebaseUser(firebaseUser);
+//        user.setUserDocument(new HashMap<String, Object>());
+//        user.setFirstName(firstName);
+//        user.setLastName(lastName);
+//        user.setAlias(alias);
+//        user.setCity(city);
+//
+//        FirebaseHelper helper = new FirebaseHelper();
+//        helper.getFirestore().getUserTemplate();
+//        helper.getFirestore().pushUserDocument(user);
 
 
         //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -190,20 +238,4 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
-
-    public void setDisplayInfo(Map<String, Object> data) {
-        String firstName = (String) data.get(FirebaseHelper.Firestore.FIRST_NAME);
-        String lastName = (String) data.get(FirebaseHelper.Firestore.LAST_NAME);
-        String alias = (String) data.get(FirebaseHelper.Firestore.ALIAS);
-        String city = (String) data.get(FirebaseHelper.Firestore.CITY);
-        String bio = (String) data.get(FirebaseHelper.Firestore.BIO);
-
-//        Log.d("MainActivity", "setDisplayInfo: name from function: " + name);
-        etFirstName.setText(firstName, TextView.BufferType.EDITABLE);
-        etLastName.setText(lastName, TextView.BufferType.EDITABLE);
-        etAlias.setText(alias, TextView.BufferType.EDITABLE);
-        etBio.setText(bio, TextView.BufferType.EDITABLE);
-    }
-
 }
