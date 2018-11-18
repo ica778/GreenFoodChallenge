@@ -59,6 +59,7 @@ public enum ProteinSource {
         return DAILY_PROTEIN_SERVING;
     }
 
+    // Gets c02e per gram
     public double getCO2e() {
         return proteinC02eMap.get(this);
     }
