@@ -24,7 +24,6 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView restaurantLocation;
         ImageView mealImage;
         TextView description;
-        RelativeLayout expandedArea;
 
 
         MealCardViewHolder(View view) {
@@ -36,7 +35,6 @@ public class RecyclerViewAdapter extends RecyclerView
             restaurantLocation = (TextView)view.findViewById(R.id.restaurant_location);
             mealImage = (ImageView)view.findViewById(R.id.meal_image);
             description = (TextView)view.findViewById(R.id.description);
-            expandedArea = (RelativeLayout)view.findViewById(R.id.expanded_area);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,21 +68,32 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.mealProtein.setText(mealCardList.get(position).getMealProtein());
         mealCardViewHolder.restaurantName.setText(mealCardList.get(position).getRestaurantName());
         mealCardViewHolder.restaurantLocation.setText(mealCardList.get(position).getRestaurantLocation());
-        mealCardViewHolder.mealImage.setImageResource(mealCardList.get(position).getMealImageId());
         mealCardViewHolder.description.setText(mealCardList.get(position).getDescription());
+        //When image is added by user during creation of a meal, isImageAdded() == true;
+        if (mealCardList.get(position).isImageAdded()) {
+            //to be implemented along with meal adding from dialog
+        } else {
+            mealCardViewHolder.mealImage.setImageResource(R.drawable.ic_restaurant_icon_24dp);
+        }
 
         boolean value = (position == expandedPosition);
         final boolean isExpanded = value;
-        // if (isExpanded) {.setVisibility(View.VISIBLE)} else {.setVisibility(View.GONE)}
-        mealCardViewHolder.expandedArea.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        if (isExpanded) {
+            mealCardViewHolder.description.setVisibility(View.VISIBLE);
+        } else {
+            mealCardViewHolder.description.setVisibility(View.GONE);
+        }
         mealCardViewHolder.itemView.setActivated(isExpanded);
 
         final int pos = position;
         mealCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if (isExpanded) {expandedPosition = -1} else {expandedPosition = pos}
-                expandedPosition = isExpanded ? -1 : pos;
+                if (isExpanded) {
+                    expandedPosition = -1;
+                } else {
+                    expandedPosition = pos;
+                }
                 notifyItemChanged(pos);
             }
         });

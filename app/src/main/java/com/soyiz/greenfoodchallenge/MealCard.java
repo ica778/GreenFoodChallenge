@@ -6,8 +6,9 @@ public class MealCard {
     private String mealProtein = null;
     private String restaurantName = null;
     private String restaurantLocation = null;
-    private int mealImageId;
+    //This icon will show if no image is chosen instead of no image at all
     private String description = null;
+    private boolean imageAdded = false;
 
     MealCard() {
 
@@ -45,19 +46,19 @@ public class MealCard {
         this.restaurantLocation = restaurantLocation;
     }
 
-    public int getMealImageId() {
-        return mealImageId;
-    }
-
-    public void setMealImageId(int mealImageId) {
-        this.mealImageId = mealImageId;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isImageAdded() {
+        return imageAdded;
+    }
+
+    public void setImageAdded(boolean imageAdded) {
+        this.imageAdded = imageAdded;
     }
 }

@@ -14,61 +14,63 @@
             android:id="@+id/meal_card_view"
     >
 
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/meal_image"
-                android:layout_gravity="center_horizontal"
-        />
-
         <RelativeLayout
+                android:id="@+id/shown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/expanded_area"
                 android:layout_gravity="center_horizontal"
-                android:paddingTop="200dp"
-                android:paddingBottom="8dp"
+                android:paddingVertical="8dp"
                 android:paddingHorizontal="8dp"
-                android:visibility="gone"
         >
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/meal_name"
-                    android:layout_alignParentLeft="true"
+            <ImageView
+                    android:id="@+id/meal_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="true"
             />
 
             <TextView
+                    android:id="@+id/meal_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/meal_image"
+            />
+
+            <TextView
                     android:id="@+id/meal_protein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/meal_name"
             />
 
 
             <TextView
+                    android:id="@+id/restaurant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/restaurant_name"
                     android:layout_alignParentRight="true"
+                    android:layout_below="@+id/meal_image"
             />
 
             <TextView
+                    android:id="@+id/restaurant_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/restaurant_location"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/restaurant_name"
             />
 
             <TextView
+                    android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/description"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/meal_protein"
+                    android:paddingTop="8dp"
+                    android:visibility="gone"
             />
 
         </RelativeLayout>
