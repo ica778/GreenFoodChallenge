@@ -11,6 +11,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.util.Consumer;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
@@ -307,7 +308,7 @@ public class FirebaseHelper {
             makeCall("setUserField", data);
         }
 
-        public void getUserField(final String fieldToGet, final UseField callback) {
+        public void getUserField(final String fieldToGet, final Consumer<Object> callback) {
             Log.d(TAG, "getUserField: getting field '" + fieldToGet + "'");
 
             FirebaseUser firebaseUser;
@@ -335,7 +336,7 @@ public class FirebaseHelper {
                     Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
                     Log.d(TAG, "getUserField: data map '" + data + "'");
 
-                    callback.use(data.get(FIELD_VALUE));
+                    callback.accept(data.get(FIELD_VALUE));
                 }
             });
         }
