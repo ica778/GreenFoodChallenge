@@ -46,10 +46,6 @@ public class FirebaseHelper {
         return functionsInstance;
     }
 
-    public interface UseField {
-        void use(Object fieldValue);
-    }
-
     final class Firestore {
 
         public static final String FIRST_NAME = "firstName";
