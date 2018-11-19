@@ -9,20 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class RestaurantFragment extends Fragment implements View.OnClickListener, AddMealInterface {
+public class RestaurantFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
-    //To make sure meals aren't created twice from Firebase
-    private boolean mealsShown = false;
-    private Button addMealCardButton;
-
-    private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
+    private Button testButton;
+    private Button searchButton;
+    private EditText searchBar;
 
     public RestaurantFragment() {
     }
@@ -49,46 +50,92 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mealCardList);
         recyclerView.setAdapter(adapter);
 
-        if (!mealsShown) {
-            showMeals();
-        }
-
         initView(view);
         return view;
     }
 
     private void initView(View view) {
-        addMealCardButton = view.findViewById(R.id.add_meal_card_button);
-        addMealCardButton.setOnClickListener(this);
+        testButton = view.findViewById(R.id.test_button);
+        testButton.setOnClickListener(this);
+        searchButton = view.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(this);
+        searchBar = view.findViewById(R.id.search_bar);
+
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.add_meal_card_button:
-                AddMealDialogFragment dialog = AddMealDialogFragment.newInstance();
-                dialog.setTargetFragment(this, 0);
-                dialog.show(getFragmentManager(), "addMealDialog");
+            case R.id.test_button:
+                createTestMeals();
+                break;
+            case R.id.search_button:
+                search();
                 break;
         }
     }
 
-    public void showMeals() {
-        functions.getMealsForList(mealCardList::add);
-        recyclerView.getAdapter().notifyDataSetChanged();
-        mealsShown = true;
-    }
-
-    //Interface method
-    @Override
-    public void addMeal(String uuid) {
-        functions.getMeal(uuid, mealCardList::add);
+    public void postMeal(MealCard mealCard) {
+        mealCardList.add(mealCard);
         recyclerView.getAdapter().notifyDataSetChanged();
     }
-
 
     public void deleteMeal(MealCard mealCard) {
         mealCardList.remove(mealCard);
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
+    public void createTestMeals() {
+        //Just for testing
+        MealCard testMeal1 = new MealCard();
+        testMeal1.setMealName("Meal Name 1");
+        testMeal1.setMealProtein("Main Protein of Meal 1");
+        testMeal1.setRestaurantName("Restaurant Name 1");
+        testMeal1.setRestaurantLocation("Restaurant Location 1");
+        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
+                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
+
+        MealCard testMeal2 = new MealCard();
+        testMeal2.setMealName("Meal Name 2");
+        testMeal2.setMealProtein("Main Protein of Meal 2");
+        testMeal2.setRestaurantName("Restaurant Name 2");
+        testMeal2.setRestaurantLocation("Restaurant Location 2");
+        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
+                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
+
+        MealCard testMeal3 = new MealCard();
+        testMeal3.setMealName("Meal Name 3");
+        testMeal3.setMealProtein("Main Protein of Meal 3");
+        testMeal3.setRestaurantName("Restaurant Name 3");
+        testMeal3.setRestaurantLocation("Restaurant Location 3");
+        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
+                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
+
+        postMeal(testMeal1);
+        postMeal(testMeal2);
+        postMeal(testMeal3);
+    }
+    // Using the keyword from search bar to search restaurant.
+    public void search(){
+        mealCardList.clear();
+        Map mealList = getRestaurants();
+        for (Object key : mealList.keySet()) {
+            MealCard tempMealCard = (MealCard) mealList.get( key);
+            mealCardList.add(tempMealCard);
+        }
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    //Todo: query server by keyword to get restaurants - zhiwen
+    public Map<String, MealCard> getRestaurants() {
+        Map mealList = new HashMap();
+        MealCard testMeal4 = new MealCard();
+        testMeal4.setMealName("Burger");
+        MealCard testMeal5 = new MealCard();
+        testMeal5.setMealName("Noodle");
+        mealList.put("b",testMeal4);
+        mealList.put("n",testMeal5);
+
+
+        return mealList;
+    }
 }
