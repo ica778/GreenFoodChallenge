@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 public class MainActivity extends AppCompatActivity {
 
     // Set to true to disable mandatory logins and enable facebook hash printing
-    public static final boolean DEBUG_MODE = false;
+    public static final boolean DEBUG_MODE = true;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
 
