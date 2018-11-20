@@ -5,15 +5,29 @@
     <string name="eco_name">Eco Eating</string>
     <string name="user_name">User</string>
     <string name="pledge_name">Pledge</string>
+    <string name="restaurant_name">Restaurants</string>
 
 
-    //Strings for Eco
+    //Strings for EcoFragment
+    <string-array name="types_of_diet">
+        <item name="currentDiet">[Select Diet]</item>
+        <item name="highMeat">Meat eater</item>
+        <item name="lowMeat">Low Meat</item>
+        <item name="onlyFish">Only Fish</item>
+        <item name="vegetarian">Vegetarian</item>
+        <item name="vegan">Vegan</item>
+    </string-array>
+    <string name="titleText">Pick a new diet below to see how your ecological footprint can improve.\n</string>
+    <string name="newDietImprovement">\t - This diet is %1$.2f \% better than your current diet.</string>
+
+
+
     <string name="highMeat">Meat eater</string>
     <string name="lowMeat">Low Meat</string>
     <string name="onlyFish">Only Fish</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
-    <string name="BetterPercentage">Better CO2e than current Diet</string>
+    <string name="BetterPercentage">Improvement over current diet</string>
     <string name="dietInfo">Please enter your diet in Eating Habits Page.\nAfter that, You
         can chose the diets above.
     </string>
@@ -42,6 +56,7 @@
         \n(80/20) with beans and veg.
     </string>
 
+    // Strings for info fragment
     <string name="info_name">About</string>
     <string name="info">\tThe reason we made this app is to help people
         plan new, eco friendly diets in hopes of reducing greenhouse gas
@@ -69,68 +84,69 @@
 
 
     // Strings for EatingHabitsFragment
-    <string name="calculator_toast">Please enter at least one amount</string>
-    <string name="co2_100g_n">\nThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
+    <string name="calculator_invalid_input_toast">Please enter at least one valid amount</string>
+    <string name="calculator_results">\n\n\t
+        \n\tThis diet will produce %1$.2f tonnes/year of CO2e which is equivalent to burning %2$.2f
         litres of gasoline. Think about how much gas you use to commute!
-        \n\nCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
-        \n\nIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
+        \n\n\tCompared to the regional average of %3$.2f tonnes/year per capita, this diet produces %4$s.
+        \n\n\tIf everyone in your area ate like this for a year, they would produce approximately %5$d tonnes of C02e
         which is %6$s than the current %7$d tonnes.
-        \n\nAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can affect
+        \n\n\tAs you can see these numbers are massive! Lets look at the Eco page to see how changing our diet can
+        affect
         these numbers.
     </string>
 
+    <string name="show_pledge_information">%1$d people and %2$.2f tonnes of C02e have been pledged in total.\nThis is
+        equivalent to %3$.2f barrels of gasoline.\n\nThe average C02e saved per person is %4$.2f tonnes.
+    </string>
+
+    // Strings for calculator results
+    <string name="calculator_text1">This is the proportion of foods in your diet by weight:</string>
+    <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
+    <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
+        \n\t- Equivalent to burning %2$.2f barrels of gasoline
+        \n\t- %3$s than the Metro Vancouver\n\taverage of %4$.2f tonnes</string>
+    <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
+        ecological footprint!</string>
+
+    // Strings for restaurant fragments
+    <string name="add_meal_card_text">Add A Meal</string>
+    <string name="exit_dialog_text">Exit</string>
+    <string name="enter_meal_text">Add</string>
+    <string name="dialog_title_text">Enter Your Meal</string>
+    <string name="meal_name_title">Enter the name of your meal:</string>
+    <string name="meal_protein_title">Enter the main protein source in your meal:</string>
+    <string name="restaurant_name_title">Enter the name of the restaurant where you ordered this meal:</string>
+    <string name="restaurant_location_title">Enter the location of this restaurant:</string>
+    <string name="description_title">Enter a short description of this meal (optional):</string>
+    <string name="add_meal_invalid_input_toast">Meal name, meal protein, restaurant name, and restaurant location are mandatory</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    //Municipalities
-    <string name="no_municipality">No municipality chosen</string>
-    <string name="anmore">Anmore</string>
-    <string name="belcarra">Belcarra</string>
-    <string name="bowen_island">Bowen Island</string>
-    <string name="burnaby">Burnaby</string>
-    <string name="coquitlam">Coquitlam</string>
-    <string name="delta">Delta</string>
-    <string name="langley">Langley</string>
-    <string name="lions_bay">Lions Bay</string>
-    <string name="maple_ridge">Maple Ridge</string>
-    <string name="new_westminster">New Westminster</string>
-    <string name="north_vancouver">North Vancouver</string>
-    <string name="pitt_meadows">Pitt Meadows</string>
-    <string name="port_coquitlam">Port Coquitlam</string>
-    <string name="port_moody">Port Moody</string>
-    <string name="richmond">Richmond</string>
-    <string name="surrey">Surrey</string>
-    <string name="university_endowment_lands">University Endowment Lands</string>
-    <string name="vancouver">Vancouver</string>
-    <string name="west_vancouver">West Vancouver</string>
-    <string name="white_rock">White Rock</string>
-
-    <!--city array-->
-    <array name="city_array">
-        <item>Anmore</item>
-        <item>Belcarra</item>
-        <item>Bowen Island</item>
-        <item>Burnaby</item>
-        <item>Coquitlam</item>
-        <item>Delta</item>
-        <item>Langley</item>
-        <item>Lions Bay</item>
-        <item>Maple Ridge</item>
-        <item>New Westminster</item>
-        <item>North Vancouver</item>
-        <item>Pitt Meadows</item>
-        <item>Port Coquitlam</item>
-        <item>Port Moody</item>
-        <item>Richmond</item>
-        <item>Surrey</item>
-        <item>University Endowment Lands</item>
-        <item>Vancouver</item>
-        <item>West Vancouver</item>
-        <item>Vancouver</item>
-        <item>West Vancouver</item>
-        <item>White Rock</item>
-    </array>
+    <string-array name="municipalities_spinner">
+        <item name="no_municipality">No municipality chosen</item>
+        <item name="anmore">Anmore</item>
+        <item name="belcarra">Belcarra</item>
+        <item name="bowen_island">Bowen Island</item>
+        <item name="burnaby">Burnaby</item>
+        <item name="coquitlam">Coquitlam</item>
+        <item name="delta">Delta</item>
+        <item name="langley">Langley</item>
+        <item name="lions_bay">Lions Bay</item>
+        <item name="maple_ridge">Maple Ridge</item>
+        <item name="new_westminster">New Westminster</item>
+        <item name="north_vancouver">North Vancouver</item>
+        <item name="pitt_meadows">Pitt Meadows</item>
+        <item name="port_coquitlam">Port Coquitlam</item>
+        <item name="port_moody">Port Moody</item>
+        <item name="richmond">Richmond</item>
+        <item name="surrey">Surrey</item>
+        <item name="university_endowment_lands">University Endowment Lands</item>
+        <item name="vancouver">Vancouver</item>
+        <item name="west_vancouver">West Vancouver</item>
+        <item name="white_rock">White Rock</item>
+    </string-array>
 
     //No user name
     <string name="no_user_name">No name given</string>
@@ -139,8 +155,9 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb254721118525412</string>
 
     <!-- TODO: add consumer key and secret when available -->
-    <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
-    <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+    <string name="twitter_consumer_key" translatable="false">6hAtWCzYmqeZ9Ec0pQqxbysrr</string>
+    <string name="twitter_consumer_secret" translatable="false">cXrj3MUjnD2ETeXgXcAZ1DmKxkA7upIBlYiD4a0DgJjrrRQFtc
+    </string>
 
     <string name="sign_in_btn_txt">Sign in</string>
     <string name="sign_out_btn_txt">Sign out</string>
@@ -151,5 +168,8 @@
     <string name="last_name">Last Name</string>
     <string name="alias">Alias</string>
     <string name="choose_city">Choose City</string>
+
+    <string name="toast_sign_out">Signed out!</string>
+    <string name="toast_already_signed_in">Already signed in!</string>
 
 </resources>

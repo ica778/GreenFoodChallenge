@@ -8,21 +8,18 @@ import java.util.Map;
 public class Diet {
     private static final String TAG = "Diet";
 
-    private Map<ProteinSource, Float> proteinPercentMap;
+    private Map<ProteinSource, Double> proteinPercentMap;
 
     Diet() {
         proteinPercentMap = new HashMap<>();
     }
 
     // Used to load a map from Firebase into a diet object
-    public void loadFromStringMap(Map<String, Float> map)
-    {
-        for (Map.Entry<String, Float> entry : map.entrySet())
-        {
+    public void loadFromStringMap(Map<String, Float> map) {
+        for (Map.Entry<String, Float> entry : map.entrySet()) {
             ProteinSource protein = ProteinSource.stringToEnumValue(entry.getKey());
 
-            if (protein == null)
-            {
+            if (protein == null) {
                 // Yes, this is silently failing. Unfortunately that's pretty much the best we can do here.
                 // If this case occurs, eventually a NRE will happen. But if we're in that scenario, we've already lost.
                 Log.d(TAG, "[ERROR] loadFromStringMap: bad protein string. Got: '" + entry.getKey() + "'.");
@@ -34,12 +31,10 @@ public class Diet {
     }
 
     // Used to turn a diet into a string keyed map for saving with Firebase
-    public Map<String, Float> exportToStringMap()
-    {
-        Map<String, Float> outputMap = new HashMap<>();
+    public Map<String, Double> exportToStringMap() {
+        Map<String, Double> outputMap = new HashMap<>();
 
-        for (Map.Entry<ProteinSource, Float> entry : proteinPercentMap.entrySet())
-        {
+        for (Map.Entry<ProteinSource, Double> entry : proteinPercentMap.entrySet()) {
             outputMap.put(entry.getKey().toString(), entry.getValue());
         }
 
@@ -47,34 +42,34 @@ public class Diet {
     }
 
     // Sets the percentage of a given protein
-    public void setProteinPercent(ProteinSource protein, float percent) {
+    public void setProteinPercent(ProteinSource protein, double percent) {
         proteinPercentMap.put(protein, percent);
     }
 
     // Gets the percentage of a given protein
-    public float getProteinPercent(ProteinSource protein) {
+    public double getProteinPercent(ProteinSource protein) {
         return proteinPercentMap.get(protein);
     }
 
     // Gets the weekly CO2e usage for the diet
-    public float getWeeklyCO2e() {
-        float output = 0;
+    public double getWeeklyCO2e() {
+        double output = 0;
 
         // Weekly serving in grams for protein
-        float weeklyServing = ProteinSource.getDailyServing() * 7;
-        for (Map.Entry<ProteinSource, Float> pair : proteinPercentMap.entrySet()) {
+        double weeklyServing = ProteinSource.getDailyServing() * 7;
+        for (Map.Entry<ProteinSource, Double> pair : proteinPercentMap.entrySet()) {
 
             // Weekly serving in grams for a specific protein
-            float proteinWeeklyServing = pair.getValue() * weeklyServing;
+            double proteinWeeklyServing = pair.getValue() / 100 * weeklyServing;
 
             // Puts the serving into KG and multiplies by CO2e for the protein
-            output += (proteinWeeklyServing / 1000f) * pair.getKey().getCO2e();
+            output += (proteinWeeklyServing / 1000.0) * pair.getKey().getCO2e();
         }
         return output;
     }
 
     // Gets the yearly CO2e usage for the diet
-    public float getYearlyCO2e() {
+    public double getYearlyCO2e() {
         // There are 52 weeks in a year
         return getWeeklyCO2e() * 52;
     }

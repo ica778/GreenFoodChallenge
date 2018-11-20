@@ -33,18 +33,18 @@
             android:paddingRight="5dp">
 
             <EditText
-                android:id="@+id/et_first_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/first_name"
-                android:textSize="14sp" />
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/first_name"
+                    android:textSize="14sp" android:inputType="text|textCapWords|textPersonName"/>
 
             <EditText
-                android:id="@+id/et_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/last_name"
-                android:textSize="14sp" />
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/last_name"
+                    android:textSize="14sp" android:inputType="text|textCapWords|textPersonName"/>
 
         </LinearLayout>
 
@@ -65,11 +65,11 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_alias"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/alias"
-            android:textSize="14sp" />
+                android:id="@+id/et_alias"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/alias"
+                android:textSize="14sp" android:inputType="text"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
                 android:id="@+id/spinner_city"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/city_array" />
+                android:entries="@array/municipalities_spinner" />
 
         </LinearLayout>
 
@@ -93,17 +93,18 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/et_bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/bg_shape"
-        android:gravity="top"
-        android:hint="Bio"
-        android:maxHeight="200dp"
-        android:minHeight="150dp"
-        android:padding="10dp"
-        android:textSize="14sp" />
+            android:id="@+id/et_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_shape"
+            android:gravity="top"
+            android:hint="Bio"
+            android:maxHeight="200dp"
+            android:minHeight="150dp"
+            android:padding="10dp"
+            android:textSize="14sp" android:inputType="text|textCapSentences|textAutoCorrect|textMultiLine"
+            android:singleLine="false" android:selectAllOnFocus="false"/>
 
     <LinearLayout
         android:layout_width="match_parent"

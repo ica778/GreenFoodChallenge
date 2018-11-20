@@ -18,11 +18,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/eatingHabitsCalculatorTitle"
                 android:layout_width="match_parent"
                 android:layout_height="67dp"
                 android:gravity="center"
-                android:text="Enter the amount of each food you eat below to calculate the C02e produced"
+                android:text="Enter the amount of each food you eat below to calculate the C02e "
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <LinearLayout
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="number"
-                />
+                        android:hint="0"/>
 
             </LinearLayout>
 
@@ -86,12 +86,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_chicken"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_chicken"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -110,12 +110,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_pork"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_pork"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -134,12 +134,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_fish"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_fish"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -158,12 +158,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_beans"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_beans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -182,12 +182,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_vegetables"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_vegetables"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -206,12 +206,12 @@
 
 
                 <EditText
-                    android:id="@+id/et_egg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:text="" />
+                        android:id="@+id/et_egg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:text="" android:hint="0"/>
 
             </LinearLayout>
 
@@ -243,7 +243,8 @@
             <TextView
                 android:id="@+id/tv_result"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         </LinearLayout>
     </ScrollView>

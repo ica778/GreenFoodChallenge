@@ -6,9 +6,45 @@
     tools:context=".PledgeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+        <Spinner
+                android:layout_width="232dp"
+                android:gravity="center"
+                android:layout_height="wrap_content" android:id="@+id/selectRegionSpinner"/>
+        <TextView
+                android:text="List Of Pledges"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" android:id="@+id/textView14"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        <ScrollView
+                android:layout_width="295dp"
+                android:background="@drawable/custom_border"
+                android:layout_height="204dp" android:id="@+id/listOfPledges">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp" android:id="@+id/listViewPledges"/>
+            </LinearLayout>
+        </ScrollView>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+                android:hint="Select A Municipality"
+                android:layout_width="365dp"
+                android:layout_height="wrap_content" android:id="@+id/showInformationAboutPledge"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+    </LinearLayout>
 </FrameLayout>
