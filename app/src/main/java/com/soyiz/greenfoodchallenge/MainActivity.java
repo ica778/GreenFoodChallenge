@@ -80,6 +80,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_LOGIN_ACTIVITY) {
+            Log.d(TAG, "onActivityResult: successful login. Firebase user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            User.getCurrent().setFirebaseUser(FirebaseAuth.getInstance().getCurrentUser());
+            (new FirebaseHelper()).getFunctions().getUserInfoForDisplay();
+        } else {
+            Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -91,23 +104,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate");
+        Log.d(TAG, "onCreate start");
 
         // Debug code for getting facebook login hash
         if (DEBUG_MODE) {
             getHashForFacebook();
         }
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (!DEBUG_MODE) {
-            if (currentUser == null) {
+            if (firebaseUser == null) {
                 Log.d(TAG, "onCreate: user not previously logged in, going to AuthUI");
                 startLogin();
 
-            } else if (User.getCurrent().getFirebaseUser() == null) {
-                Log.d(TAG, "onCreate: user logged in, but not set on User instance");
-                User.getCurrent().setFirebaseUser(currentUser);
+            } else {
+                if (User.getCurrent().getFirebaseUser() == null) {
+                    Log.d(TAG, "onCreate: user logged in, but not set on User instance");
+                    User.getCurrent().setFirebaseUser(firebaseUser);
+                }
+
+                (new FirebaseHelper()).getFunctions().getUserInfoForDisplay();
             }
         }
 
@@ -157,18 +174,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         changeFragment(currentFragment);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_LOGIN_ACTIVITY) {
-            Log.d(TAG, "onActivityResult: successful login. Firebase user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-            User.getCurrent().setFirebaseUser(FirebaseAuth.getInstance().getCurrentUser());
-        } else {
-            Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
-        }
     }
 
     private void getHashForFacebook() {

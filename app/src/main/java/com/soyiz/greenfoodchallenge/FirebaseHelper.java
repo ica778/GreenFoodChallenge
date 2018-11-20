@@ -7,7 +7,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.firestore.*;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.util.Consumer;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 
@@ -40,6 +44,10 @@ public class FirebaseHelper {
     // Returns the Functions instance
     public Functions getFunctions() {
         return functionsInstance;
+    }
+
+    public interface UseField {
+        void use(Object fieldValue);
     }
 
     final class Firestore {
@@ -120,39 +128,39 @@ public class FirebaseHelper {
             return pledge;
         }
 
-        // Given a user, will set its userDocument to the latest on the server, but does it asynchronously
-        // Would recommend running this immediately upon user login so the pull can resolve by the time it's needed
-        public void pullUserDocument(final User user) {
-            FirebaseUser firebaseUser = user.getFirebaseUser();
-
-            userCollection.document(firebaseUser.getUid())
-                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-
-                        if (document == null) {
-                            // Yes, this silently fails, but throwing will just get more problematic.
-                            // Logging is about as useful as we can get here.
-                            Log.d("pullUserDocument", "[ERROR] onComplete: grabbed document was null. User was never created!");
-                            return;
-                        }
-
-                        if (document.exists()) {
-                            user.setUserDocument(document.getData());
-                        }
-                    }
-                }
-            });
-
-        }
-
-        // Given a user, will send its userDocument to the server as an update
-        public void pushUserDocument(User user) {
-            FirebaseUser firebaseUser = user.getFirebaseUser();
-            userCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
-        }
+//        // Given a user, will set its userDocument to the latest on the server, but does it asynchronously
+//        // Would recommend running this immediately upon user login so the pull can resolve by the time it's needed
+//        public void pullUserDocument(final User user) {
+//            FirebaseUser firebaseUser = user.getFirebaseUser();
+//
+//            userCollection.document(firebaseUser.getUid())
+//                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//
+//                        if (document == null) {
+//                            // Yes, this silently fails, but throwing will just get more problematic.
+//                            // Logging is about as useful as we can get here.
+//                            Log.d("pullUserDocument", "[ERROR] onComplete: grabbed document was null. User was never created!");
+//                            return;
+//                        }
+//
+//                        if (document.exists()) {
+//                            user.setUserDocument(document.getData());
+//                        }
+//                    }
+//                }
+//            });
+//
+//        }
+//
+//        // Given a user, will send its userDocument to the server as an update
+//        public void pushUserDocument(User user) {
+//            FirebaseUser firebaseUser = user.getFirebaseUser();
+//            userCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
+//        }
 
         public void queryPledgesForViewer(final PledgeFragment fragment) {
             userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -197,7 +205,7 @@ public class FirebaseHelper {
 
     final class Functions {
 
-        public static final String IDENTIFER = "identifier";
+        public static final String USER_ID = "identifier";
         public static final String FIELD_NAME = "fieldName";
         public static final String FIELD_VALUE = "fieldValue";
 
@@ -228,24 +236,24 @@ public class FirebaseHelper {
             throw new Exception();
         }
 
-        private FirebaseUser safeGetFirebaseUser() {
+        private FirebaseUser safeGetFirebaseUser() throws Exception {
             User user = User.getCurrent();
             if (user == null) {
                 Log.e(TAG, "getUserInfoForDisplay: user is null! Something isn't setup right...");
-                throw new NullPointerException();
+                throw new Exception();
             }
 
             FirebaseUser firebaseUser = user.getFirebaseUser();
             if (firebaseUser == null) {
                 Log.e(TAG, "getUserInfoForDisplay: Firebase user is null! User likely not logged in...");
-                throw new NullPointerException();
+                throw new Exception();
             }
 
             return firebaseUser;
         }
 
         // Will grab the user information to display on the user fragment and set it
-        public void getUserInfoForDisplay(final UserFragment userFragment) {
+        public void getUserInfoForDisplay() {
 
             FirebaseUser firebaseUser;
             try {
@@ -262,7 +270,7 @@ public class FirebaseHelper {
             }
 
             Map<String, Object> data = new HashMap<>();
-            data.put(IDENTIFER, userEmail);
+            data.put(USER_ID, userEmail);
 
             Task<HttpsCallableResult> task = makeCall("getUserInfoForDisplay", data);
             task.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
@@ -270,13 +278,13 @@ public class FirebaseHelper {
                 public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                     Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
                     Log.d(TAG, "getUserInfoForDisplay.onComplete: data map: '" + data + "'");
-                    userFragment.setDisplayInfo(data);
+                    User.getCurrent().setDisplayInfo(data);
                 }
             });
         }
 
-        public void updateUserField(String fieldToChange, Object newFieldValue) {
-            Log.d(TAG, "updateUserField: changing field '" + fieldToChange + "' to value '" + newFieldValue + "'");
+        public void setUserField(final String fieldToChange, final Object newFieldValue) {
+            Log.d(TAG, "setUserField: setting field '" + fieldToChange + "' to value '" + newFieldValue + "'");
 
             FirebaseUser firebaseUser;
             try {
@@ -293,11 +301,44 @@ public class FirebaseHelper {
             }
 
             Map<String, Object> data = new HashMap<>();
-            data.put(IDENTIFER, userEmail);
+            data.put(USER_ID, userEmail);
             data.put(FIELD_NAME, fieldToChange);
             data.put(FIELD_VALUE, newFieldValue);
 
-            makeCall("updateUserField", data);
+            makeCall("setUserField", data);
+        }
+
+        public void getUserField(final String fieldToGet, final Consumer<Object> callback) {
+            Log.d(TAG, "getUserField: getting field '" + fieldToGet + "'");
+
+            FirebaseUser firebaseUser;
+            try {
+                firebaseUser = safeGetFirebaseUser();
+            } catch (Exception e) {
+                return;
+            }
+
+            String userEmail;
+            try {
+                userEmail = findUserEmail(firebaseUser);
+            } catch (Exception e) {
+                return;
+            }
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(USER_ID, userEmail);
+            data.put(FIELD_NAME, fieldToGet);
+
+            Task<HttpsCallableResult> task = makeCall("getUserField", data);
+            task.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+                @Override
+                public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                    Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
+                    Log.d(TAG, "getUserField: data map '" + data + "'");
+
+                    callback.accept(data.get(FIELD_VALUE));
+                }
+            });
         }
     }
 
