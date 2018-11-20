@@ -8,30 +8,24 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.HashMap;
+import com.google.firebase.firestore.util.Consumer;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
-    private Button   updateprofile;
+    private static final String TAG = "UserFragment";
+
     private Button signOutButton;
-    private Button signInButton;
+    //private Button signOutButton;
+    //private Button signInButton;
     private Button aboutPageBtn;
     private ImageView ivHead;
     private EditText etFirstName, etLastName, etAlias, etBio;
@@ -47,17 +41,19 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
+        Log.d(TAG, "onCreateView: UserFragment creating");
+
         initView(view);
         return view;
     }
 
     private void initView(View view) {
-        updateprofile = view.findViewById(R.id.update_profile_btn);
-        updateprofile.setOnClickListener(this);
+        //updateprofile = view.findViewById(R.id.update_profile_btn);
+        //updateprofile.setOnClickListener(this);
         signOutButton = view.findViewById(R.id.sign_out_btn);
         signOutButton.setOnClickListener(this);
-        signInButton = view.findViewById(R.id.sign_in_btn);
-        signInButton.setOnClickListener(this);
+        //signInButton = view.findViewById(R.id.sign_in_btn);
+        //signInButton.setOnClickListener(this);
         aboutPageBtn = view.findViewById(R.id.about_page_btn);
         aboutPageBtn.setOnClickListener(this);
 
@@ -68,55 +64,110 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         etAlias = view.findViewById(R.id.et_alias);
         etBio = view.findViewById(R.id.et_bio);
         spinnerCity = view.findViewById(R.id.spinner_city);
+
+        setInitialEditTextValues();
+
+//        //TODO: example implementation, should be updated to match how the rest is implemented
+//        etFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus == false) {
+//                    String newValue = etFirstName.getText().toString();
+//                    Log.d("MainActivity", "onFocusChange: new field value: '" + newValue + "'");
+//
+//                    (new FirebaseHelper()).getFunctions().setUserField(FirebaseHelper.Firestore.FIRST_NAME, etFirstName.getText().toString());
+//                }
+//            }
+//        });
+
+        setupFocusListener(etFirstName);
+        setupFocusListener(etLastName);
+        setupFocusListener(etAlias);
+        setupFocusListener(etBio);
+    }
+
+    private void setInitialEditTextValues() {
+        etFirstName.setText(User.getCurrent().getFirstName(), TextView.BufferType.EDITABLE);
+        etLastName.setText(User.getCurrent().getLastName(), TextView.BufferType.EDITABLE);
+        etAlias.setText(User.getCurrent().getAlias(), TextView.BufferType.EDITABLE);
+        etBio.setText(User.getCurrent().getBio(), TextView.BufferType.EDITABLE);
+    }
+
+    private void setupFocusListener(EditText editText) {
+        Consumer<String> function;
+        User user = User.getCurrent();
+
+        if (editText == etFirstName) {
+            function = user::setFirstName;
+        } else if (editText == etLastName) {
+            function = user::setLastName;
+        } else if (editText == etAlias) {
+            function = user::setAlias;
+        } else if (editText == etBio) {
+            function = user::setBio;
+        } else {
+            Log.e(TAG, "initView: setting listener on EditText broke!");
+            return;
+        }
+
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String newValue = "";
+
+                    if (editText == etFirstName) {
+                        newValue = etFirstName.getText().toString();
+                    } else if (editText == etLastName) {
+                        newValue = etLastName.getText().toString();
+                    } else if (editText == etAlias) {
+                        newValue = etAlias.getText().toString();
+                    } else if (editText == etBio) {
+                        newValue = etBio.getText().toString();
+                    }
+
+                    function.accept(newValue);
+                }
+            }
+        });
     }
 
     public void onClick(View view) {
-        if (view.getId() == R.id.update_profile_btn) {
-            //However sign in is implemented, just put this line when called and it should take care of the rest
-            Update();
-            //startActivity(new Intent(getActivity(), LoginActivity.class));
-            //getActivity().finish();
 
-            ////////////////////////////////////////////////////////////////////////////////////////////
-        }
+        switch (view.getId()) {
+            /*case R.id.update_profile_btn:
+                Update();
+                break;*/
 
-        if (view.getId() == R.id.sign_out_btn) {
-            //However sign out is implemented, just put these lines when called and it should take care of the rest
-            AuthUI.getInstance()
-                    .signOut(getActivity())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // user is now signed out
-                            startActivity(new Intent(getActivity(), LoginActivity.class));
-                            getActivity().finish();
-                        }
-                    });
-            /////////////////////////////////////////////////////////////////////////////////////
-        }
+            case R.id.sign_out_btn:
+                AuthUI.getInstance()
+                        .signOut(getActivity())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // user is now signed out
+                                Log.d(MainActivity.TAG, "UserFragment: user signed out");
+                                ((MainActivity) getActivity()).startLogin();
+                            }
+                        });
+                break;
 
-        if (view.getId() == R.id.sign_in_btn) {
-            //However delete user is implemented, just put these lines when called and it should take care of the rest
-            AuthUI.getInstance()
-                    .delete(getActivity())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // ...
-                            startActivity(new Intent(getActivity(),
-                                    LoginActivity.class));
-                            getActivity().finish();
-                        }
-                    });
-            ///////////////////////////////////////////////////////////////////////////////////////
-        }
+            /*case R.id.sign_in_btn:
+                if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    ((MainActivity) getActivity()).startLogin();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.toast_already_signed_in), Toast.LENGTH_SHORT).show();
+                }
 
-        if (view.getId() == R.id.about_page_btn) {
-            startActivity(new Intent(getContext(), AboutActivity.class));
+                break;*/
 
-        }
+            case R.id.about_page_btn:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
+                break;
 
-        if (view.getId() == R.id.iv_head) {
-            selectImage();
+            case R.id.iv_head:
+                selectImage();
+                break;
+
         }
     }
 
@@ -147,25 +198,23 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
+//        //TODO passing when sign in
+//        User user = new User();
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        user.setFirebaseUser(firebaseUser);
+//        user.setUserDocument(new HashMap<String, Object>());
+//        user.setFirstName(firstName);
+//        user.setLastName(lastName);
+//        user.setAlias(alias);
+//        user.setCity(city);
+//
+//        FirebaseHelper helper = new FirebaseHelper();
+//        helper.getFirestore().getUserTemplate();
+//        helper.getFirestore().pushUserDocument(user);
 
-
-        //TODO passing when sign in
-        User user = new User();
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        user.setFirebaseUser(firebaseUser);
-        user.setUserDocument(new HashMap<String, Object>());
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setAlias(alias);
-        user.setCity(city);
-
-      FirestoreHelper helper = new FirestoreHelper();
-        helper.getUserTemplate();
-      helper.pushUserDocument(user);
 
         //getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
     }
-
 
     private void selectImage() {
         final Integer[] resIds = new Integer[]{R.drawable.ic_head1, R.drawable.ic_head2,
@@ -189,6 +238,4 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
-
 }
