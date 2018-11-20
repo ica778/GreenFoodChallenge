@@ -1,10 +1,9 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.CollectionReference;
@@ -14,11 +13,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.util.Consumer;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.soyiz.greenfoodchallenge.FirebaseHelper.Firestore.UUID_TAG;
 
 // Note: this is not a singleton because it can cause a memory leak due to holding the
 // database reference for a long time. Usage case is then to instantiate a helper object for usage
@@ -30,11 +37,14 @@ public class FirebaseHelper {
 
     private final Firestore firestoreInstance = new Firestore();
     private final Functions functionsInstance = new Functions();
+    private final Storage storageInstance = new Storage();
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference userCollection = db.collection("users");
 
     private final FirebaseFunctions functions = FirebaseFunctions.getInstance();
+
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     // Returns the Firestore instance
     public Firestore getFirestore() {
@@ -46,12 +56,13 @@ public class FirebaseHelper {
         return functionsInstance;
     }
 
-    public interface UseField {
-        void use(Object fieldValue);
+    public Storage getStorage() {
+        return storageInstance;
     }
 
     final class Firestore {
 
+        // Field constants for user
         public static final String FIRST_NAME = "firstName";
         public static final String LAST_NAME = "lastName";
         public static final String ALIAS = "alias";
@@ -73,6 +84,16 @@ public class FirebaseHelper {
         public static final String PLEDGE = "pledge";
 
         public static final String DIET = "diet";
+
+        //Field constants for meals
+        public static final String MEAL_NAME = "mealName";
+        public static final String MEAL_PROTEIN = "mealProtein";
+        public static final String MEAL_DESCRIPTION = "mealDescription";
+
+        public static final String RESTAURANT_NAME = "restaurantName";
+        public static final String RESTAURANT_LOCATION = "restaurantLocation";
+
+        public static final String UUID_TAG = "UUID";
 
         public Map<String, Object> getUserTemplate() {
             Map<String, Object> user = new HashMap<>();
@@ -209,6 +230,8 @@ public class FirebaseHelper {
         public static final String FIELD_NAME = "fieldName";
         public static final String FIELD_VALUE = "fieldValue";
 
+        public static final String MEAL_MAP = "mealMap";
+
         private Task<HttpsCallableResult> makeCall(String functionName, Map<String, Object> data) {
             return functions.getHttpsCallable(functionName).call(data).continueWith(new Continuation<HttpsCallableResult, HttpsCallableResult>() {
                 @Override
@@ -252,9 +275,7 @@ public class FirebaseHelper {
             return firebaseUser;
         }
 
-        // Will grab the user information to display on the user fragment and set it
-        public void getUserInfoForDisplay() {
-
+        private void internalGetter(String functionName, Map<String, Object> data, OnCompleteListener<HttpsCallableResult> callback) {
             FirebaseUser firebaseUser;
             try {
                 firebaseUser = safeGetFirebaseUser();
@@ -269,11 +290,41 @@ public class FirebaseHelper {
                 return;
             }
 
-            Map<String, Object> data = new HashMap<>();
             data.put(USER_ID, userEmail);
 
-            Task<HttpsCallableResult> task = makeCall("getUserInfoForDisplay", data);
-            task.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            makeCall(functionName, data).addOnCompleteListener(callback);
+        }
+
+        private void internalSetter(String functionName, Map<String, Object> data, OnCompleteListener<HttpsCallableResult> callback) {
+            FirebaseUser firebaseUser;
+            try {
+                firebaseUser = safeGetFirebaseUser();
+            } catch (Exception e) {
+                return;
+            }
+
+            String userEmail;
+            try {
+                userEmail = findUserEmail(firebaseUser);
+            } catch (Exception e) {
+                return;
+            }
+
+            data.put(USER_ID, userEmail);
+
+            Task<HttpsCallableResult> task = makeCall(functionName, data);
+            if (callback != null) {
+                task.addOnCompleteListener(callback);
+            }
+        }
+
+        // Will grab the user information to display on the user fragment and set it
+        public void getUserInfoForDisplay() {
+            Log.d(TAG, "getUserInfoForDisplay: getting user data");
+
+            Map<String, Object> data = new HashMap<>();
+
+            internalGetter("getUserInfoForDisplay", data, new OnCompleteListener<HttpsCallableResult>() {
                 @Override
                 public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                     Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
@@ -283,54 +334,13 @@ public class FirebaseHelper {
             });
         }
 
-        public void setUserField(final String fieldToChange, final Object newFieldValue) {
-            Log.d(TAG, "setUserField: setting field '" + fieldToChange + "' to value '" + newFieldValue + "'");
-
-            FirebaseUser firebaseUser;
-            try {
-                firebaseUser = safeGetFirebaseUser();
-            } catch (Exception e) {
-                return;
-            }
-
-            String userEmail;
-            try {
-                userEmail = findUserEmail(firebaseUser);
-            } catch (Exception e) {
-                return;
-            }
-
-            Map<String, Object> data = new HashMap<>();
-            data.put(USER_ID, userEmail);
-            data.put(FIELD_NAME, fieldToChange);
-            data.put(FIELD_VALUE, newFieldValue);
-
-            makeCall("setUserField", data);
-        }
-
         public void getUserField(final String fieldToGet, final Consumer<Object> callback) {
             Log.d(TAG, "getUserField: getting field '" + fieldToGet + "'");
 
-            FirebaseUser firebaseUser;
-            try {
-                firebaseUser = safeGetFirebaseUser();
-            } catch (Exception e) {
-                return;
-            }
-
-            String userEmail;
-            try {
-                userEmail = findUserEmail(firebaseUser);
-            } catch (Exception e) {
-                return;
-            }
-
             Map<String, Object> data = new HashMap<>();
-            data.put(USER_ID, userEmail);
             data.put(FIELD_NAME, fieldToGet);
 
-            Task<HttpsCallableResult> task = makeCall("getUserField", data);
-            task.addOnCompleteListener(new OnCompleteListener<HttpsCallableResult>() {
+            internalGetter("getUserField", data, new OnCompleteListener<HttpsCallableResult>() {
                 @Override
                 public void onComplete(@NonNull Task<HttpsCallableResult> task) {
                     Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
@@ -339,6 +349,105 @@ public class FirebaseHelper {
                     callback.accept(data.get(FIELD_VALUE));
                 }
             });
+        }
+
+        public void setUserField(final String fieldToChange, final Object newFieldValue) {
+            Log.d(TAG, "setUserField: setting field '" + fieldToChange + "' to value '" + newFieldValue + "'");
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(FIELD_NAME, fieldToChange);
+            data.put(FIELD_VALUE, newFieldValue);
+
+            internalSetter("setUserField", data, null);
+        }
+
+        public void getMeal(String uuid, Consumer<MealCard> callback) {
+            Log.d(TAG, "getMeal: getting meal with uuid '" + uuid + "'");
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(UUID_TAG, uuid);
+
+            internalGetter("getMeal", data, new OnCompleteListener<HttpsCallableResult>() {
+                @Override
+                public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                    Map<String, Object> data = (Map<String, Object>) task.getResult().getData();
+                    MealCard output = new MealCard(data);
+
+                    callback.accept(output);
+                }
+            });
+        }
+
+        public void setMeal(MealCard meal) {
+            Map<String, Object> mealMap = meal.exportToStringMap();
+            Log.d(TAG, "setMeal: settings meal '" + mealMap + "'");
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(MEAL_MAP, mealMap);
+
+            internalSetter("setMeal", data, null);
+        }
+    }
+
+    final class Storage {
+        public void getImage(String path, String imageName) {
+            StorageReference imageRef = storage.getReference().child(path);
+            String fileName = imageName.replaceAll("(/)|( )", "_");
+            File file;
+
+            String[] imageNameSplit = imageName.split("\\.");
+            String extension = imageNameSplit[imageNameSplit.length - 1];
+
+            try {
+                file = File.createTempFile(fileName, extension);
+            } catch (IOException e) {
+                Log.e(TAG, "getImage: failure creating file!");
+                return;
+            }
+
+            imageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + file.getName() + "'");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "getImage.onFailure: failure downloading image '" + file.getName() + "'");
+                }
+            });
+        }
+
+        // Given the uuid for a meal will get download its image
+        public void getMealImage(String uuid) {
+            getImage("mealPictures/", uuid + ".jpg");
+        }
+
+        public void putImage(File image, String path) {
+            Uri imageURI = Uri.fromFile(image);
+            StorageReference imageRef = storage.getReference().child(path);
+
+            imageRef.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "putImage.onSuccess: successfully uploaded image with uri '" + imageURI + "' and path '" + path + "'");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "getImage.onFailure: failure uploading image with uri '" + imageURI + "' and path '" + path + "'");
+                }
+            });
+        }
+
+        // Given an image file and a meal's uuid will upload the image
+        public void putMealImage(File image, String uuid) {
+            Uri imageURI = Uri.fromFile(image);
+            String[] imageSplitEndOfPath = imageURI.getLastPathSegment().split("\\.");
+            String imageExtension = imageSplitEndOfPath[imageSplitEndOfPath.length - 1];
+
+            String path = "mealPictures/" + uuid + "." + imageExtension;
+            putImage(image, path);
         }
     }
 
