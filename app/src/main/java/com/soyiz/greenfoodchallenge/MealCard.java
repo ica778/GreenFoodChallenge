@@ -1,5 +1,8 @@
 package com.soyiz.greenfoodchallenge;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MealCard {
 
     private String mealName = null;
@@ -12,6 +15,41 @@ public class MealCard {
 
     MealCard() {
 
+    }
+
+    // Constructor from data map
+    MealCard(Map<String, Object> map) {
+        this.uuid = (String) map.get(FirebaseHelper.Firestore.UUID_TAG);
+
+        this.mealName = (String) map.get(FirebaseHelper.Firestore.MEAL_NAME);
+        this.mealProtein = (String) map.get(FirebaseHelper.Firestore.MEAL_PROTEIN);
+        this.mealDescription = (String) map.get(FirebaseHelper.Firestore.MEAL_DESCRIPTION);
+
+        this.restaurantName = (String) map.get(FirebaseHelper.Firestore.RESTAURANT_NAME);
+        this.restaurantLocation = (String) map.get(FirebaseHelper.Firestore.RESTAURANT_LOCATION);
+    }
+
+    public Map<String, Object> exportToStringMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put(FirebaseHelper.Firestore.UUID_TAG, uuid);
+
+        map.put(FirebaseHelper.Firestore.MEAL_NAME, mealName);
+        map.put(FirebaseHelper.Firestore.MEAL_PROTEIN, mealProtein);
+        map.put(FirebaseHelper.Firestore.MEAL_DESCRIPTION, mealDescription);
+
+        map.put(FirebaseHelper.Firestore.RESTAURANT_NAME, restaurantName);
+        map.put(FirebaseHelper.Firestore.RESTAURANT_LOCATION, restaurantLocation);
+
+        return map;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getMealName() {
@@ -28,6 +66,14 @@ public class MealCard {
 
     public void setMealProtein(String mealProtein) {
         this.mealProtein = mealProtein;
+    }
+
+    public String getMealDescription() {
+        return mealDescription;
+    }
+
+    public void setMealDescription(String mealDescription) {
+        this.mealDescription = mealDescription;
     }
 
     public String getRestaurantName() {
