@@ -39,12 +39,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="400dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="g/day"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:text="servings/week\n(1 serving ≈ 150 grams)"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="18dp" />
 
             </LinearLayout>
 
