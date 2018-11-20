@@ -1,10 +1,9 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.CollectionReference;
@@ -14,7 +13,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.util.Consumer;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +35,14 @@ public class FirebaseHelper {
 
     private final Firestore firestoreInstance = new Firestore();
     private final Functions functionsInstance = new Functions();
+    private final Storage storageInstance = new Storage();
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference userCollection = db.collection("users");
 
     private final FirebaseFunctions functions = FirebaseFunctions.getInstance();
+
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     // Returns the Firestore instance
     public Firestore getFirestore() {
@@ -44,6 +52,10 @@ public class FirebaseHelper {
     // Returns the Functions instance
     public Functions getFunctions() {
         return functionsInstance;
+    }
+
+    public Storage getStorage() {
+        return storageInstance;
     }
 
     final class Firestore {
@@ -335,6 +347,70 @@ public class FirebaseHelper {
                     callback.accept(data.get(FIELD_VALUE));
                 }
             });
+        }
+
+
+    }
+
+    final class Storage {
+        public void getImage(String path, String imageName) {
+            StorageReference imageRef = storage.getReference().child(path);
+            String fileName = imageName.replaceAll("(/)|( )", "_");
+            File file;
+
+            String[] imageNameSplit = imageName.split("\\.");
+            String extension = imageNameSplit[imageNameSplit.length - 1];
+
+            try {
+                file = File.createTempFile(fileName, extension);
+            } catch (IOException e) {
+                Log.e(TAG, "getImage: failure creating file!");
+                return;
+            }
+
+            imageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + file.getName() + "'");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "getImage.onFailure: failure downloading image '" + file.getName() + "'");
+                }
+            });
+        }
+
+        // Given the uuid for a meal will get download its image
+        public void getMealImage(String uuid) {
+            getImage("mealPictures/", uuid + ".jpg");
+        }
+
+        public void putImage(File image, String path) {
+            Uri imageURI = Uri.fromFile(image);
+            StorageReference imageRef = storage.getReference().child(path);
+
+            imageRef.putFile(imageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, "putImage.onSuccess: successfully uploaded image with uri '" + imageURI + "' and path '" + path + "'");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "getImage.onFailure: failure uploading image with uri '" + imageURI + "' and path '" + path + "'");
+                }
+            });
+        }
+
+        // Given an image file and a meal's uuid will upload the image
+        public void putMealImage(File image, String uuid) {
+            Uri imageURI = Uri.fromFile(image);
+            String[] imageSplitEndOfPath = imageURI.getLastPathSegment().split("\\.");
+            String imageExtension = imageSplitEndOfPath[imageSplitEndOfPath.length - 1];
+
+            String path = "mealPictures/" + uuid + "." + imageExtension;
+            putImage(image, path);
         }
     }
 
