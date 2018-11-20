@@ -109,6 +109,17 @@
     <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
         ecological footprint!</string>
 
+    // Strings for restaurant fragments
+    <string name="add_meal_card_text">Add A Meal</string>
+    <string name="exit_dialog_text">Exit</string>
+    <string name="enter_meal_text">Add</string>
+    <string name="dialog_title_text">Enter Your Meal</string>
+    <string name="meal_name_title">Enter the name of your meal:</string>
+    <string name="meal_protein_title">Enter the main protein source in your meal:</string>
+    <string name="restaurant_name_title">Enter the name of the restaurant where you ordered this meal:</string>
+    <string name="restaurant_location_title">Enter the location of this restaurant:</string>
+    <string name="description_title">Enter a short description of this meal (optional):</string>
+    <string name="add_meal_invalid_input_toast">Meal name, meal protein, restaurant name, and restaurant location are mandatory</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
