@@ -236,7 +236,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Make sure the portion sizes are\nin grams before calculating"/>
+                        android:text="Suggested daily serving of\n meat/alternatives: 187.5g"/>
 
             </LinearLayout>
 

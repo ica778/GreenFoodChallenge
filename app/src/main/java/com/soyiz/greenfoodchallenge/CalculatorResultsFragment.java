@@ -26,9 +26,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: code is very messy and needs to be cleaned up. Should fix repetitive code and move some methods in here to another class
-// TODO: CHECK LOGIC IN CALCULATING EMISSIONS
-
 /**
  * A simple {@link Fragment} subclass.
  */
