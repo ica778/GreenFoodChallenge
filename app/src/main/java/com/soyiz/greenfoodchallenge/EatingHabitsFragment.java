@@ -86,43 +86,43 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         if (TextUtils.isEmpty(beef) || Integer.parseInt(beef) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("beef", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("beef", (int) ((double) (Integer.parseInt(beef)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("beef",  ((float) (Integer.parseInt(beef)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(chicken) || Integer.parseInt(chicken) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", (int) ((double) (Integer.parseInt(chicken)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", ((float) (Integer.parseInt(chicken)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(pork) || Integer.parseInt(pork) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("pork", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", (int) ((double) (Integer.parseInt(pork)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", ((float) (Integer.parseInt(pork)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(fish) || Integer.parseInt(fish) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("fish", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", (int) ((double) (Integer.parseInt(fish)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", ((float) (Integer.parseInt(fish)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(bean) || Integer.parseInt(bean) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("bean", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", (int) ((double) (Integer.parseInt(bean)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", ((float) (Integer.parseInt(bean)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(vegetable) || Integer.parseInt(vegetable) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", (int) ((double) (Integer.parseInt(vegetable)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", ((float) (Integer.parseInt(vegetable)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(egg) || Integer.parseInt(egg) == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("egg", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", (int) ((double) (Integer.parseInt(egg)) * ProteinSource.getDailyServing()) / 7);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", ((float) (Integer.parseInt(egg)) * (float) ProteinSource.getDailyServing()) / 7f);
             userHasEnteredInput = true;
         }
         return userHasEnteredInput;
