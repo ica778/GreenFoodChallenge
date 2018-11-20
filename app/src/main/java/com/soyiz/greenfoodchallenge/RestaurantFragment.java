@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RestaurantFragment extends Fragment implements View.OnClickListener {
+public class RestaurantFragment extends Fragment implements View.OnClickListener, AddMealInterface {
 
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
@@ -57,9 +57,18 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.test_button:
-                createTestMeals();
+                AddMealDialogFragment dialog = AddMealDialogFragment.newInstance();
+                dialog.setTargetFragment(this, 0);
+                dialog.show(getFragmentManager(), "addMealDialog");
+                //createTestMeals();
                 break;
         }
+    }
+
+    //Interface method
+    @Override
+    public void addMeal(MealCard newMeal) {
+        postMeal(newMeal);
     }
 
     public void postMeal(MealCard mealCard) {
