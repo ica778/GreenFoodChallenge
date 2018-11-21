@@ -192,8 +192,8 @@ public class CalculatorResultsFragment extends Fragment {
         dietC02ePercentsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                float valueToShowOnClick = (float) Math.round(e.getY() * 1000f) / 1000f;
-                String xAxisStringToShowOnClick = xData[h.getDataSetIndex()];
+                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
+                String xAxisStringToShowOnClick = xData[(int)h.getX()];
                 String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
                 Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
@@ -283,8 +283,8 @@ public class CalculatorResultsFragment extends Fragment {
         dietProportionsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                float valueToShowOnClick = (float) Math.round(e.getY() * 1000f) / 1000f;
-                String xAxisStringToShowOnClick = xData[h.getDataSetIndex()];
+                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
+                String xAxisStringToShowOnClick = xData[(int)h.getX()];
                 String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
                 Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }

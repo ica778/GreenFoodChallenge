@@ -39,12 +39,12 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="servings/week"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Servings/Week"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             </LinearLayout>
 
@@ -256,7 +256,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Click the name of a food to see how much is\nin a Canada Food Guide serving of each."/>
+                        android:text="Click name of food to see Canada\nFood Guide serving amounts"/>
 
             </LinearLayout>
 

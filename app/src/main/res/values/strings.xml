@@ -105,7 +105,7 @@
     <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
     <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
         \n\t- Equivalent to burning %2$.2f barrels of gasoline
-        \n\t- %3$s than the Metro Vancouver\n\taverage of %4$.2f tonnes</string>
+        \n\t- %3$s compared to Metro Vancouver\n\t  average of %4$.2f tonnes</string>
     <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
         ecological footprint!</string>
     <string name="beefServingsGuide">Beef: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
