@@ -1,89 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EatingHabitsFragment">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".EatingHabitsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
-        android:id="@+id/mScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:id="@+id/mScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/eatingHabitsCalculatorTitle"
-                android:layout_width="match_parent"
-                android:layout_height="67dp"
-                android:gravity="center"
-                android:text="Enter the amount of each food you eat below to calculate the C02e "
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
+            <TextView
+                    android:id="@+id/eatingHabitsCalculatorTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="67dp"
+                    android:gravity="center"
+                    android:text="Enter the amount of each food you eat below to calculate the C02e "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Food"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="400dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="servings/week\n(1 serving ≈ 150 grams)"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textSize="18dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Food"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                        android:layout_width="390dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Servings/Week\n(1 serving≈187.5 grams)"
+                        android:textSize="17dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Beef"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Beef"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/beefText"/>
 
                 <EditText
                         android:id="@+id/et_beef"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Chicken"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Chicken"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/chickenText"/>
 
 
                 <EditText
@@ -91,23 +96,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Pork"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Pork"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/porkText"/>
 
 
                 <EditText
@@ -115,23 +123,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Fish"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Fish"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/fishText"/>
 
 
                 <EditText
@@ -139,23 +150,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Beans"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Beans"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/beanText"/>
 
 
                 <EditText
@@ -163,23 +177,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Vegetables"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Vegetables"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/vegetablesText"/>
 
 
                 <EditText
@@ -187,23 +204,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Egg"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Eggs"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/eggsText"/>
 
 
                 <EditText
@@ -211,41 +231,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
 
                 <Button
                         android:id="@+id/btn_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CALCULATE"/>
-
                 <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Make sure the portion sizes are\nin grams before calculating"/>
+                        android:text="Click name of food to see Canada\nFood Guide serving amounts"/>
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_result"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    android:id="@+id/tv_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         </LinearLayout>
     </ScrollView>
