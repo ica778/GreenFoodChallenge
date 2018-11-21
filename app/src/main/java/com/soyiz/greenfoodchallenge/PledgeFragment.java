@@ -58,6 +58,8 @@ public class PledgeFragment extends Fragment {
                 android.R.layout.simple_spinner_item);
         regionShowSpinner = view.findViewById(R.id.selectRegionSpinner);
         regionShowSpinner.setAdapter(adapter);
+        //Turn off showing Pledge dialog when initialize the PledgeFragment UI.
+        regionShowSpinner.setSelection(0, false);
         regionShowSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
@@ -65,6 +67,10 @@ public class PledgeFragment extends Fragment {
                 // Updates scrollview to show correct pledges
 //                populateListView(parent.getItemAtPosition(position).toString());
 
+                String selected = regionShowSpinner.getSelectedItem().toString();
+                PledgeDialog dialog = PledgeDialog.newInstance(selected);
+                dialog.setTargetFragment(PledgeFragment.this, 1);
+                dialog.show(getFragmentManager(), "MyCustomDialog");
 
             }
 
