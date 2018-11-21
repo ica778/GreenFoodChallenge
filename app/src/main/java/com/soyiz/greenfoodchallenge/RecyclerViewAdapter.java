@@ -1,5 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView
@@ -16,6 +19,8 @@ public class RecyclerViewAdapter extends RecyclerView
 
     private int expandedPosition = -1;
     private List<MealCard> mealCardList;
+    private FirebaseHelper.Storage storage = (new FirebaseHelper()).getStorage();
+    private File file = null;
 
     public static class MealCardViewHolder extends RecyclerView.ViewHolder {
         CardView mealCardView;
@@ -70,8 +75,14 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.mealDescription.setText(mealCardList.get(position).getMealDescription());
         //When image is added by user during creation of a meal, isImageAdded() == true;
         if (mealCardList.get(position).isImageAdded()) {
-            //to be implemented along with meal adding from dialog
             //retrieve image from database
+            String uuid = mealCardList.get(position).getUuid();
+            //convert to bitmap
+            storage.getMealImage(uuid,this::setFile);
+            String path = file.getPath();
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            //set image
+            mealCardViewHolder.mealImage.setImageBitmap(bitmap);
         } else {
             mealCardViewHolder.mealImage.setImageResource(R.drawable.ic_restaurant_icon_24dp);
         }
@@ -102,6 +113,12 @@ public class RecyclerViewAdapter extends RecyclerView
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+
+    //In order to get image to convert to get path
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }

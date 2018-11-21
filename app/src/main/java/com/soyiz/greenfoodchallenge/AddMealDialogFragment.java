@@ -36,8 +36,8 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
 
     private boolean imageAdded = false;
 
-    private FirebaseHelper.Functions helper_f;
-    private FirebaseHelper.Storage helper_s;
+    private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
+    private FirebaseHelper.Storage storage = (new FirebaseHelper()).getStorage();
 
     private static int RESULT_LOAD_IMAGE = 121;
 
@@ -79,10 +79,12 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //exit button
             case R.id.exit_dialog_btn:
                 dismiss();
                 break;
 
+            //add inputted meal
             case R.id.add_meal_btn:
                 MealCard newMeal = new MealCard();
 
@@ -91,11 +93,12 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                     String uuid = UUID.randomUUID().toString();
                     newMeal.setUuid(uuid);
                     if(imageAdded) {
-                        helper_s.putMealImage(mealImageUri, uuid);
+                        //add image URI and meal UUID
+                        storage.putMealImage(mealImageUri, uuid);
                         newMeal.setImageAdded(true);
                     }
-                    helper_f.setMeal(newMeal);
-                    ((AddMealInterface)getTargetFragment()).addMeal(newMeal);
+                    functions.setMeal(newMeal);
+                    ((AddMealInterface)getTargetFragment()).addMeal(uuid);
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.add_meal_invalid_input_toast)
@@ -103,6 +106,7 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                 }
                 break;
 
+            //get image URI
             case R.id.add_image_btn:
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
@@ -150,6 +154,6 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     }
 
     //Interface method
-    public void addMeal(MealCard newMeal) {}
+    public void addMeal(String mealUuid) {}
 
 }
