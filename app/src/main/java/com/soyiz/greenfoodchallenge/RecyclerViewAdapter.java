@@ -71,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView
         //When image is added by user during creation of a meal, isImageAdded() == true;
         if (mealCardList.get(position).isImageAdded()) {
             //to be implemented along with meal adding from dialog
-            //mealCardViewHolder.mealImage.setImageBitmap(mealCardList.get(position).getImageBitmap));
+            //retrieve image from database
         } else {
             mealCardViewHolder.mealImage.setImageResource(R.drawable.ic_restaurant_icon_24dp);
         }

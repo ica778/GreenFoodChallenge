@@ -1,6 +1,8 @@
 package com.soyiz.greenfoodchallenge;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,6 +10,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
+
+import java.util.UUID;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddMealDialogFragment extends DialogFragment implements View.OnClickListener, AddMealInterface {
 
@@ -26,6 +32,14 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     private String restaurantName;
     private String restaurantLocation;
     private String description;
+    private Uri mealImageUri;
+
+    private boolean imageAdded = false;
+
+    private FirebaseHelper.Functions helper_f;
+    private FirebaseHelper.Storage helper_s;
+
+    private static int RESULT_LOAD_IMAGE = 121;
 
     public AddMealDialogFragment() {}
 
@@ -71,8 +85,16 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
 
             case R.id.add_meal_btn:
                 MealCard newMeal = new MealCard();
+
                 boolean isComplete = !userInput(newMeal);
                 if (isComplete) {
+                    String uuid = UUID.randomUUID().toString();
+                    newMeal.setUuid(uuid);
+                    if(imageAdded) {
+                        helper_s.putMealImage(mealImageUri, uuid);
+                        newMeal.setImageAdded(true);
+                    }
+                    helper_f.setMeal(newMeal);
                     ((AddMealInterface)getTargetFragment()).addMeal(newMeal);
                     dismiss();
                 } else {
@@ -82,7 +104,24 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                 break;
 
             case R.id.add_image_btn:
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                if (mealImageUri!= null) {
+                    imageAdded = true;
+                }
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            mealImageUri = data.getData();
         }
     }
 

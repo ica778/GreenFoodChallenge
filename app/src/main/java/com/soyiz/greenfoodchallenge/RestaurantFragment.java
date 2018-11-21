@@ -68,13 +68,10 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     //Interface method
     @Override
     public void addMeal(MealCard newMeal) {
-        postMeal(newMeal);
-    }
-
-    public void postMeal(MealCard mealCard) {
-        mealCardList.add(mealCard);
+        //mealCardList.add(/*get new from firebase*/);
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
 
     public void deleteMeal(MealCard mealCard) {
         mealCardList.remove(mealCard);

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class MealCard {
 
-    private String uuid = UUID.randomUUID().toString();
+    private String uuid;
     private String mealName = null;
     private String mealProtein = null;
     private String restaurantName = null;
