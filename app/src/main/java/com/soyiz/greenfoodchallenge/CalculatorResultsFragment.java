@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -20,23 +21,22 @@ import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: code is very messy and needs to be cleaned up. Should fix repetitive code and move some methods in here to another class
-// TODO: CHECK LOGIC IN CALCULATING EMISSIONS
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CalculatorResultsFragment extends Fragment {
 
-    private PieChart dietProportionsPieChartView;
-    private PieChart dietC02ePercentsPieChartView;
-    private BarChart barChartCompareEmissionsView;
+    private PieChart dietProportionsPieChart;
+    private PieChart dietC02ePercentsPieChart;
+    private BarChart compareEmissionsBarChart;
     private List<Integer> colorsToChooseFrom;
     private TextView textView1, textView2, textView3, textView4;
 
@@ -58,9 +58,9 @@ public class CalculatorResultsFragment extends Fragment {
     }
 
     private void initView(View view) {
-        dietProportionsPieChartView = view.findViewById(R.id.pieChartDietProportions);
-        dietC02ePercentsPieChartView = view.findViewById(R.id.pieChartDietC02ePercents);
-        barChartCompareEmissionsView = view.findViewById(R.id.barChartCompareEmissions);
+        dietProportionsPieChart = view.findViewById(R.id.pieChartDietProportions);
+        dietC02ePercentsPieChart = view.findViewById(R.id.pieChartDietC02ePercents);
+        compareEmissionsBarChart = view.findViewById(R.id.barChartCompareEmissions);
         textView1 = view.findViewById(R.id.textView1);
         textView2 = view.findViewById(R.id.textView2);
         textView3 = view.findViewById(R.id.textView3);
@@ -149,21 +149,21 @@ public class CalculatorResultsFragment extends Fragment {
 
         PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "");
 
-        dietC02ePercentsPieChartView.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+        dietC02ePercentsPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
         // Set click events
-        dietC02ePercentsPieChartView.setRotationEnabled(false);
-        dietC02ePercentsPieChartView.setDrawHoleEnabled(false);
+        dietC02ePercentsPieChart.setRotationEnabled(false);
+        dietC02ePercentsPieChart.setDrawHoleEnabled(false);
 
         // Set things outside of pie chart
-        Legend legend = dietC02ePercentsPieChartView.getLegend();
+        Legend legend = dietC02ePercentsPieChart.getLegend();
         legend.setEnabled(true);
         legend.setWordWrapEnabled(true);
         legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        dietC02ePercentsPieChartView.getDescription().setText("");
+        dietC02ePercentsPieChart.getDescription().setText("");
 
         // Set pie chart and its slices
-        dietC02ePercentsPieChartView.setUsePercentValues(true);
+        dietC02ePercentsPieChart.setUsePercentValues(true);
         dietC02ePercentsPieDataSet.setSliceSpace(1f);
         dietC02ePercentsPieDataSet.setColors(colorsToChooseFrom);
 
@@ -176,15 +176,33 @@ public class CalculatorResultsFragment extends Fragment {
         dietC02ePercentsPieDataSet.setValueTextSize(10f);
 
         // Set x axis text color
-        dietC02ePercentsPieChartView.setEntryLabelColor(Color.BLACK);
-        dietC02ePercentsPieChartView.setEntryLabelTextSize(10f);
+        dietC02ePercentsPieChart.setEntryLabelColor(Color.BLACK);
+        dietC02ePercentsPieChart.setEntryLabelTextSize(10f);
 
         // Show x axis text
-        dietC02ePercentsPieChartView.setDrawEntryLabels(false);
+        dietC02ePercentsPieChart.setDrawEntryLabels(false);
+
+        // Show y axis text
+        dietC02ePercentsPieDataSet.setDrawValues(true);
 
         // Show pie chart
-        dietC02ePercentsPieChartView.setData(pieData);
-        dietC02ePercentsPieChartView.invalidate();
+        dietC02ePercentsPieChart.setData(pieData);
+        dietC02ePercentsPieChart.invalidate();
+
+        dietC02ePercentsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
+                String xAxisStringToShowOnClick = xData[(int)h.getX()];
+                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
+                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
     // Creates pie chart showing proportion of each food in diet
@@ -222,21 +240,21 @@ public class CalculatorResultsFragment extends Fragment {
 
         PieDataSet dietProportionsPieDataSet = new PieDataSet(yEntries, "");
 
-        dietProportionsPieChartView.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+        dietProportionsPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
         // Set click events
-        dietProportionsPieChartView.setRotationEnabled(false);
-        dietProportionsPieChartView.setDrawHoleEnabled(false);
+        dietProportionsPieChart.setRotationEnabled(false);
+        dietProportionsPieChart.setDrawHoleEnabled(false);
 
         // Set things outside of pie chart
-        Legend legend = dietProportionsPieChartView.getLegend();
+        Legend legend = dietProportionsPieChart.getLegend();
         legend.setEnabled(true);
         legend.setWordWrapEnabled(true);
         legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        dietProportionsPieChartView.getDescription().setText("");
+        dietProportionsPieChart.getDescription().setText("");
 
         // Set pie chart and its slices
-        dietProportionsPieChartView.setUsePercentValues(true);
+        dietProportionsPieChart.setUsePercentValues(true);
         dietProportionsPieDataSet.setSliceSpace(1f);
         dietProportionsPieDataSet.setColors(colorsToChooseFrom);
 
@@ -249,15 +267,33 @@ public class CalculatorResultsFragment extends Fragment {
         dietProportionsPieDataSet.setValueTextSize(10f);
 
         // Set x axis text color
-        dietProportionsPieChartView.setEntryLabelColor(Color.BLACK);
-        dietProportionsPieChartView.setEntryLabelTextSize(10f);
+        dietProportionsPieChart.setEntryLabelColor(Color.BLACK);
+        dietProportionsPieChart.setEntryLabelTextSize(10f);
 
         // Show x axis text
-        dietProportionsPieChartView.setDrawEntryLabels(false);
+        dietProportionsPieChart.setDrawEntryLabels(false);
+
+        // Show y axis text
+        dietProportionsPieDataSet.setDrawValues(true);
 
         // Show pie chart
-        dietProportionsPieChartView.setData(pieData);
-        dietProportionsPieChartView.invalidate();
+        dietProportionsPieChart.setData(pieData);
+        dietProportionsPieChart.invalidate();
+
+        dietProportionsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
+                String xAxisStringToShowOnClick = xData[(int)h.getX()];
+                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
+                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
     private void createC02eEmissionsComparedToAverageBarChart() {
@@ -285,38 +321,41 @@ public class CalculatorResultsFragment extends Fragment {
         BarDataSet compareEmissionsDataSet = new BarDataSet(yEntries, "");
 
         // Set things outside bar chart
-        Legend legend = barChartCompareEmissionsView.getLegend();
+        Legend legend = compareEmissionsBarChart.getLegend();
         legend.setEnabled(false);
-        barChartCompareEmissionsView.getDescription().setText("");
+        compareEmissionsBarChart.getDescription().setText("");
 
         BarData barData = new BarData(compareEmissionsDataSet);
 
         // Set bar chart axis texts
-        barChartCompareEmissionsView.getXAxis().setDrawLabels(true);
-        barChartCompareEmissionsView.getLegend().setEnabled(false);
-        barChartCompareEmissionsView.setScaleYEnabled(true);
+        compareEmissionsBarChart.getXAxis().setDrawLabels(true);
+        compareEmissionsBarChart.getLegend().setEnabled(false);
+        compareEmissionsBarChart.setScaleYEnabled(false);
+        compareEmissionsBarChart.setScaleXEnabled(false);
 
-        // Set bar chart bar colors
+        // Set bar chart features
         compareEmissionsDataSet.setColor(Color.GREEN);
+        compareEmissionsDataSet.setHighlightEnabled(false);
+
 
         // Set y axis
-        YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
+        YAxis yAxisLeft = compareEmissionsBarChart.getAxisLeft();
         yAxisLeft.setStartAtZero(true);
-        yAxisLeft.setAxisMaximum(3f);
+        yAxisLeft.setAxisMaximum(2.0f + yData[0]);
         yAxisLeft.setDrawGridLines(true);
-        YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
+        YAxis yAxisRight = compareEmissionsBarChart.getAxisRight();
         yAxisRight.setEnabled(false);
         yAxisRight.setDrawGridLines(false);
 
         // Set x axis values
-        XAxis xAxis = barChartCompareEmissionsView.getXAxis();
+        XAxis xAxis = compareEmissionsBarChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new MyXAxisValueFormatter(xData));
         xAxis.setLabelCount(2);
 
         // Show bar chart
-        barChartCompareEmissionsView.setData(barData);
-        barChartCompareEmissionsView.invalidate();
+        compareEmissionsBarChart.setData(barData);
+        compareEmissionsBarChart.invalidate();
     }
 
     // Class needed for putting strings in x axis

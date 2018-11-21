@@ -1,5 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView
         .Adapter<RecyclerViewAdapter.MealCardViewHolder> {
 
     private int expandedPosition = -1;
+    private List<MealCard> mealCardList;
+    private FirebaseHelper.Storage storage = (new FirebaseHelper()).getStorage();
+    private File file = null;
 
     public static class MealCardViewHolder extends RecyclerView.ViewHolder {
         CardView mealCardView;
@@ -23,18 +29,18 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView restaurantName;
         TextView restaurantLocation;
         ImageView mealImage;
-        TextView description;
+        TextView mealDescription;
 
 
         MealCardViewHolder(View view) {
             super(view);
-            mealCardView = (CardView)view.findViewById(R.id.meal_card_view);
-            mealName = (TextView)view.findViewById(R.id.meal_name);
-            mealProtein = (TextView)view.findViewById(R.id.meal_protein);
-            restaurantName = (TextView)view.findViewById(R.id.restaurant_name);
-            restaurantLocation = (TextView)view.findViewById(R.id.restaurant_location);
-            mealImage = (ImageView)view.findViewById(R.id.meal_image);
-            description = (TextView)view.findViewById(R.id.description);
+            mealCardView = view.findViewById(R.id.meal_card_view);
+            mealName = view.findViewById(R.id.meal_name);
+            mealProtein = view.findViewById(R.id.meal_protein);
+            restaurantName = view.findViewById(R.id.restaurant_name);
+            restaurantLocation = view.findViewById(R.id.restaurant_location);
+            mealImage = view.findViewById(R.id.meal_image);
+            mealDescription = view.findViewById(R.id.description);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,7 +51,6 @@ public class RecyclerViewAdapter extends RecyclerView
         }
     }
 
-    List<MealCard> mealCardList;
     RecyclerViewAdapter(List<MealCard> mealCardList) {
         this.mealCardList = mealCardList;
     }
@@ -58,8 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView
     @Override
     public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.meal_card_view, viewGroup, false);
-        MealCardViewHolder mealCardViewHolder = new MealCardViewHolder(view);
-        return mealCardViewHolder;
+        return new MealCardViewHolder(view);
     }
 
     @Override
@@ -68,20 +72,26 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.mealProtein.setText(mealCardList.get(position).getMealProtein());
         mealCardViewHolder.restaurantName.setText(mealCardList.get(position).getRestaurantName());
         mealCardViewHolder.restaurantLocation.setText(mealCardList.get(position).getRestaurantLocation());
-        mealCardViewHolder.description.setText(mealCardList.get(position).getDescription());
+        mealCardViewHolder.mealDescription.setText(mealCardList.get(position).getMealDescription());
         //When image is added by user during creation of a meal, isImageAdded() == true;
         if (mealCardList.get(position).isImageAdded()) {
-            //to be implemented along with meal adding from dialog
+            //retrieve image from database
+            String uuid = mealCardList.get(position).getUuid();
+            //convert to bitmap
+            storage.getMealImage(uuid,this::setFile);
+            String path = file.getPath();
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            //set image
+            mealCardViewHolder.mealImage.setImageBitmap(bitmap);
         } else {
             mealCardViewHolder.mealImage.setImageResource(R.drawable.ic_restaurant_icon_24dp);
         }
 
-        boolean value = (position == expandedPosition);
-        final boolean isExpanded = value;
+        final boolean isExpanded = (position == expandedPosition);
         if (isExpanded) {
-            mealCardViewHolder.description.setVisibility(View.VISIBLE);
+            mealCardViewHolder.mealDescription.setVisibility(View.VISIBLE);
         } else {
-            mealCardViewHolder.description.setVisibility(View.GONE);
+            mealCardViewHolder.mealDescription.setVisibility(View.GONE);
         }
         mealCardViewHolder.itemView.setActivated(isExpanded);
 
@@ -103,6 +113,12 @@ public class RecyclerViewAdapter extends RecyclerView
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+
+    //In order to get image to convert to get path
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }

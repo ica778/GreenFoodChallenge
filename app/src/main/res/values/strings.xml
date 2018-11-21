@@ -106,14 +106,22 @@
     <string name="calculator_text2">\n\nThis is the proportion of foods in your diet by C02e emissions:</string>
     <string name="calculator_text3">\nYour diet will produce %1$.2f tonnes of C02e per year:
         \n\t- Equivalent to burning %2$.2f barrels of gasoline
-        \n\t- %3$s than the Metro Vancouver\n\taverage of %4$.2f tonnes</string>
+        \n\t- %3$s compared to Metro Vancouver\n\t  average of %4$.2f tonnes</string>
     <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
         ecological footprint!</string>
+    <string name="beefServingsGuide">Beef: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="chickenServingsGuide">Chicken: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="porkServingsGuide">Pork: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="fishServingsGuide">Fish: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="beansServingsGuide">Beans: 150 g (5 oz) / 175 mL, (¾ cup)</string>
+    <string name="vegetablesServingsGuide">Vegetables: 150 g, 175 mL, (¾ cup)</string>
+    <string name="eggsServingsGuide">Eggs: 2 eggs</string>
 
     // Strings for restaurant fragments
     <string name="add_meal_card_text">Add A Meal</string>
     <string name="exit_dialog_text">Exit</string>
     <string name="enter_meal_text">Add</string>
+    <string name="add_image_text">Add Meal Image (Optional)</string>
     <string name="dialog_title_text">Enter Your Meal</string>
     <string name="meal_name_title">Enter the name of your meal:</string>
     <string name="meal_protein_title">Enter the main protein source in your meal:</string>
