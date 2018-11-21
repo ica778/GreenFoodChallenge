@@ -113,6 +113,7 @@
     <string name="add_meal_card_text">Add A Meal</string>
     <string name="exit_dialog_text">Exit</string>
     <string name="enter_meal_text">Add</string>
+    <string name="add_image_text">Add Meal Image (Optional)</string>
     <string name="dialog_title_text">Enter Your Meal</string>
     <string name="meal_name_title">Enter the name of your meal:</string>
     <string name="meal_protein_title">Enter the main protein source in your meal:</string>

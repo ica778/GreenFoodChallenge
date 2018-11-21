@@ -1,16 +1,19 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.graphics.Bitmap;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class MealCard {
 
+    private String uuid = UUID.randomUUID().toString();
     private String mealName = null;
     private String mealProtein = null;
     private String restaurantName = null;
     private String restaurantLocation = null;
-    //This icon will show if no image is chosen instead of no image at all
-    private String description = null;
+    private String mealDescription = null;
     private boolean imageAdded = false;
 
     MealCard() {
@@ -90,14 +93,6 @@ public class MealCard {
 
     public void setRestaurantLocation(String restaurantLocation) {
         this.restaurantLocation = restaurantLocation;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public boolean isImageAdded() {

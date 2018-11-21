@@ -12,7 +12,9 @@ import android.widget.*;
 public class AddMealDialogFragment extends DialogFragment implements View.OnClickListener, AddMealInterface {
 
     private Button exitButton;
-    private Button tempAddMeal;
+    private Button addMealButton;
+    private Button addImageButton;
+
     private EditText mealNameEdit;
     private EditText mealProteinEdit;
     private EditText restaurantNameEdit;
@@ -32,8 +34,9 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_add_meal, new LinearLayout(getActivity()), false);
 
-        exitButton = (Button) view.findViewById(R.id.exit_dialog_btn);
-        tempAddMeal = (Button) view.findViewById(R.id.temp_add_meal);
+        exitButton = view.findViewById(R.id.exit_dialog_btn);
+        addMealButton = view.findViewById(R.id.add_meal_btn);
+        addImageButton = view.findViewById(R.id.add_image_btn);
 
         initView(view);
 
@@ -48,8 +51,10 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     private void initView(View view) {
         exitButton = view.findViewById(R.id.exit_dialog_btn);
         exitButton.setOnClickListener(this);
-        tempAddMeal = view.findViewById(R.id.temp_add_meal);
-        tempAddMeal.setOnClickListener(this);
+        addMealButton = view.findViewById(R.id.add_meal_btn);
+        addMealButton.setOnClickListener(this);
+        addImageButton = view.findViewById(R.id.add_image_btn);
+        addImageButton.setOnClickListener(this);
         mealNameEdit = view.findViewById(R.id.meal_name_edit);
         mealProteinEdit = view.findViewById(R.id.meal_protein_edit);
         restaurantNameEdit = view.findViewById(R.id.restaurant_name_edit);
@@ -64,7 +69,7 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                 dismiss();
                 break;
 
-            case R.id.temp_add_meal:
+            case R.id.add_meal_btn:
                 MealCard newMeal = new MealCard();
                 boolean isComplete = !userInput(newMeal);
                 if (isComplete) {
@@ -74,6 +79,9 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                     Toast.makeText(getContext(), getResources().getString(R.string.add_meal_invalid_input_toast)
                             , Toast.LENGTH_SHORT).show();
                 }
+                break;
+
+            case R.id.add_image_btn:
                 break;
         }
     }
@@ -94,7 +102,7 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
         meal.setMealProtein(mealProtein);
         meal.setRestaurantName(restaurantName);
         meal.setRestaurantLocation(restaurantLocation);
-        meal.setDescription(description);
+        meal.setMealDescription(description);
 
         //is true if any non-optional values are empty
         boolean userInputEmpty = TextUtils.isEmpty(mealName)||TextUtils.isEmpty(mealProtein)
