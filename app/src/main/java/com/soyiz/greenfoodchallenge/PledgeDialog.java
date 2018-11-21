@@ -1,25 +1,16 @@
 package com.soyiz.greenfoodchallenge;
 
 import android.support.v4.app.DialogFragment;
-
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.HashMap;
-
-import java.util.Map;
-import com.google.firebase.firestore.util.Consumer;
 
 
 public class PledgeDialog extends DialogFragment {
@@ -27,13 +18,14 @@ public class PledgeDialog extends DialogFragment {
     private static final String TAG = "PledgeDialog";
 
 
-
+    public interface OnInputSelected{
+        void sendInput(String input);
+    }
+    public OnInputSelected mOnInputSelected;
 
     //widgets
     private EditText mInput;
-    private TextView mActionOk,heading;
-    private RecyclerView recyclerView = null;
-    private List<PledgeCard> pledgeCardList = new ArrayList<>();
+    private TextView mActionOk, mActionCancel,heading;
 
     public static PledgeDialog newInstance(String title) {
         PledgeDialog frag = new PledgeDialog();
@@ -60,38 +52,18 @@ public class PledgeDialog extends DialogFragment {
             }
         });
 
-
-        //set Pledge
-        Map<String, Object> pledge = new HashMap<>();
-        pledge.put("currentCO2e", 0.0);
-        pledge.put("goalCO2e", 20.0);
-
-        FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
-        functions.setUserField(FirebaseHelper.Firestore.PLEDGE, pledge);
-
-
-        recyclerView = view.findViewById(R.id.pledge_recycler_view);
-        LinearLayoutManager manager = new LinearLayoutManager(recyclerView.getContext());
-        //so latest additions shown at the top
-        manager.setReverseLayout(true);
-        manager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(manager);
-
-        RecyclerViewAdapeterForPledge adapter = new RecyclerViewAdapeterForPledge(pledgeCardList);
-        recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
         return view;
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnInputSelected = (OnInputSelected) getTargetFragment();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException : " + e.getMessage() );
+        }
+    }
 
 }
 
