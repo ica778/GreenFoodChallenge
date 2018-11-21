@@ -54,19 +54,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Beef"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Beef"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/beefText"/>
 
                 <EditText
                         android:id="@+id/et_beef"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:hint="0"/>
 
             </LinearLayout>
@@ -77,12 +79,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Chicken"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Chicken"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/chickenText"/>
 
 
                 <EditText
@@ -90,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -101,12 +105,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Pork"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Pork"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/porkText"/>
 
 
                 <EditText
@@ -114,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -125,12 +131,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Fish"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Fish"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/fishText"/>
 
 
                 <EditText
@@ -138,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -149,12 +157,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Beans"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Beans"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/beanText"/>
 
 
                 <EditText
@@ -162,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -173,12 +183,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Vegetables"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Vegetables"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/vegetablesText"/>
 
 
                 <EditText
@@ -186,7 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -197,12 +209,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Egg"
-                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Eggs"
+                        android:clickable="true"
+                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                        android:id="@+id/eggsText"/>
 
 
                 <EditText
@@ -210,7 +224,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -229,14 +243,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CALCULATE"/>
-
                 <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Suggested daily serving of\n meat/alternatives: 187.5g"/>
+                        android:text="Click the name of a food to see how\nmuch is in a serving of each."/>
 
             </LinearLayout>
 

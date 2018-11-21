@@ -21,6 +21,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private Button btn_total;
     private TextView tv_result;
     private ScrollView mScrollView;
+    private TextView beefText, chickenText, porkText, fishText, beanText, vegetablesText, eggsText;
 
     public EatingHabitsFragment() {
     }
@@ -48,6 +49,23 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         et_bean = view.findViewById(R.id.et_beans);
         et_vegetable = view.findViewById(R.id.et_vegetables);
         et_egg = view.findViewById(R.id.et_egg);
+
+        beefText = view.findViewById(R.id.beefText);
+        chickenText = view.findViewById(R.id.chickenText);
+        porkText = view.findViewById(R.id.porkText);
+        fishText = view.findViewById(R.id.fishText);
+        beanText = view.findViewById(R.id.beanText);
+        vegetablesText = view.findViewById(R.id.vegetablesText);
+        eggsText = view.findViewById(R.id.eggsText);
+
+        beefText.setOnClickListener(this);
+        chickenText.setOnClickListener(this);
+        porkText.setOnClickListener(this);
+        fishText.setOnClickListener(this);
+        beanText.setOnClickListener(this);
+        vegetablesText.setOnClickListener(this);
+        eggsText.setOnClickListener(this);
+
         btn_total = view.findViewById(R.id.btn_total);
         tv_result = view.findViewById(R.id.tv_result);
         btn_total.setOnClickListener(this);
@@ -57,7 +75,42 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.btn_total:
+                if (userInput() == true) {
+                    CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.beefText:
+                Toast.makeText(getContext(), getResources().getString(R.string.beefServingsGuide), Toast.LENGTH_SHORT).show();
+            break;
+            case R.id.chickenText:
+                Toast.makeText(getContext(), getResources().getString(R.string.chickenServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.porkText:
+                Toast.makeText(getContext(), getResources().getString(R.string.porkServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fishText:
+                Toast.makeText(getContext(), getResources().getString(R.string.fishServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.beanText:
+                Toast.makeText(getContext(), getResources().getString(R.string.beansServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.vegetablesText:
+                Toast.makeText(getContext(), getResources().getString(R.string.vegetablesServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.eggsText:
+                Toast.makeText(getContext(), getResources().getString(R.string.eggsServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+        }
 
+        /*
         if (userInput() == true) {
             CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -67,6 +120,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         } else {
             Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     /* This method checks if user has entered at least one valid input which is at least 1 number greater than 0.

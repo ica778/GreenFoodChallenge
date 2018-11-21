@@ -108,6 +108,13 @@
         \n\t- %3$s than the Metro Vancouver\n\taverage of %4$.2f tonnes</string>
     <string name="calculator_text4">\n\nGo to the Eco Eating page to see if it\'s possible to reduce our
         ecological footprint!</string>
+    <string name="beefServingsGuide">Beef: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="chickenServingsGuide">Chicken: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="porkServingsGuide">Pork: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="fishServingsGuide">Fish: 75 g (2 ½ oz) / 125 mL, (½ cup)</string>
+    <string name="beansServingsGuide">Beans: 175 mL, ¾ cup</string>
+    <string name="vegetablesServingsGuide">Vegetables: 150 g, 175 mL, ¾ cup</string>
+    <string name="eggsServingsGuide">Eggs: 2 eggs</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
