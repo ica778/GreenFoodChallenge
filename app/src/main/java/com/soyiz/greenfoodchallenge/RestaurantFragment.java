@@ -8,15 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RestaurantFragment extends Fragment {
+public class RestaurantFragment extends Fragment implements View.OnClickListener, AddMealInterface {
 
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
+    //To make sure meals aren't created twice from Firebase
+    private boolean mealsShown = false;
+    private Button addMealCardButton;
+
+    private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
 
     public RestaurantFragment() {
     }
@@ -35,32 +41,54 @@ public class RestaurantFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(recyclerView.getContext());
+        //so latest additions shown at the top
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
-
-        //Just for testing
-        MealCard testMeal1 = new MealCard();
-        testMeal1.setMealName("Meal Name 1");
-        testMeal1.setMealProtein("Main Protein of Meal 1");
-        testMeal1.setRestaurantName("Restaurant Name 1");
-        testMeal1.setRestaurantLocation("Restaurant Location 1");
-        mealCardList.add(testMeal1);
-        MealCard testMeal2 = new MealCard();
-        testMeal2.setMealName("Meal Name 2");
-        testMeal2.setMealProtein("Main Protein of Meal 2");
-        testMeal2.setRestaurantName("Restaurant Name 2");
-        testMeal2.setRestaurantLocation("Restaurant Location 2");
-        mealCardList.add(testMeal2);
-        MealCard testMeal3 = new MealCard();
-        testMeal3.setMealName("Meal Name 3");
-        testMeal3.setMealProtein("Main Protein of Meal 3");
-        testMeal3.setRestaurantName("Restaurant Name 3");
-        testMeal3.setRestaurantLocation("Restaurant Location 3");
-        mealCardList.add(testMeal3);
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mealCardList);
         recyclerView.setAdapter(adapter);
 
+        if (!mealsShown) {
+            showMeals();
+        }
+
+        initView(view);
         return view;
+    }
+
+    private void initView(View view) {
+        addMealCardButton = view.findViewById(R.id.add_meal_card_button);
+        addMealCardButton.setOnClickListener(this);
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_meal_card_button:
+                AddMealDialogFragment dialog = AddMealDialogFragment.newInstance();
+                dialog.setTargetFragment(this, 0);
+                dialog.show(getFragmentManager(), "addMealDialog");
+                break;
+        }
+    }
+
+    public void showMeals() {
+        functions.getMealsForList(mealCardList::add);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        mealsShown = true;
+    }
+
+    //Interface method
+    @Override
+    public void addMeal(String uuid) {
+        functions.getMeal(uuid, mealCardList::add);
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+
+    public void deleteMeal(MealCard mealCard) {
+        mealCardList.remove(mealCard);
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
 }

@@ -23,9 +23,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "UserFragment";
 
-    private Button updateprofile;
     private Button signOutButton;
-    private Button signInButton;
+    //private Button signOutButton;
+    //private Button signInButton;
     private Button aboutPageBtn;
     private ImageView ivHead;
     private EditText etFirstName, etLastName, etAlias, etBio;
@@ -48,12 +48,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
-        updateprofile = view.findViewById(R.id.update_profile_btn);
-        updateprofile.setOnClickListener(this);
+        //updateprofile = view.findViewById(R.id.update_profile_btn);
+        //updateprofile.setOnClickListener(this);
         signOutButton = view.findViewById(R.id.sign_out_btn);
         signOutButton.setOnClickListener(this);
-        signInButton = view.findViewById(R.id.sign_in_btn);
-        signInButton.setOnClickListener(this);
+        //signInButton = view.findViewById(R.id.sign_in_btn);
+        //signInButton.setOnClickListener(this);
         aboutPageBtn = view.findViewById(R.id.about_page_btn);
         aboutPageBtn.setOnClickListener(this);
 
@@ -135,9 +135,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.update_profile_btn:
+            /*case R.id.update_profile_btn:
                 Update();
-                break;
+                break;*/
 
             case R.id.sign_out_btn:
                 AuthUI.getInstance()
@@ -151,14 +151,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         });
                 break;
 
-            case R.id.sign_in_btn:
+            /*case R.id.sign_in_btn:
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                     ((MainActivity) getActivity()).startLogin();
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.toast_already_signed_in), Toast.LENGTH_SHORT).show();
                 }
 
-                break;
+                break;*/
 
             case R.id.about_page_btn:
                 startActivity(new Intent(getActivity(), AboutActivity.class));

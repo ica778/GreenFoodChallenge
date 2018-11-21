@@ -1,16 +1,26 @@
 package com.soyiz.greenfoodchallenge;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView
         .Adapter<RecyclerViewAdapter.MealCardViewHolder> {
+
+    private int expandedPosition = -1;
+    private List<MealCard> mealCardList;
+    private FirebaseHelper.Storage storage = (new FirebaseHelper()).getStorage();
+    private File file = null;
 
     public static class MealCardViewHolder extends RecyclerView.ViewHolder {
         CardView mealCardView;
@@ -18,18 +28,29 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView mealProtein;
         TextView restaurantName;
         TextView restaurantLocation;
+        ImageView mealImage;
+        TextView mealDescription;
+
 
         MealCardViewHolder(View view) {
             super(view);
-            mealCardView = (CardView)view.findViewById(R.id.meal_card_view);
-            mealName = (TextView)view.findViewById(R.id.meal_name);
-            mealProtein = (TextView)view.findViewById(R.id.meal_protein);
-            restaurantName = (TextView)view.findViewById(R.id.restaurant_name);
-            restaurantLocation = (TextView)view.findViewById(R.id.restaurant_location);
+            mealCardView = view.findViewById(R.id.meal_card_view);
+            mealName = view.findViewById(R.id.meal_name);
+            mealProtein = view.findViewById(R.id.meal_protein);
+            restaurantName = view.findViewById(R.id.restaurant_name);
+            restaurantLocation = view.findViewById(R.id.restaurant_location);
+            mealImage = view.findViewById(R.id.meal_image);
+            mealDescription = view.findViewById(R.id.description);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
-    List<MealCard> mealCardList;
     RecyclerViewAdapter(List<MealCard> mealCardList) {
         this.mealCardList = mealCardList;
     }
@@ -40,23 +61,64 @@ public class RecyclerViewAdapter extends RecyclerView
     }
 
     @Override
-    public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public MealCardViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.meal_card_view, viewGroup, false);
-        MealCardViewHolder mealCardViewHolder = new MealCardViewHolder(view);
-        return mealCardViewHolder;
+        return new MealCardViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MealCardViewHolder mealCardViewHolder, int i) {
-        mealCardViewHolder.mealName.setText(mealCardList.get(i).getMealName());
-        mealCardViewHolder.mealProtein.setText(mealCardList.get(i).getMealProtein());
-        mealCardViewHolder.restaurantName.setText(mealCardList.get(i).getRestaurantName());
-        mealCardViewHolder.restaurantLocation.setText(mealCardList.get(i).getRestaurantLocation());
+    public void onBindViewHolder(MealCardViewHolder mealCardViewHolder, int position) {
+        mealCardViewHolder.mealName.setText(mealCardList.get(position).getMealName());
+        mealCardViewHolder.mealProtein.setText(mealCardList.get(position).getMealProtein());
+        mealCardViewHolder.restaurantName.setText(mealCardList.get(position).getRestaurantName());
+        mealCardViewHolder.restaurantLocation.setText(mealCardList.get(position).getRestaurantLocation());
+        mealCardViewHolder.mealDescription.setText(mealCardList.get(position).getMealDescription());
+        //When image is added by user during creation of a meal, isImageAdded() == true;
+        if (mealCardList.get(position).isImageAdded()) {
+            //retrieve image from database
+            String uuid = mealCardList.get(position).getUuid();
+            //convert to bitmap
+            storage.getMealImage(uuid,this::setFile);
+            String path = file.getPath();
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            //set image
+            mealCardViewHolder.mealImage.setImageBitmap(bitmap);
+        } else {
+            mealCardViewHolder.mealImage.setImageResource(R.drawable.ic_restaurant_icon_24dp);
+        }
+
+        final boolean isExpanded = (position == expandedPosition);
+        if (isExpanded) {
+            mealCardViewHolder.mealDescription.setVisibility(View.VISIBLE);
+        } else {
+            mealCardViewHolder.mealDescription.setVisibility(View.GONE);
+        }
+        mealCardViewHolder.itemView.setActivated(isExpanded);
+
+        final int pos = position;
+        mealCardViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isExpanded) {
+                    expandedPosition = -1;
+                } else {
+                    expandedPosition = pos;
+                }
+                notifyItemChanged(pos);
+            }
+        });
+
     }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+
+    //In order to get image to convert to get path
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }

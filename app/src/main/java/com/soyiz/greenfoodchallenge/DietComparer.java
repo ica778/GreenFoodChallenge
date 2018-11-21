@@ -2,6 +2,7 @@ package com.soyiz.greenfoodchallenge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.List;
 
 /*Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
@@ -47,13 +48,13 @@ public class DietComparer {
     }
 
     public static double getHowManyKGOfC02eAYear() {
-        double totalKG = 365 * (27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
-                + 12.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
-                + 6.9F * UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
-                + 6.1F * UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
-                + 4.8F * UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
-                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
-                + 2 * UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
+        double totalKG = 54 * (150*27 * UserDietInfo.getInstance().getAmountOfProteinGrams("beef")
+                + 12.1F *150* UserDietInfo.getInstance().getAmountOfProteinGrams("pork")
+                + 6.9F *150* UserDietInfo.getInstance().getAmountOfProteinGrams("chicken")
+                + 6.1F *150* UserDietInfo.getInstance().getAmountOfProteinGrams("fish")
+                + 4.8F *150* UserDietInfo.getInstance().getAmountOfProteinGrams("egg")
+                + 2 *150* UserDietInfo.getInstance().getAmountOfProteinGrams("bean")
+                + 2 * 150*UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable")) / 1000;
         return totalKG;
     }
 

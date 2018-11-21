@@ -19,6 +19,7 @@
     </string-array>
     <string name="titleText">Pick a new diet below to see how your ecological footprint can improve.\n</string>
     <string name="newDietImprovement">\t - This diet is %1$.2f \% better than your current diet.</string>
+    <string name="co2eEmissionsComparation"></string>
 
 
 
@@ -116,6 +117,18 @@
     <string name="vegetablesServingsGuide">Vegetables: 150 g, 175 mL, (¾ cup)</string>
     <string name="eggsServingsGuide">Eggs: 2 eggs</string>
 
+    // Strings for restaurant fragments
+    <string name="add_meal_card_text">Add A Meal</string>
+    <string name="exit_dialog_text">Exit</string>
+    <string name="enter_meal_text">Add</string>
+    <string name="add_image_text">Add Meal Image (Optional)</string>
+    <string name="dialog_title_text">Enter Your Meal</string>
+    <string name="meal_name_title">Enter the name of your meal:</string>
+    <string name="meal_protein_title">Enter the main protein source in your meal:</string>
+    <string name="restaurant_name_title">Enter the name of the restaurant where you ordered this meal:</string>
+    <string name="restaurant_location_title">Enter the location of this restaurant:</string>
+    <string name="description_title">Enter a short description of this meal (optional):</string>
+    <string name="add_meal_invalid_input_toast">Meal name, meal protein, restaurant name, and restaurant location are mandatory</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -167,5 +180,6 @@
 
     <string name="toast_sign_out">Signed out!</string>
     <string name="toast_already_signed_in">Already signed in!</string>
+
 
 </resources>
