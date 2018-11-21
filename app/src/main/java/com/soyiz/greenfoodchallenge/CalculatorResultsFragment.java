@@ -291,15 +291,18 @@ public class CalculatorResultsFragment extends Fragment {
         // Set bar chart axis texts
         barChartCompareEmissionsView.getXAxis().setDrawLabels(true);
         barChartCompareEmissionsView.getLegend().setEnabled(false);
-        barChartCompareEmissionsView.setScaleYEnabled(true);
+        barChartCompareEmissionsView.setScaleYEnabled(false);
+        barChartCompareEmissionsView.setScaleXEnabled(false);
 
-        // Set bar chart bar colors
+        // Set bar chart features
         compareEmissionsDataSet.setColor(Color.GREEN);
+        compareEmissionsDataSet.setHighlightEnabled(false);
+
 
         // Set y axis
         YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
         yAxisLeft.setStartAtZero(true);
-        yAxisLeft.setAxisMaximum(3f);
+        yAxisLeft.setAxisMaximum(2.0f + yData[0]);
         yAxisLeft.setDrawGridLines(true);
         YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
         yAxisRight.setEnabled(false);

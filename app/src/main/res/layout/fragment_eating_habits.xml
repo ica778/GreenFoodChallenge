@@ -69,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:hint="0"/>
 
             </LinearLayout>
@@ -95,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -121,6 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -147,6 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -173,6 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -199,6 +204,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -225,6 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:text="" android:hint="0"/>
 
             </LinearLayout>
@@ -249,7 +256,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Click the name of a food to see how\nmuch is in a serving of each."/>
+                        android:text="Click the name of a food to see how much is\nin a Canada Food Guide serving of each."/>
 
             </LinearLayout>
 
