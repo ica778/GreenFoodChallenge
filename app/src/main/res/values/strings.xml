@@ -19,6 +19,7 @@
     </string-array>
     <string name="titleText">Pick a new diet below to see how your ecological footprint can improve.\n</string>
     <string name="newDietImprovement">\t - This diet is %1$.2f \% better than your current diet.</string>
+    <string name="co2eEmissionsComparation"></string>
 
 
 
@@ -171,5 +172,6 @@
 
     <string name="toast_sign_out">Signed out!</string>
     <string name="toast_already_signed_in">Already signed in!</string>
+
 
 </resources>
