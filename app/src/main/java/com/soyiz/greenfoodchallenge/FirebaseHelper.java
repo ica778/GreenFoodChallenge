@@ -445,14 +445,13 @@ public class FirebaseHelper {
             });
         }
 
-        // Given an image file and a meal's uuid will upload the image
-        public void putMealImage(File image, String uuid) {
-            Uri imageURI = Uri.fromFile(image);
+        // Given an image URI and a meal's uuid will upload the image
+        public void putMealImage(Uri imageURI, String uuid) {
             String[] imageSplitEndOfPath = imageURI.getLastPathSegment().split("\\.");
             String imageExtension = imageSplitEndOfPath[imageSplitEndOfPath.length - 1];
 
             String path = "mealPictures/" + uuid + "." + imageExtension;
-            putImage(image, path);
+            putImage(new File(imageURI.getPath()), path);
         }
     }
 
