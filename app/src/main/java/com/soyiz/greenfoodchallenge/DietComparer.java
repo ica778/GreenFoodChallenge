@@ -2,6 +2,7 @@ package com.soyiz.greenfoodchallenge;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.List;
 
 /*Compares CO2e levels in two diets and calculates the % of CO2e saved with new diet
