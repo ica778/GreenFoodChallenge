@@ -340,8 +340,8 @@ public class EcoFragment extends Fragment {
         ArrayList<Float> yData = new ArrayList<>();
 
         String[] xData = {
-                "Eco CO2e Emissions",
-                "Current Diet CO2e",
+                "Eco CO2e",
+                "Current CO2e",
                 "Metro Vancouver Average"
         };
         barChartCompareEmissionsView.setDrawValueAboveBar(true);
