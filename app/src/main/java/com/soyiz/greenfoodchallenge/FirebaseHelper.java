@@ -60,6 +60,9 @@ public class FirebaseHelper {
 
     final class Firestore {
 
+        private Firestore() {
+        }
+
         // Field constants for user
         public static final String FIRST_NAME = "firstName";
         public static final String LAST_NAME = "lastName";
@@ -223,6 +226,9 @@ public class FirebaseHelper {
     }
 
     final class Functions {
+
+        private Functions() {
+        }
 
         public static final String USER_ID = "identifier";
         public static final String FIELD_NAME = "fieldName";
@@ -403,6 +409,10 @@ public class FirebaseHelper {
     }
 
     final class Storage {
+
+        private Storage() {
+        }
+
         public void getImage(String path, String imageName, Consumer<File> callback) {
             StorageReference imageRef = storage.getReference().child(path);
             String fileName = imageName.replaceAll("(/)|( )", "_");
