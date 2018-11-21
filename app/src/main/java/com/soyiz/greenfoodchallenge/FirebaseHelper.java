@@ -6,10 +6,7 @@ import android.util.Log;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.util.Consumer;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -40,7 +37,8 @@ public class FirebaseHelper {
     private final Storage storageInstance = new Storage();
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference userCollection = db.collection("users");
+    private final CollectionReference usersCollection = db.collection("users");
+    private final CollectionReference mealsCollection = db.collection("meals");
 
     private final FirebaseFunctions functions = FirebaseFunctions.getInstance();
 
@@ -154,7 +152,7 @@ public class FirebaseHelper {
 //        public void pullUserDocument(final User user) {
 //            FirebaseUser firebaseUser = user.getFirebaseUser();
 //
-//            userCollection.document(firebaseUser.getUid())
+//            usersCollection.document(firebaseUser.getUid())
 //                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 //                @Override
 //                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -180,11 +178,11 @@ public class FirebaseHelper {
 //        // Given a user, will send its userDocument to the server as an update
 //        public void pushUserDocument(User user) {
 //            FirebaseUser firebaseUser = user.getFirebaseUser();
-//            userCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
+//            usersCollection.document(firebaseUser.getUid()).set(user.getUserDocument());
 //        }
 
         public void queryPledgesForViewer(final PledgeFragment fragment) {
-            userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            usersCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     String TAG = "queryPledgesForViewer";
@@ -386,6 +384,20 @@ public class FirebaseHelper {
             data.put(MEAL_MAP, mealMap);
 
             internalSetter("setMeal", data, null);
+        }
+
+        public void getMealsForList(Consumer<MealCard> callback) {
+            mealsCollection.limit(20).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    Log.d(TAG, "getMealsForList.onComplete: completed query and now iterating over documents");
+                    for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
+                        Map<String, Object> data = snapshot.getData();
+                        MealCard output = new MealCard(data);
+                        callback.accept(output);
+                    }
+                }
+            });
         }
 
     }
