@@ -95,59 +95,59 @@ public class FirebaseHelper {
 
         public static final String UUID_TAG = "UUID";
 
-        public Map<String, Object> getUserTemplate() {
-            Map<String, Object> user = new HashMap<>();
-
-            // User's first name
-            user.put(FIRST_NAME, "");
-            // User's last name
-            user.put(LAST_NAME, "");
-            // Alias, like a username, in case the user wants the pledge shared under it instead
-            user.put(ALIAS, "");
-            // If the user wants to share the pledge under an alias instead of their name
-            user.put(USE_ALIAS_FOR_NAME, false);
-
-            // Which city the pledge goes under
-            user.put(CITY, "");
-
-            // User's biography
-            user.put(BIO, "");
-
-            // If the pledge is shared anonymously. Overrides all other settings below except city
-            user.put(ANONYMOUS_PLEDGE, false);
-            // If the user wants to share their first name
-            user.put(SHOW_FIRST_NAME, false);
-            // If the user wants to share their last name
-            user.put(SHOW_LAST_NAME, false);
-            // If to replace the user's last name with their last initial when shared
-            user.put(SHOW_LAST_INITIAL_FOR_LAST_NAME, false);
-            // If the user's city is to be shared publicly
-            user.put(SHOW_CITY, false);
-
-            // A reference (in the database) to the pledge for this user
-            // user.put(PLEDGE, pledgeCollection.document("template"));
-
-            // A map representing pledge info
-            user.put(PLEDGE, getPledgeTemplate());
-
-            // A map of the string equivalent of a ProteinSource (via .toString) to the float percentage.
-            // Essentially, a string keyed version of the internal map of a diet.
-            // Starts null since it's designed to be loaded from Diet.exportToStringMap.
-            user.put(DIET, null);
-
-            return user;
-        }
-
-        private Map<String, Object> getPledgeTemplate() {
-            Map<String, Object> pledge = new HashMap<>();
-
-            // Current CO2e usage by user with this pledge. -1 means it's not been set
-            pledge.put(CURRENT_CO2E, -1);
-            // Goal CO2e usage by user with this pledge. -1 means it's not been set
-            pledge.put(GOAL_CO2E, -1);
-
-            return pledge;
-        }
+//        public Map<String, Object> getUserTemplate() {
+//            Map<String, Object> user = new HashMap<>();
+//
+//            // User's first name
+//            user.put(FIRST_NAME, "");
+//            // User's last name
+//            user.put(LAST_NAME, "");
+//            // Alias, like a username, in case the user wants the pledge shared under it instead
+//            user.put(ALIAS, "");
+//            // If the user wants to share the pledge under an alias instead of their name
+//            user.put(USE_ALIAS_FOR_NAME, false);
+//
+//            // Which city the pledge goes under
+//            user.put(CITY, "");
+//
+//            // User's biography
+//            user.put(BIO, "");
+//
+//            // If the pledge is shared anonymously. Overrides all other settings below except city
+//            user.put(ANONYMOUS_PLEDGE, false);
+//            // If the user wants to share their first name
+//            user.put(SHOW_FIRST_NAME, false);
+//            // If the user wants to share their last name
+//            user.put(SHOW_LAST_NAME, false);
+//            // If to replace the user's last name with their last initial when shared
+//            user.put(SHOW_LAST_INITIAL_FOR_LAST_NAME, false);
+//            // If the user's city is to be shared publicly
+//            user.put(SHOW_CITY, false);
+//
+//            // A reference (in the database) to the pledge for this user
+//            // user.put(PLEDGE, pledgeCollection.document("template"));
+//
+//            // A map representing pledge info
+//            user.put(PLEDGE, getPledgeTemplate());
+//
+//            // A map of the string equivalent of a ProteinSource (via .toString) to the float percentage.
+//            // Essentially, a string keyed version of the internal map of a diet.
+//            // Starts null since it's designed to be loaded from Diet.exportToStringMap.
+//            user.put(DIET, null);
+//
+//            return user;
+//        }
+//
+//        private Map<String, Object> getPledgeTemplate() {
+//            Map<String, Object> pledge = new HashMap<>();
+//
+//            // Current CO2e usage by user with this pledge. -1 means it's not been set
+//            pledge.put(CURRENT_CO2E, -1);
+//            // Goal CO2e usage by user with this pledge. -1 means it's not been set
+//            pledge.put(GOAL_CO2E, -1);
+//
+//            return pledge;
+//        }
 
 //        // Given a user, will set its userDocument to the latest on the server, but does it asynchronously
 //        // Would recommend running this immediately upon user login so the pull can resolve by the time it's needed
@@ -387,10 +387,11 @@ public class FirebaseHelper {
 
             internalSetter("setMeal", data, null);
         }
+
     }
 
     final class Storage {
-        public void getImage(String path, String imageName) {
+        public void getImage(String path, String imageName, Consumer<File> callback) {
             StorageReference imageRef = storage.getReference().child(path);
             String fileName = imageName.replaceAll("(/)|( )", "_");
             File file;
@@ -409,18 +410,22 @@ public class FirebaseHelper {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + file.getName() + "'");
+                    // Sends file along to callback once complete
+                    callback.accept(file);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.e(TAG, "getImage.onFailure: failure downloading image '" + file.getName() + "'");
+                    // If there's a download failure instead pass a null
+                    callback.accept(null);
                 }
             });
         }
 
         // Given the uuid for a meal will get download its image
-        public void getMealImage(String uuid) {
-            getImage("mealPictures/", uuid + ".jpg");
+        public void getMealImage(String uuid, Consumer<File> callback) {
+            getImage("mealPictures/", uuid + ".jpg", callback);
         }
 
         public void putImage(File image, String path) {
