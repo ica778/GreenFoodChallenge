@@ -103,7 +103,7 @@ public class EcoFragment extends Fragment {
         myDiet.setProteinPercent(ProteinSource.Vegetables, 0);
 
         if (UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) {
-            float totalAmountOfProtein = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+            int totalAmountOfProtein = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
             myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 100 / totalAmountOfProtein);
             myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 100 / totalAmountOfProtein);
             myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 100 / totalAmountOfProtein);
