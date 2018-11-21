@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class UserDietInfo {
     private static final UserDietInfo ourInstance = new UserDietInfo();
-    private Map<String, Integer> amountOfProteinMap;
+    private Map<String, Float> amountOfProteinMap;
 
     private UserDietInfo() {
         amountOfProteinMap = new HashMap<>();
@@ -20,32 +20,32 @@ public class UserDietInfo {
     }
 
     // Sets the amount in grams of a given protein
-    public void setAmountOfProteinGrams(String typeOfProtein, Integer amountOfProtein) {
+    public void setAmountOfProteinGrams(String typeOfProtein, float amountOfProtein) {
         amountOfProteinMap.put(typeOfProtein, amountOfProtein);
     }
 
     // Gets the amount in grams of a given protein
-    public int getAmountOfProteinGrams(String typeOfProtein) {
+    public float getAmountOfProteinGrams(String typeOfProtein) {
         return amountOfProteinMap.get(typeOfProtein);
     }
     // Returns amount in KG of a given protein
-    public double getAmountOfProteinKG(String typeOfProtein) {
+    public float getAmountOfProteinKG(String typeOfProtein) {
         return amountOfProteinMap.get(typeOfProtein) / 1000;
     }
 
     // Returns sum of all proteins in grams THIS WILL ALWAYS BE WHOLE NUMBER
-    public int getTotalAmountOfProteinGrams() {
+    public float getTotalAmountOfProteinGrams() {
         int sumOfAllProteinGrams = 0;
-        for (int amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
+        for (float amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
             sumOfAllProteinGrams += amountOfCurrentProteinGrams;
         }
         return sumOfAllProteinGrams;
     }
 
     // Returns sum of all proteins in KG
-    public double getTotalAmountOfProteinKG() {
+    public float getTotalAmountOfProteinKG() {
         int sumOfAllProteinGrams = 0;
-        for (int amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
+        for (float amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
             sumOfAllProteinGrams += amountOfCurrentProteinGrams;
         }
         return sumOfAllProteinGrams / 1000;

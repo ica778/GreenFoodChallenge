@@ -3,6 +3,7 @@ package com.soyiz.greenfoodchallenge;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private Button btn_total;
     private TextView tv_result;
     private ScrollView mScrollView;
+    private TextView beefText, chickenText, porkText, fishText, beanText, vegetablesText, eggsText;
+    private int maximumUserInputLength;
 
     public EatingHabitsFragment() {
     }
@@ -48,6 +51,23 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         et_bean = view.findViewById(R.id.et_beans);
         et_vegetable = view.findViewById(R.id.et_vegetables);
         et_egg = view.findViewById(R.id.et_egg);
+
+        beefText = view.findViewById(R.id.beefText);
+        chickenText = view.findViewById(R.id.chickenText);
+        porkText = view.findViewById(R.id.porkText);
+        fishText = view.findViewById(R.id.fishText);
+        beanText = view.findViewById(R.id.beanText);
+        vegetablesText = view.findViewById(R.id.vegetablesText);
+        eggsText = view.findViewById(R.id.eggsText);
+
+        beefText.setOnClickListener(this);
+        chickenText.setOnClickListener(this);
+        porkText.setOnClickListener(this);
+        fishText.setOnClickListener(this);
+        beanText.setOnClickListener(this);
+        vegetablesText.setOnClickListener(this);
+        eggsText.setOnClickListener(this);
+
         btn_total = view.findViewById(R.id.btn_total);
         tv_result = view.findViewById(R.id.tv_result);
         btn_total.setOnClickListener(this);
@@ -57,15 +77,39 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-
-        if (userInput() == true) {
-            CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
+        switch(view.getId()) {
+            case R.id.btn_total:
+                if (userInput() == true) {
+                    CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.calculator_invalid_input_toast), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.beefText:
+                Toast.makeText(getContext(), getResources().getString(R.string.beefServingsGuide), Toast.LENGTH_SHORT).show();
+            break;
+            case R.id.chickenText:
+                Toast.makeText(getContext(), getResources().getString(R.string.chickenServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.porkText:
+                Toast.makeText(getContext(), getResources().getString(R.string.porkServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fishText:
+                Toast.makeText(getContext(), getResources().getString(R.string.fishServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.beanText:
+                Toast.makeText(getContext(), getResources().getString(R.string.beansServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.vegetablesText:
+                Toast.makeText(getContext(), getResources().getString(R.string.vegetablesServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.eggsText:
+                Toast.makeText(getContext(), getResources().getString(R.string.eggsServingsGuide), Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -81,46 +125,49 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         String vegetable = et_vegetable.getText().toString().trim();
         String egg = et_egg.getText().toString().trim();
         boolean userHasEnteredInput = false;
-        if (TextUtils.isEmpty(beef) || Integer.parseInt(beef) == 0) {
+
+        // Put user input into singleton
+        if (TextUtils.isEmpty(beef) || Float.parseFloat("0" + beef + "0") == 0 ) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("beef", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("beef", Integer.parseInt(beef));
+
+            UserDietInfo.getInstance().setAmountOfProteinGrams("beef",  (Float.parseFloat("0" + beef)) * 75f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(chicken) || Integer.parseInt(chicken) == 0) {
+        if (TextUtils.isEmpty(chicken) || Float.parseFloat("0" + chicken + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", Integer.parseInt(chicken));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("chicken", (Float.parseFloat("0" + chicken)) * 75f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(pork) || Integer.parseInt(pork) == 0) {
+        if (TextUtils.isEmpty(pork) || Float.parseFloat("0" + pork + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("pork", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", Integer.parseInt(pork));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("pork", (Float.parseFloat("0" + pork)) * 75f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(fish) || Integer.parseInt(fish) == 0) {
+        if (TextUtils.isEmpty(fish) || Float.parseFloat("0" + fish + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("fish", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", Integer.parseInt(fish));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("fish", (Float.parseFloat("0" + fish)) * 75f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(bean) || Integer.parseInt(bean) == 0) {
+        if (TextUtils.isEmpty(bean) || Float.parseFloat("0" + bean + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("bean", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", Integer.parseInt(bean));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("bean", (Float.parseFloat("0" + bean)) * 150f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(vegetable) || Integer.parseInt(vegetable) == 0) {
+        if (TextUtils.isEmpty(vegetable) || Float.parseFloat("0" + vegetable + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", Integer.parseInt(vegetable));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("vegetable", (Float.parseFloat("0" + vegetable)) * 150f / 7f);
             userHasEnteredInput = true;
         }
-        if (TextUtils.isEmpty(egg) || Integer.parseInt(egg) == 0) {
+        if (TextUtils.isEmpty(egg) || Float.parseFloat("0" + egg + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("egg", 0);
         } else {
-            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", Integer.parseInt(egg));
+            UserDietInfo.getInstance().setAmountOfProteinGrams("egg", (Float.parseFloat("0" + egg)) * 120f / 7f);
             userHasEnteredInput = true;
         }
         return userHasEnteredInput;
