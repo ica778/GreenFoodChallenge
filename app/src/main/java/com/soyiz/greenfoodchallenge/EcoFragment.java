@@ -325,8 +325,9 @@ public class EcoFragment extends Fragment {
 
     private void createC02eEmissionsComparedToAverageBarChart(int typeOfDiet) {
 
-        float totalProteinInCurrentDietKG = UserDietInfo.getInstance().getTotalAmountOfProteinKG();
-        List<Float> newDietSelected = new ArrayList<>();
+        float newDietTonnesOfC02e;
+        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
+        float averageC02eFromDietForRegion = 7.7f * 0.2f;
 
         // highMeat
         if (typeOfDiet == 1) {
@@ -335,13 +336,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+                newDietTonnesOfC02e = (float) highMeat.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
             }
         }
 
@@ -352,13 +347,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+                newDietTonnesOfC02e = (float) lowMeat.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
             }
         }
 
@@ -369,13 +358,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+                newDietTonnesOfC02e = (float) onlyFish.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
             }
         }
 
@@ -386,13 +369,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+                newDietTonnesOfC02e = (float) vegetarian.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
             }
         }
 
@@ -403,13 +380,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
-                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+                newDietTonnesOfC02e = (float) vegan.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
             }
         }
 
@@ -424,20 +395,6 @@ public class EcoFragment extends Fragment {
                 return;
             }
         }
-
-        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
-        float averageC02eFromDietForRegion = 7.7f * 0.2f;
-
-        // calculates the total c02e emissions from new diet selected
-
-        float newDietTonnesOfC02e = ((newDietSelected.get(0) * 27f) +
-                (newDietSelected.get(1) * 6.9f) +
-                (newDietSelected.get(2) * 12.1f) +
-                (newDietSelected.get(3) * 6.1f) +
-                (newDietSelected.get(4) * 2f) +
-                (newDietSelected.get(5) * 2f) +
-                (newDietSelected.get(6) * 4.8f)) / 1000f;
-
 
         // Bar chart will show these things
         Float[] yData = {

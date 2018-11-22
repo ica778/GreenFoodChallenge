@@ -44,6 +44,10 @@
                 android:layout_height="350dp"
                 android:layout_gravity="center" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp" />
+
             <TextView
                 android:id="@+id/textViewEco2"
                 android:layout_width="350dp"
@@ -51,10 +55,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="22dp" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChartCompareEmissions"

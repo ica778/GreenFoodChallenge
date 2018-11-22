@@ -18,7 +18,7 @@
         <item name="vegan">Vegan</item>
     </string-array>
     <string name="titleText">Pick a new diet below to see how your ecological footprint can be
-        improved by changing the proportions of food consumed.\n</string>
+        improved by changing the proportions of your diet.\n</string>
     <string name="newDietImprovement">\t - This diet is %1$.2f \% better than your current diet.</string>
     <string name="co2eEmissionsComparation"></string>
 
