@@ -162,8 +162,8 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
+                textViewEco2.setText("Emissions Comparison (Tonnes)");
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Pork));
@@ -180,8 +180,8 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
+                textViewEco2.setText("Emissions Comparison (Tonnes)");
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Pork));
@@ -198,9 +198,8 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
-
+                textViewEco2.setText("Emissions Comparison (Tonnes)");
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Pork));
@@ -217,8 +216,8 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
+                textViewEco2.setText("Emissions Comparison (Tonnes)");
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Pork));
@@ -235,8 +234,8 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
+                textViewEco2.setText("Emissions Comparison (Tonnes)");
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Pork));
@@ -250,7 +249,6 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
-                return;
             } else {
                 textViewEco2.setText("");
                 yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("beef"));
@@ -422,7 +420,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                compareEmissionsBarChart.setNoDataText("Please choose a Eco Diet");
+                compareEmissionsBarChart.setNoDataText("Please choose a new diet");
                 return;
             }
         }
@@ -431,13 +429,15 @@ public class EcoFragment extends Fragment {
         float averageC02eFromDietForRegion = 7.7f * 0.2f;
 
         // calculates the total c02e emissions from new diet selected
+
         float newDietTonnesOfC02e = ((newDietSelected.get(0) * 27f) +
-                (newDietSelected.get(1) * 12.2f) +
-                (newDietSelected.get(2) * 6.9f) +
+                (newDietSelected.get(1) * 6.9f) +
+                (newDietSelected.get(2) * 12.1f) +
                 (newDietSelected.get(3) * 6.1f) +
-                (newDietSelected.get(4) * 4.8f) +
+                (newDietSelected.get(4) * 2f) +
                 (newDietSelected.get(5) * 2f) +
-                (newDietSelected.get(6) * 2f)) / 1000f;
+                (newDietSelected.get(6) * 4.8f)) / 1000f;
+
 
         // Bar chart will show these things
         Float[] yData = {
