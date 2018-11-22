@@ -19,13 +19,16 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,119 +108,21 @@ public class CalculatorResultsFragment extends Fragment {
                 averageC02eEmissionPerCapitaInMetroVancouverTonnes
         );
         textView3.setText(textView3Text);
-
-
-    }
-
-    // Creates pie chart showing C02e footprint of each protein
-    private void createDietC02ePercents() {
-        //Pie chart will show these things
-        float totalC02eFootprintGrams = ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2));
-        Float[] yData = {
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2)) / totalC02eFootprintGrams
-        };
-        String[] xData = {
-                "Beef",
-                "Chicken",
-                "Pork",
-                "Fish",
-                "Bean",
-                "Vegetable",
-                "Egg"
-        };
-
-        ArrayList<PieEntry> yEntries = new ArrayList<>();
-
-        // Put values into entries that can be put into the pie chart
-        for (int i = 0; i < yData.length; i++) {
-            if (yData[i] > 0) {
-                yEntries.add(new PieEntry(yData[i], xData[i]));
-            }
-        }
-
-        PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "");
-
-        dietC02ePercentsPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-
-        // Set click events
-        dietC02ePercentsPieChart.setRotationEnabled(false);
-        dietC02ePercentsPieChart.setDrawHoleEnabled(false);
-
-        // Set things outside of pie chart
-        Legend legend = dietC02ePercentsPieChart.getLegend();
-        legend.setEnabled(true);
-        legend.setWordWrapEnabled(true);
-        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        dietC02ePercentsPieChart.getDescription().setText("");
-
-        // Set pie chart and its slices
-        dietC02ePercentsPieChart.setUsePercentValues(true);
-        dietC02ePercentsPieDataSet.setSliceSpace(1f);
-        dietC02ePercentsPieDataSet.setColors(colorsToChooseFrom);
-
-        // Set text in pie chart
-        PieData pieData = new PieData(dietC02ePercentsPieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
-
-        // Set y axis text color
-        dietC02ePercentsPieDataSet.setValueTextColor(Color.BLACK);
-        dietC02ePercentsPieDataSet.setValueTextSize(10f);
-
-        // Set x axis text color
-        dietC02ePercentsPieChart.setEntryLabelColor(Color.BLACK);
-        dietC02ePercentsPieChart.setEntryLabelTextSize(10f);
-
-        // Show x axis text
-        dietC02ePercentsPieChart.setDrawEntryLabels(false);
-
-        // Show y axis text
-        dietC02ePercentsPieDataSet.setDrawValues(true);
-
-        // Show pie chart
-        dietC02ePercentsPieChart.setData(pieData);
-        dietC02ePercentsPieChart.invalidate();
-
-        dietC02ePercentsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
-                String xAxisStringToShowOnClick = xData[(int)h.getX()];
-                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
-                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
     }
 
     // Creates pie chart showing proportion of each food in diet
     private void createDietProportionsPieChart() {
-        float totalProteinGrams = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+        float totalProteinKG = UserDietInfo.getInstance().getTotalAmountOfProteinKG();
 
         // Pie chart will show these things
         Float[] yData = {
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") / totalProteinGrams) * 100
+                (UserDietInfo.getInstance().getAmountOfProteinKG("beef") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("pork") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("fish") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("bean") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("egg") / totalProteinKG) * 100
         };
         String[] xData = {
                 "Beef",
@@ -254,13 +159,13 @@ public class CalculatorResultsFragment extends Fragment {
         dietProportionsPieChart.getDescription().setText("");
 
         // Set pie chart and its slices
-        dietProportionsPieChart.setUsePercentValues(true);
+        dietProportionsPieChart.setUsePercentValues(false);
         dietProportionsPieDataSet.setSliceSpace(1f);
         dietProportionsPieDataSet.setColors(colorsToChooseFrom);
 
         // Set text in pie chart
         PieData pieData = new PieData(dietProportionsPieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
+        pieData.setValueFormatter(new PieChartValueFormatter());
 
         // Set y axis text color
         dietProportionsPieDataSet.setValueTextColor(Color.BLACK);
@@ -283,9 +188,103 @@ public class CalculatorResultsFragment extends Fragment {
         dietProportionsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                double valueToShowOnClick = (double) Math.round(yData[(int)h.getX()] * 10) / 10;
-                String xAxisStringToShowOnClick = xData[(int)h.getX()];
-                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
+                int valueToShowOnClick = (int) h.getY();
+                String onValueSelectedToastString = valueToShowOnClick + " %";
+                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+    }
+
+    // Creates pie chart showing C02e footprint of each protein
+    private void createDietC02ePercents() {
+        //Pie chart will show these things
+        float totalC02eFootprintKG = ((UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2));
+        Float[] yData = {
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2)) / totalC02eFootprintKG
+        };
+        String[] xData = {
+                "Beef",
+                "Chicken",
+                "Pork",
+                "Fish",
+                "Bean",
+                "Vegetable",
+                "Egg"
+        };
+
+        ArrayList<PieEntry> yEntries = new ArrayList<>();
+
+        // Put values into entries that can be put into the pie chart
+        for (int i = 0; i < yData.length; i++) {
+            if (yData[i] > 0) {
+                yEntries.add(new PieEntry(yData[i], xData[i]));
+            }
+        }
+
+        PieDataSet dietC02ePercentsPieDataSet = new PieDataSet(yEntries, "");
+
+        dietC02ePercentsPieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+        // Set click events
+        dietC02ePercentsPieChart.setRotationEnabled(false);
+        dietC02ePercentsPieChart.setDrawHoleEnabled(false);
+
+        // Set things outside of pie chart
+        Legend legend = dietC02ePercentsPieChart.getLegend();
+        legend.setEnabled(true);
+        legend.setWordWrapEnabled(true);
+        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        dietC02ePercentsPieChart.getDescription().setText("");
+
+        // Set pie chart and its slices
+        dietC02ePercentsPieChart.setUsePercentValues(false);
+        dietC02ePercentsPieDataSet.setSliceSpace(1f);
+        dietC02ePercentsPieDataSet.setColors(colorsToChooseFrom);
+
+        // Set text in pie chart
+        PieData pieData = new PieData(dietC02ePercentsPieDataSet);
+        pieData.setValueFormatter(new PieChartValueFormatter());
+
+        // Set y axis text color
+        dietC02ePercentsPieDataSet.setValueTextColor(Color.BLACK);
+        dietC02ePercentsPieDataSet.setValueTextSize(10f);
+
+        // Set x axis text color
+        dietC02ePercentsPieChart.setEntryLabelColor(Color.BLACK);
+        dietC02ePercentsPieChart.setEntryLabelTextSize(10f);
+
+        // Show x axis text
+        dietC02ePercentsPieChart.setDrawEntryLabels(false);
+
+        // Show y axis text
+        dietC02ePercentsPieDataSet.setDrawValues(true);
+
+        // Show pie chart
+        dietC02ePercentsPieChart.setData(pieData);
+        dietC02ePercentsPieChart.invalidate();
+
+        dietC02ePercentsPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                int valueToShowOnClick = (int) h.getY();
+                String onValueSelectedToastString = valueToShowOnClick + " %";
                 Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
 
@@ -358,7 +357,7 @@ public class CalculatorResultsFragment extends Fragment {
         compareEmissionsBarChart.invalidate();
     }
 
-    // Class needed for putting strings in x axis
+    // Class needed for putting strings in x axis for bar chart
     private class MyXAxisValueFormatter implements IAxisValueFormatter {
         private String[] xValues;
 
@@ -372,5 +371,24 @@ public class CalculatorResultsFragment extends Fragment {
         }
     }
 
+    // Format y axis values for pie charts
+    private class PieChartValueFormatter implements IValueFormatter {
+        private DecimalFormat formattedValue;
 
+        public PieChartValueFormatter() {
+            formattedValue = new DecimalFormat("###,###,###");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            if (value < 3) {
+                return "";
+            }
+            return formattedValue.format((int) value) + " %";
+        }
+    }
+
+    private void showResults(float oldDietC02eKG, float newDietC02eKG) {
+
+    }
 }

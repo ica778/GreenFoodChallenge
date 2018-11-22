@@ -31,7 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center" />
+                android:gravity="center"
+                android:visibility="visible" />
 
             <Space
                 android:layout_width="match_parent"
@@ -43,17 +44,17 @@
                 android:layout_height="350dp"
                 android:layout_gravity="center" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp" />
+
             <TextView
                 android:id="@+id/textViewEco2"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/newDietImprovement"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="22dp" />
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChartCompareEmissions"
@@ -66,7 +67,6 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/co2eEmissionsComparation"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
         </LinearLayout>
     </ScrollView>

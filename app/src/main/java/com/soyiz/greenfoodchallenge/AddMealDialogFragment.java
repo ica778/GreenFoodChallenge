@@ -4,12 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.util.UUID;
 
@@ -87,7 +88,6 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
             //add inputted meal
             case R.id.add_meal_btn:
                 MealCard newMeal = new MealCard();
-
                 boolean isComplete = !userInput(newMeal);
                 if (isComplete) {
                     String uuid = UUID.randomUUID().toString();
@@ -95,10 +95,12 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                     if(imageAdded) {
                         //add image URI and meal UUID
                         storage.putMealImage(mealImageUri, uuid);
-                        newMeal.setImageAdded(true);
                     }
+
+                    newMeal.setCreator(getUserEmail());
+
                     functions.setMeal(newMeal);
-                    ((AddMealInterface)getTargetFragment()).addMeal(uuid);
+                    ((AddMealInterface)getTargetFragment()).addMeal();
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.add_meal_invalid_input_toast)
@@ -153,7 +155,24 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
         return userInputEmpty;
     }
 
+    public String getUserEmail() {
+        User user = User.getCurrent();
+        FirebaseUser firebaseUser = user.getFirebaseUser();
+        // Get the user email by looping over the providers and grabbing the first email listed there
+        for (UserInfo profile : firebaseUser.getProviderData()) {
+            // Skip firebase as a provider
+            if (profile.getProviderId().equals("firebase")) {
+                continue;
+            }
+
+            if (profile.getEmail() != null) {
+                return profile.getEmail();
+            }
+        }
+        return null;
+    }
+
     //Interface method
-    public void addMeal(String mealUuid) {}
+    public void addMeal(/*String uuid*/) {}
 
 }

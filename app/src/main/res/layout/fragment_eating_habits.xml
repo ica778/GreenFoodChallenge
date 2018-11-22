@@ -39,13 +39,12 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
-                        android:layout_width="390dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Servings/Week\n(1 serving≈187.5 grams)"
-                        android:textSize="17dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Servings/Week"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             </LinearLayout>
 
@@ -246,18 +245,21 @@
                     android:layout_height="40dp"
                     android:orientation="horizontal">
 
-                <Button
-                        android:id="@+id/btn_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CALCULATE"/>
                 <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Click name of food to see Canada\nFood Guide serving amounts"/>
+                    android:id="@+id/textView"
+                    android:textColor="@android:color/holo_green_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Don't know how much is in a serving?\nClick the name of a food above to see!"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                <Button
+                    android:id="@+id/btn_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CALCULATE" />
 
             </LinearLayout>
 
