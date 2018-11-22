@@ -415,6 +415,11 @@ public class FirebaseHelper {
                     Log.d(TAG, "getMealsForList.onComplete: completed query and now iterating over documents");
                     for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
                         Map<String, Object> data = snapshot.getData();
+
+                        if (data.get(UUID_TAG) == "template") {
+                            continue;
+                        }
+
                         MealCard output = new MealCard(data);
                         callback.accept(output);
                     }
