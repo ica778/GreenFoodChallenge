@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +39,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EcoFragment extends Fragment {
+public class EcoFragment extends Fragment implements View.OnClickListener {
 
     private Spinner spinnerShowDifferentDiets;
     private ArrayAdapter adapter;
@@ -54,6 +55,9 @@ public class EcoFragment extends Fragment {
     private DietComparer dietComparer;
     private TextView textViewEco2;
     private TextView textView3;
+    private float newDietC02eEmissionsGoal;
+    private Button pledgeFirebaseButton;
+    private boolean userHasSelectedNewDiet;
 
     private BarChart compareEmissionsBarChart;
 
@@ -87,6 +91,9 @@ public class EcoFragment extends Fragment {
         colorsToChooseFrom.add(Color.rgb(255, 153, 255));
         colorsToChooseFrom.add(Color.rgb(128, 255, 0));
 
+        newDietC02eEmissionsGoal = 0;
+        userHasSelectedNewDiet = false;
+
         textViewEco2 = view.findViewById(R.id.textViewEco2);
         dietsCreator = new DietsCreator();
         myDiet = new Diet();
@@ -94,6 +101,8 @@ public class EcoFragment extends Fragment {
         pieChartDietProportionView = view.findViewById(R.id.pieChartDietEcoProportions);
         textView3 = view.findViewById(R.id.textViewEco3);
         compareEmissionsBarChart = view.findViewById(R.id.barChartCompareEmissions);
+        pledgeFirebaseButton = view.findViewById(R.id.buttonEcoFirebase);
+        pledgeFirebaseButton.setOnClickListener(this);
     }
 
     private void createDiet() {
@@ -108,7 +117,7 @@ public class EcoFragment extends Fragment {
         myDiet.setProteinPercent(ProteinSource.Vegetables, 0);
 
         if (UserDietInfo.getInstance().getTotalAmountOfProteinKG() > 0) {
-            float totalAmountOfProtein = (float)UserDietInfo.getInstance().getTotalAmountOfProteinKG();
+            float totalAmountOfProtein = (float) UserDietInfo.getInstance().getTotalAmountOfProteinKG();
             myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 100 / totalAmountOfProtein);
             myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 100 / totalAmountOfProtein);
             myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 100 / totalAmountOfProtein);
@@ -314,6 +323,12 @@ public class EcoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
                 createDietEcoProportionsPieChart(position);
                 createC02eEmissionsComparedToAverageBarChart(position);
+                if (position != 0) {
+                    userHasSelectedNewDiet = true;
+                }
+                else {
+                    userHasSelectedNewDiet = false;
+                }
             }
 
             @Override
@@ -331,8 +346,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 newDietTonnesOfC02e = (float) highMeat.getYearlyCO2e() / 1000;
             }
         }
@@ -342,8 +356,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 newDietTonnesOfC02e = (float) lowMeat.getYearlyCO2e() / 1000;
             }
         }
@@ -353,8 +366,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 newDietTonnesOfC02e = (float) onlyFish.getYearlyCO2e() / 1000;
             }
         }
@@ -364,8 +376,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 newDietTonnesOfC02e = (float) vegetarian.getYearlyCO2e() / 1000;
             }
         }
@@ -375,8 +386,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 newDietTonnesOfC02e = (float) vegan.getYearlyCO2e() / 1000;
             }
         }
@@ -386,8 +396,7 @@ public class EcoFragment extends Fragment {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
-            }
-            else {
+            } else {
                 compareEmissionsBarChart.setNoDataText("Please choose a new diet");
                 return;
             }
@@ -411,6 +420,8 @@ public class EcoFragment extends Fragment {
                 "Metro Vancouver Average",
                 "New Diet"
         };
+
+        newDietC02eEmissionsGoal = newDietTonnesOfC02e;
 
         ArrayList<BarEntry> yEntries = new ArrayList<>();
 
@@ -457,6 +468,22 @@ public class EcoFragment extends Fragment {
         // Show bar chart
         compareEmissionsBarChart.setData(barData);
         compareEmissionsBarChart.invalidate();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(newDietC02eEmissionsGoal == 0 && userHasSelectedNewDiet == true) {
+            Toast.makeText(getContext(), "Your current diet is empty, please complete Diet page again", Toast.LENGTH_SHORT).show();
+        }
+        else if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+            Toast.makeText(getContext(), "Please complete Diet page first", Toast.LENGTH_SHORT).show();
+        }
+        else if (userHasSelectedNewDiet == false) {
+            Toast.makeText(getContext(), "Select a new diet plan", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getContext(), "You have pledged this diet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class MyXAxisValueFormatter implements IAxisValueFormatter {

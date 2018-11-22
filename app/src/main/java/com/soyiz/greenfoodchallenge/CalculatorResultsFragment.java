@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -190,7 +191,7 @@ public class CalculatorResultsFragment extends Fragment {
             public void onValueSelected(Entry e, Highlight h) {
                 int valueToShowOnClick = (int) h.getY();
                 String onValueSelectedToastString = valueToShowOnClick + " %";
-                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -285,7 +286,7 @@ public class CalculatorResultsFragment extends Fragment {
             public void onValueSelected(Entry e, Highlight h) {
                 int valueToShowOnClick = (int) h.getY();
                 String onValueSelectedToastString = valueToShowOnClick + " %";
-                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
