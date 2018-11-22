@@ -55,7 +55,7 @@ public class EcoFragment extends Fragment {
     private TextView textViewEco2;
     private TextView textViewEco3;
 
-    private BarChart barChartCompareEmissionsView;
+    private BarChart compareEmissionsBarChart;
 
     public EcoFragment() {
     }
@@ -93,7 +93,7 @@ public class EcoFragment extends Fragment {
 
         pieChartDietProportionView = view.findViewById(R.id.pieChartDietEcoProportions);
         textViewEco3 = view.findViewById(R.id.textViewEco3);
-        barChartCompareEmissionsView = view.findViewById(R.id.barChartCompareEmissions);
+        compareEmissionsBarChart = view.findViewById(R.id.barChartCompareEmissions);
     }
 
     private void createDiet() {
@@ -107,15 +107,15 @@ public class EcoFragment extends Fragment {
         myDiet.setProteinPercent(ProteinSource.Beans, 0);
         myDiet.setProteinPercent(ProteinSource.Vegetables, 0);
 
-        if (UserDietInfo.getInstance().getTotalAmountOfProteinGrams() > 0) {
-            int totalAmountOfProtein = (int)UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
-            myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Fish, UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Eggs, UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Beans, UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 100 / totalAmountOfProtein);
-            myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 100 / totalAmountOfProtein);
+        if (UserDietInfo.getInstance().getTotalAmountOfProteinKG() > 0) {
+            float totalAmountOfProtein = (float)UserDietInfo.getInstance().getTotalAmountOfProteinKG();
+            myDiet.setProteinPercent(ProteinSource.Beef, UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Pork, UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Chicken, UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Fish, UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Eggs, UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Beans, UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 100 / totalAmountOfProtein);
+            myDiet.setProteinPercent(ProteinSource.Vegetables, UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 100 / totalAmountOfProtein);
         }
         dietsCreator.setUserDiet(myDiet);
         highMeat = dietsCreator.createMeatEaterDiet();
@@ -134,7 +134,7 @@ public class EcoFragment extends Fragment {
         pieChartDietProportionView.setRotationEnabled(false);
 
         // Set draw hole
-        pieChartDietProportionView.setDrawHoleEnabled(false);
+        pieChartDietProportionView.setDrawHoleEnabled(true);
         pieChartDietProportionView.setCenterText("");
 
         // Set things outside of pie chart
@@ -161,8 +161,8 @@ public class EcoFragment extends Fragment {
         if (typeOfDiet == 1) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Chicken));
@@ -171,8 +171,7 @@ public class EcoFragment extends Fragment {
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Beans));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Vegetables));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Eggs));
-
-
+                pieChartDietProportionView.setCenterText("Meat Eater Diet");
             }
         }
 
@@ -180,8 +179,8 @@ public class EcoFragment extends Fragment {
         else if (typeOfDiet == 2) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken));
@@ -190,6 +189,7 @@ public class EcoFragment extends Fragment {
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beans));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Vegetables));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Eggs));
+                pieChartDietProportionView.setCenterText("Low Meat Diet");
             }
         }
 
@@ -197,9 +197,10 @@ public class EcoFragment extends Fragment {
         else if (typeOfDiet == 3) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
+
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Pork));
@@ -207,6 +208,7 @@ public class EcoFragment extends Fragment {
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beans));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Vegetables));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Eggs));
+                pieChartDietProportionView.setCenterText("Only Fish Diet");
             }
         }
 
@@ -214,8 +216,8 @@ public class EcoFragment extends Fragment {
         else if (typeOfDiet == 4) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken));
@@ -224,6 +226,7 @@ public class EcoFragment extends Fragment {
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beans));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Vegetables));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Eggs));
+                pieChartDietProportionView.setCenterText("Vegetarian Diet");
             }
         }
 
@@ -231,8 +234,8 @@ public class EcoFragment extends Fragment {
         else if (typeOfDiet == 5) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Chicken));
@@ -241,22 +244,22 @@ public class EcoFragment extends Fragment {
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Beans));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Vegetables));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Eggs));
+                pieChartDietProportionView.setCenterText("Vegan Diet");
             }
         } else {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
                 yData.clear();
-                pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
+                return;
             } else {
                 textViewEco2.setText("");
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("beef"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("chicken"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("pork"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("fish"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("bean"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable"));
-                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinGrams("egg"));
-                pieChartDietProportionView.setDrawHoleEnabled(true);
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("beef"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("chicken"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("pork"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("fish"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("bean"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("vegetable"));
+                yData.add((float) UserDietInfo.getInstance().getAmountOfProteinKG("egg"));
                 pieChartDietProportionView.setCenterText("Your Current Diet");
             }
         }
@@ -277,6 +280,9 @@ public class EcoFragment extends Fragment {
         dietProportionsPieDataSet.setSliceSpace(1f);
         dietProportionsPieDataSet.setColors(colorsToChooseFrom);
 
+        dietProportionsPieDataSet.setHighlightEnabled(false);
+        pieChartDietProportionView.setHighlightPerTapEnabled(false);
+
         // Set text in pie chart
         PieData pieData = new PieData(dietProportionsPieDataSet);
         pieData.setValueFormatter(new PieChartValueFormatter());
@@ -295,21 +301,6 @@ public class EcoFragment extends Fragment {
         // Show pie chart
         pieChartDietProportionView.setData(pieData);
         pieChartDietProportionView.invalidate();
-
-        pieChartDietProportionView.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                //int valueToShowOnClick = (int) h.getY();
-                float valueToShowOnClick = h.getY();
-                String onValueSelectedToastString = valueToShowOnClick + " %";
-                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
     }
 
     // Handles events on spinner
@@ -335,121 +326,177 @@ public class EcoFragment extends Fragment {
     }
 
     private void createC02eEmissionsComparedToAverageBarChart(int typeOfDiet) {
-        textViewEco3.setText(getResources().getString(R.string.co2eEmissionsComparation));
-        float yearlyCO2e = 0;
+
+        float totalProteinInCurrentDietKG = UserDietInfo.getInstance().getTotalAmountOfProteinKG();
+        List<Float> newDietSelected = new ArrayList<>();
+
+        // highMeat
         if (typeOfDiet == 1) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
                 return;
             }
             else {
-                yearlyCO2e = (float) highMeat.getYearlyCO2e();
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) highMeat.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
             }
-        } else if (typeOfDiet == 2) {
-            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
-                return;
-            }
-            else {
-                yearlyCO2e = (float) lowMeat.getYearlyCO2e();
-            }
-        } else if (typeOfDiet == 3) {
-            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
-                return;
-            }
-            else {
-                yearlyCO2e = (float) onlyFish.getYearlyCO2e();
-            }
-        } else if (typeOfDiet == 4) {
-            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
-                return;
-            }
-            else {
-                yearlyCO2e = (float) vegetarian.getYearlyCO2e();
-            }
-        } else if (typeOfDiet == 5) {
-            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
-                return;
-            }
-            else {
-                yearlyCO2e = (float) vegan.getYearlyCO2e();
-            }
-        } else {
-            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-                barChartCompareEmissionsView.setNoDataText("Please complete the Diet page first");
-                return;
-            }
-            textViewEco3.setText("");
-            barChartCompareEmissionsView.setNoDataText("Please choose a Eco Diet");
-            return;
         }
 
-        float currentDietCO2e = (float) DietComparer.getHowManyKGOfC02eAYear();
+        // lowMeat
+        else if (typeOfDiet == 2) {
+            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
+                return;
+            }
+            else {
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) lowMeat.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+            }
+        }
+
+        // onlyFish
+        else if (typeOfDiet == 3) {
+            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
+                return;
+            }
+            else {
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) onlyFish.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+            }
+        }
+
+        // Vegetarian
+        else if (typeOfDiet == 4) {
+            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
+                return;
+            }
+            else {
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegetarian.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+            }
+        }
+
+        // Vegan
+        else if (typeOfDiet == 5) {
+            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
+                return;
+            }
+            else {
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Beef) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Chicken) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Pork) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Fish) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Beans) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Vegetables) * totalProteinInCurrentDietKG);
+                newDietSelected.add((float) vegan.getProteinPercent(ProteinSource.Eggs) * totalProteinInCurrentDietKG);
+            }
+        }
+
+        // this will only happen if the first spinner thing is chosen
+        else {
+            if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+                compareEmissionsBarChart.setNoDataText("Please complete the Diet page first");
+                return;
+            }
+            else {
+                compareEmissionsBarChart.setNoDataText("Please choose a Eco Diet");
+                return;
+            }
+        }
+
+        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
         float averageC02eFromDietForRegion = 7.7f * 0.2f;
 
-        // Bar chart will show these two things
-        ArrayList<Float> yData = new ArrayList<>();
+        // calculates the total c02e emissions from new diet selected
+        float newDietTonnesOfC02e = ((newDietSelected.get(0) * 27f) +
+                (newDietSelected.get(1) * 12.2f) +
+                (newDietSelected.get(2) * 6.9f) +
+                (newDietSelected.get(3) * 6.1f) +
+                (newDietSelected.get(4) * 4.8f) +
+                (newDietSelected.get(5) * 2f) +
+                (newDietSelected.get(6) * 2f)) / 1000f;
+
+        // Bar chart will show these things
+        Float[] yData = {
+                tonnesOfC02eFromUser,
+                averageC02eFromDietForRegion,
+                newDietTonnesOfC02e
+        };
 
         String[] xData = {
-                "Eco CO2e",
-                "Current CO2e",
-                "Metro Vancouver Average"
+                "Current Diet",
+                "Metro Vancouver Average",
+                "New Diet"
         };
-        barChartCompareEmissionsView.setDrawValueAboveBar(true);
-        if (UserDietInfo.getInstance().getDietMap().size() == 0) {
-            yData.clear();
-            barChartCompareEmissionsView.clearValues();
-            barChartCompareEmissionsView.setNoDataText("Create a Diet First");
-        } else {
-            yData.add(yearlyCO2e);
-            yData.add(currentDietCO2e);
-            yData.add(averageC02eFromDietForRegion);
-        }
 
         ArrayList<BarEntry> yEntries = new ArrayList<>();
 
         // Put values into entries that can be put into the pie chart
-        for (int i = 0; i < yData.size(); i++) {
-            yEntries.add(new BarEntry(i, yData.get(i)));
+        for (int i = 0; i < yData.length; i++) {
+            yEntries.add(new BarEntry(i, yData[i]));
         }
 
         BarDataSet compareEmissionsDataSet = new BarDataSet(yEntries, "");
 
         // Set things outside bar chart
-        Legend legend = barChartCompareEmissionsView.getLegend();
+        Legend legend = compareEmissionsBarChart.getLegend();
         legend.setEnabled(false);
-        barChartCompareEmissionsView.getDescription().setText("");
+        compareEmissionsBarChart.getDescription().setText("");
 
         BarData barData = new BarData(compareEmissionsDataSet);
 
         // Set bar chart axis texts
-        barChartCompareEmissionsView.getXAxis().setDrawLabels(true);
-        barChartCompareEmissionsView.getLegend().setEnabled(false);
-        barChartCompareEmissionsView.setScaleYEnabled(true);
+        compareEmissionsBarChart.getXAxis().setDrawLabels(true);
+        compareEmissionsBarChart.getLegend().setEnabled(false);
+        compareEmissionsBarChart.setScaleYEnabled(false);
+        compareEmissionsBarChart.setScaleXEnabled(false);
 
-        // Set bar chart bar colors
+        // Set bar chart features
         compareEmissionsDataSet.setColor(Color.GREEN);
+        compareEmissionsDataSet.setHighlightEnabled(false);
+
 
         // Set y axis
-        YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
+        YAxis yAxisLeft = compareEmissionsBarChart.getAxisLeft();
         yAxisLeft.setStartAtZero(true);
+        yAxisLeft.setAxisMaximum(2.0f + yData[0]);
         yAxisLeft.setDrawGridLines(true);
-        YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
+        YAxis yAxisRight = compareEmissionsBarChart.getAxisRight();
         yAxisRight.setEnabled(false);
         yAxisRight.setDrawGridLines(false);
 
         // Set x axis values
-        XAxis xAxis = barChartCompareEmissionsView.getXAxis();
+        XAxis xAxis = compareEmissionsBarChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new MyXAxisValueFormatter(xData));
         xAxis.setLabelCount(3);
 
         // Show bar chart
-        barChartCompareEmissionsView.setData(barData);
-        barChartCompareEmissionsView.invalidate();
+        compareEmissionsBarChart.setData(barData);
+        compareEmissionsBarChart.invalidate();
     }
 
     private class MyXAxisValueFormatter implements IAxisValueFormatter {
