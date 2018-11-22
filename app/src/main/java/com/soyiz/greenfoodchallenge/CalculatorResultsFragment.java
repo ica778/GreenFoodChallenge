@@ -189,8 +189,7 @@ public class CalculatorResultsFragment extends Fragment {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int valueToShowOnClick = (int) h.getY();
-                String xAxisStringToShowOnClick = xData[(int)h.getX()];
-                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
+                String onValueSelectedToastString = valueToShowOnClick + " %";
                 Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
 
@@ -285,8 +284,7 @@ public class CalculatorResultsFragment extends Fragment {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 int valueToShowOnClick = (int) h.getY();
-                String xAxisStringToShowOnClick = xData[(int)h.getX()];
-                String onValueSelectedToastString = xAxisStringToShowOnClick + ": " + valueToShowOnClick + " %";
+                String onValueSelectedToastString = valueToShowOnClick + " %";
                 Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
             }
 
