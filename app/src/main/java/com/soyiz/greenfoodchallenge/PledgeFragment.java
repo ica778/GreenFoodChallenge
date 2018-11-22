@@ -1,6 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,7 +23,7 @@ public class PledgeFragment extends Fragment {
     private List<String> listOfPledgesToShow;
     private double totalGoalC02e;
     private int amountOfPeoplePledged;
-
+    private Button sharing;
     public PledgeFragment() {
         // Required empty public constructor
     }
@@ -45,7 +46,20 @@ public class PledgeFragment extends Fragment {
         listOfPledgesToShow = new ArrayList<>();
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
+        sharing = view.findViewById(R.id.share);
+        sharing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = "";
+                String shareSub = "";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+                startActivity(Intent.createChooser(myIntent,"Sharing App"));
 
+            }
+        });
         //TODO: remove once users work right
 //        (new FirebaseHelper()).getFirestore().queryPledgesForViewer(this);
     }
