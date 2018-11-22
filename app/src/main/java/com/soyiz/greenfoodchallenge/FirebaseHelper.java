@@ -452,12 +452,11 @@ public class FirebaseHelper {
         }
 
         public void getImage(String path, String imageName, Consumer<File> callback) {
-            StorageReference imageRef = storage.getReference().child(path);
+            String extension = ".jpg";
+
+            StorageReference imageRef = storage.getReference().child(path + "/" + imageName + extension);
             String fileName = imageName.replaceAll("(/)|( )", "_");
             File file;
-
-            String[] imageNameSplit = imageName.split("\\.");
-            String extension = imageNameSplit[imageNameSplit.length - 1];
 
             try {
                 file = File.createTempFile(fileName, extension);
@@ -466,10 +465,13 @@ public class FirebaseHelper {
                 return;
             }
 
+            Log.d(TAG, "getImage: imageRef pointing to '" + imageRef.getName() + "' with path '" + imageRef.getPath() + "'");
+            Log.d(TAG, "getImage: temp file name '" + file.getName() + "' with path '" + file.getPath() + "'");
+
             imageRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + file.getName() + "'");
+                    Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + imageName + ".jpg" + "'");
                     // Sends file along to callback once complete
 
                     callback.accept(file);
@@ -486,7 +488,7 @@ public class FirebaseHelper {
 
         // Given the uuid for a meal will get download its image
         public void getMealImage(String uuid, Consumer<File> callback) {
-            getImage("mealPictures/", uuid + ".jpg", callback);
+            getImage("mealPictures/", uuid, callback);
         }
 
         public void putImage(File image, String path) {
