@@ -22,6 +22,15 @@
             android:id="@+id/heading"/>
 
 
+        <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="50dp"
+                android:paddingTop="0dp"
+                android:id="@+id/pledge_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteY="192dp" tools:layout_editor_absoluteX="163dp">
+        </android.support.v7.widget.RecyclerView>
+
 
         <TextView
             android:layout_width="wrap_content"
