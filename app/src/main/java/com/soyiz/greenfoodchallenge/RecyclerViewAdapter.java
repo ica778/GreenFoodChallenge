@@ -75,13 +75,13 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.restaurantLocation.setText(mealCardList.get(position).getRestaurantLocation());
         mealCardViewHolder.mealDescription.setText(mealCardList.get(position).getMealDescription());
         mealCardViewHolder.deleteButton.setText(R.string.delete_meal_card_text);
-        //When image is added by user during creation of a meal, isImageAdded() == true;
-        Log.d(TAG,"Image file " + file + " and imageAdded " + mealCardList.get(position).isImageAdded());
-        if (mealCardList.get(position).isImageAdded()) {
+
+        //When image is added by user during creation of a meal, file != null;
+        String uuid = mealCardList.get(position).getUuid();
+        storage.getMealImage(uuid,this::setFile);
+        if (file != null) {
             //retrieve image from database
-            String uuid = mealCardList.get(position).getUuid();
             //convert to bitmap
-            storage.getMealImage(uuid,this::setFile);
             String path = file.getPath();
             Bitmap bitmap = BitmapFactory.decodeFile(path);
             //set image

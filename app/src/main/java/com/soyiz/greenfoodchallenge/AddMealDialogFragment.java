@@ -95,13 +95,12 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                     if(imageAdded) {
                         //add image URI and meal UUID
                         storage.putMealImage(mealImageUri, uuid);
-                        newMeal.setImageAdded(true);
                     }
 
                     newMeal.setCreator(getUserEmail());
 
                     functions.setMeal(newMeal);
-                    ((AddMealInterface)getTargetFragment()).addMeal(uuid);
+                    ((AddMealInterface)getTargetFragment()).addMeal();
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), getResources().getString(R.string.add_meal_invalid_input_toast)
@@ -174,6 +173,6 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
     }
 
     //Interface method
-    public void addMeal(String mealUuid) {}
+    public void addMeal(/*String uuid*/) {}
 
 }

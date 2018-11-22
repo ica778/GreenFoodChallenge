@@ -24,6 +24,7 @@ public class MealCard {
     // Constructor from data map
     MealCard(Map<String, Object> map) {
         this.uuid = (String) map.get(FirebaseHelper.Firestore.UUID_TAG);
+        this.creator = (String) map.get(FirebaseHelper.Functions.CREATOR);
 
         this.mealName = (String) map.get(FirebaseHelper.Firestore.MEAL_NAME);
         this.mealProtein = (String) map.get(FirebaseHelper.Firestore.MEAL_PROTEIN);
@@ -37,6 +38,7 @@ public class MealCard {
         Map<String, Object> map = new HashMap<>();
 
         map.put(FirebaseHelper.Firestore.UUID_TAG, uuid);
+        map.put(FirebaseHelper.Functions.CREATOR, creator);
 
         map.put(FirebaseHelper.Firestore.MEAL_NAME, mealName);
         map.put(FirebaseHelper.Firestore.MEAL_PROTEIN, mealProtein);
@@ -94,14 +96,6 @@ public class MealCard {
 
     public void setRestaurantLocation(String restaurantLocation) {
         this.restaurantLocation = restaurantLocation;
-    }
-
-    public boolean isImageAdded() {
-        return imageAdded;
-    }
-
-    public void setImageAdded(boolean imageAdded) {
-        this.imageAdded = imageAdded;
     }
 
     public String getCreator() {
