@@ -58,6 +58,8 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
     private float newDietC02eEmissionsGoal;
     private Button pledgeFirebaseButton;
     private boolean userHasSelectedNewDiet;
+    private User user;
+    private int positionOfSpinnerSelected;
 
     private BarChart compareEmissionsBarChart;
 
@@ -82,6 +84,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+        user = new User();
         colorsToChooseFrom = new ArrayList<>();
         colorsToChooseFrom.add(Color.rgb(204, 102, 0));
         colorsToChooseFrom.add(Color.rgb(204, 0, 102));
@@ -321,12 +324,12 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         spinnerShowDifferentDiets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
+                positionOfSpinnerSelected = position;
                 createDietEcoProportionsPieChart(position);
                 createC02eEmissionsComparedToAverageBarChart(position);
                 if (position != 0) {
                     userHasSelectedNewDiet = true;
-                }
-                else {
+                } else {
                     userHasSelectedNewDiet = false;
                 }
             }
@@ -472,16 +475,25 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(newDietC02eEmissionsGoal == 0 && userHasSelectedNewDiet == true) {
+        if (newDietC02eEmissionsGoal == 0 && userHasSelectedNewDiet == true) {
             Toast.makeText(getContext(), "Your current diet is empty, please complete Diet page again", Toast.LENGTH_SHORT).show();
-        }
-        else if (UserDietInfo.getInstance().getDietMap().size() == 0) {
+        } else if (UserDietInfo.getInstance().getDietMap().size() == 0) {
             Toast.makeText(getContext(), "Please complete Diet page first", Toast.LENGTH_SHORT).show();
-        }
-        else if (userHasSelectedNewDiet == false) {
+        } else if (userHasSelectedNewDiet == false) {
             Toast.makeText(getContext(), "Select a new diet plan", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
+            if (positionOfSpinnerSelected == 1) {
+                user.setGoalDiet(highMeat);
+            } else if (positionOfSpinnerSelected == 2) {
+                user.setGoalDiet(lowMeat);
+            } else if (positionOfSpinnerSelected == 3) {
+                user.setGoalDiet(onlyFish);
+            } else if (positionOfSpinnerSelected == 4) {
+                user.setGoalDiet(vegetarian);
+            } else if (positionOfSpinnerSelected == 5) {
+                user.setGoalDiet(vegan);
+            }
+            user.setCurrentDiet(myDiet);
             Toast.makeText(getContext(), "You have pledged this diet", Toast.LENGTH_SHORT).show();
         }
     }
