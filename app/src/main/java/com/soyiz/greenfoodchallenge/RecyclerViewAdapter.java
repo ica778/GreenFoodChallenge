@@ -23,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView
     private int expandedPosition = -1;
     private List<MealCard> mealCardList;
     private FirebaseHelper.Storage storage = (new FirebaseHelper()).getStorage();
+    private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
     private File file = null;
 
     String TAG = "RecyclerViewAdapter";
@@ -75,6 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView
         mealCardViewHolder.mealDescription.setText(mealCardList.get(position).getMealDescription());
         mealCardViewHolder.deleteButton.setText(R.string.delete_meal_card_text);
         //When image is added by user during creation of a meal, isImageAdded() == true;
+        Log.d(TAG,"Image file " + file + " and imageAdded " + mealCardList.get(position).isImageAdded());
         if (mealCardList.get(position).isImageAdded()) {
             //retrieve image from database
             String uuid = mealCardList.get(position).getUuid();
@@ -114,10 +116,11 @@ public class RecyclerViewAdapter extends RecyclerView
             @Override
             public void onClick(View view) {
                 Log.e(TAG, getUserEmail() + " and " + mealCardList.get(position).getCreator());
-               if (getUserEmail() == mealCardList.get(position).getCreator()) {
-                    mealCardList.remove(mealCardList.get(position));
-                    notifyItemRemoved(position);
-               }
+               //if (getUserEmail() == mealCardList.get(position).getCreator()) {
+                   functions.deleteMeal(mealCardList.get(position));
+                   mealCardList.remove(mealCardList.get(position));
+                   notifyItemRemoved(position);
+               //}
             }
         });
 
