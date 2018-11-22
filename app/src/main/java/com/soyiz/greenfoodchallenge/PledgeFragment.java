@@ -24,6 +24,7 @@ public class PledgeFragment extends Fragment {
     private double totalGoalC02e;
     private int amountOfPeoplePledged;
     private Button sharing;
+    private int prevSpinnerSelection = 0;
     public PledgeFragment() {
         // Required empty public constructor
     }
@@ -42,7 +43,6 @@ public class PledgeFragment extends Fragment {
     // assigns values to variables
     private void initView(View view) {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
-
         listOfPledgesToShow = new ArrayList<>();
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
@@ -66,6 +66,8 @@ public class PledgeFragment extends Fragment {
 
     // Handles events on spinner
     private void spinnerActions(View view) {
+
+
         adapter = ArrayAdapter.createFromResource(
                 getActivity(),
                 R.array.municipalities_spinner,
@@ -78,21 +80,21 @@ public class PledgeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View viewClicked, int position, long id) {
 
-                // Updates scrollview to show correct pledges
-//                populateListView(parent.getItemAtPosition(position).toString());
-
                 String selected = regionShowSpinner.getSelectedItem().toString();
                 PledgeDialog dialog = PledgeDialog.newInstance(selected);
                 dialog.setTargetFragment(PledgeFragment.this, 1);
-                dialog.show(getFragmentManager(), "MyCustomDialog");
+                if (prevSpinnerSelection != position) {
+                    dialog.show(getFragmentManager(), "MyCustomDialog");
+                    prevSpinnerSelection = position;
+                }
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
+
         String stringToShow = getResources().getString(R.string.show_pledge_information);
         // String, int, float, float, float
         String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(0), getAverageC02Pledged());
