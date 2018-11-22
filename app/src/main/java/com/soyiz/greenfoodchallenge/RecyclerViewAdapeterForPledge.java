@@ -59,7 +59,7 @@ public class RecyclerViewAdapeterForPledge extends RecyclerView
     @Override
     public void onBindViewHolder(PledgeCardViewHolder pledgeCardViewHolder, int position) {
         pledgeCardViewHolder.userName.setText(pledgeCardList.get(position).getUserName());
-        pledgeCardViewHolder.pledgeAmount.setText(pledgeCardList.get(position).getPledgeAmount()+ "tons");
+        pledgeCardViewHolder.pledgeAmount.setText(pledgeCardList.get(position).getPledgeAmount()+ " tons");
 
 
     }
