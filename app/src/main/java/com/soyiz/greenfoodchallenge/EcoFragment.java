@@ -84,7 +84,6 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
-        user = new User();
         colorsToChooseFrom = new ArrayList<>();
         colorsToChooseFrom.add(Color.rgb(204, 102, 0));
         colorsToChooseFrom.add(Color.rgb(204, 0, 102));
@@ -473,6 +472,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         compareEmissionsBarChart.invalidate();
     }
 
+    // Firebase part
     @Override
     public void onClick(View v) {
         if (newDietC02eEmissionsGoal == 0 && userHasSelectedNewDiet == true) {
@@ -482,6 +482,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         } else if (userHasSelectedNewDiet == false) {
             Toast.makeText(getContext(), "Select a new diet plan", Toast.LENGTH_SHORT).show();
         } else {
+            user = User.getCurrent();
             if (positionOfSpinnerSelected == 1) {
                 user.setGoalDiet(highMeat);
             } else if (positionOfSpinnerSelected == 2) {
