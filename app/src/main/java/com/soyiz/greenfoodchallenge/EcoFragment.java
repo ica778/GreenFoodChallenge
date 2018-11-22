@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -22,12 +23,18 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +164,6 @@ public class EcoFragment extends Fragment {
                 pieChartDietProportionView.setDrawHoleEnabled(true);
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                double A = DietComparer.getHowManyKGOfC02eAYear();
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Pork));
@@ -273,7 +279,7 @@ public class EcoFragment extends Fragment {
 
         // Set text in pie chart
         PieData pieData = new PieData(dietProportionsPieDataSet);
-        pieData.setValueFormatter(new PercentFormatter());
+        pieData.setValueFormatter(new PieChartValueFormatter());
 
         // Set y axis text color
         dietProportionsPieDataSet.setValueTextColor(Color.BLACK);
@@ -289,6 +295,21 @@ public class EcoFragment extends Fragment {
         // Show pie chart
         pieChartDietProportionView.setData(pieData);
         pieChartDietProportionView.invalidate();
+
+        pieChartDietProportionView.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                //int valueToShowOnClick = (int) h.getY();
+                float valueToShowOnClick = h.getY();
+                String onValueSelectedToastString = valueToShowOnClick + " %";
+                Toast.makeText(getContext(),  onValueSelectedToastString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
     // Handles events on spinner
@@ -415,7 +436,6 @@ public class EcoFragment extends Fragment {
         // Set y axis
         YAxis yAxisLeft = barChartCompareEmissionsView.getAxisLeft();
         yAxisLeft.setStartAtZero(true);
-//        yAxisLeft.setAxisMaximum(103f);
         yAxisLeft.setDrawGridLines(true);
         YAxis yAxisRight = barChartCompareEmissionsView.getAxisRight();
         yAxisRight.setEnabled(false);
@@ -442,6 +462,23 @@ public class EcoFragment extends Fragment {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             return xValues[(int) value];
+        }
+    }
+
+    // Format y axis values for pie charts
+    private class PieChartValueFormatter implements IValueFormatter {
+        private DecimalFormat formattedValue;
+
+        public PieChartValueFormatter() {
+            formattedValue = new DecimalFormat("###,###,###");
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            if (value < 3) {
+                return "";
+            }
+            return formattedValue.format((int) value) + " %";
         }
     }
 }
