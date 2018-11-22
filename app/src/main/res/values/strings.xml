@@ -20,7 +20,9 @@
     <string name="titleText">Pick a new diet below to see how your ecological footprint can be
         improved by changing the proportions of your diet.\n</string>
     <string name="newDietImprovement">\t - This diet is %1$.2f \% better than your current diet.</string>
-    <string name="co2eEmissionsComparation"></string>
+    <string name="C02eEmissionsComparisonDescription">The new diet is a %1$.1f \% improvement over the current diet:
+        \n\t- Produces %2$.2f less tonnes of C02e
+        \n\t- This is equivalent to %3$.2f barrels of gasoline</string>
 
 
 

@@ -53,7 +53,7 @@ public class EcoFragment extends Fragment {
     private Diet vegan;
     private DietComparer dietComparer;
     private TextView textViewEco2;
-    private TextView textViewEco3;
+    private TextView textView3;
 
     private BarChart compareEmissionsBarChart;
 
@@ -92,7 +92,7 @@ public class EcoFragment extends Fragment {
         myDiet = new Diet();
 
         pieChartDietProportionView = view.findViewById(R.id.pieChartDietEcoProportions);
-        textViewEco3 = view.findViewById(R.id.textViewEco3);
+        textView3 = view.findViewById(R.id.textViewEco3);
         compareEmissionsBarChart = view.findViewById(R.id.barChartCompareEmissions);
     }
 
@@ -397,6 +397,8 @@ public class EcoFragment extends Fragment {
         float averageC02eFromDietForRegion = 7.7f * 0.2f;
         newDietTonnesOfC02e = newDietTonnesOfC02e * tonnesOfC02eFromUser;
 
+        //showComparison(tonnesOfC02eFromUser * 1000f, newDietTonnesOfC02e * 1000);
+
         // Bar chart will show these things
         Float[] yData = {
                 tonnesOfC02eFromUser,
@@ -485,5 +487,19 @@ public class EcoFragment extends Fragment {
             }
             return formattedValue.format((int) value) + " %";
         }
+    }
+
+    private void showComparison(float oldDietC02eKG, float newDietC02eKG) {
+        float percentImprovement = newDietC02eKG / oldDietC02eKG;
+        float tonnesOfC02eSaved = (oldDietC02eKG - newDietC02eKG) / 1000f;
+        float barrelsOfGasolineSaved = DietComparer.getLitresOfGasolineEquivalentToDietC02e(oldDietC02eKG) -
+                DietComparer.getLitresOfGasolineEquivalentToDietC02e(newDietC02eKG);
+        String stringToShow = String.format(
+                getResources().getString(R.string.C02eEmissionsComparisonDescription),
+                percentImprovement,
+                tonnesOfC02eSaved,
+                barrelsOfGasolineSaved
+        );
+        textView3.setText(stringToShow);
     }
 }

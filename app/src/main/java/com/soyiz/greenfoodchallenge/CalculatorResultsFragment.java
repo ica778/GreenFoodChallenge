@@ -387,4 +387,8 @@ public class CalculatorResultsFragment extends Fragment {
             return formattedValue.format((int) value) + " %";
         }
     }
+
+    private void showResults(float oldDietC02eKG, float newDietC02eKG) {
+
+    }
 }
