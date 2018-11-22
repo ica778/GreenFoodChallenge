@@ -44,10 +44,6 @@ public class UserDietInfo {
 
     // Returns sum of all proteins in KG
     public float getTotalAmountOfProteinKG() {
-        int sumOfAllProteinGrams = 0;
-        for (float amountOfCurrentProteinGrams : amountOfProteinMap.values()) {
-            sumOfAllProteinGrams += amountOfCurrentProteinGrams;
-        }
-        return sumOfAllProteinGrams / 1000;
+        return getTotalAmountOfProteinGrams() / 1000;
     }
 }

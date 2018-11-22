@@ -112,21 +112,21 @@ public class CalculatorResultsFragment extends Fragment {
     // Creates pie chart showing C02e footprint of each protein
     private void createDietC02ePercents() {
         //Pie chart will show these things
-        float totalC02eFootprintGrams = ((UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2) +
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2));
+        float totalC02eFootprintKG = ((UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2) +
+                (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2));
         Float[] yData = {
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") * 27)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") * 12.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") * 6.9f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") * 6.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") * 4.1f)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") * 2)) / totalC02eFootprintGrams,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") * 2)) / totalC02eFootprintGrams
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2)) / totalC02eFootprintKG
         };
         String[] xData = {
                 "Beef",
@@ -207,17 +207,17 @@ public class CalculatorResultsFragment extends Fragment {
 
     // Creates pie chart showing proportion of each food in diet
     private void createDietProportionsPieChart() {
-        float totalProteinGrams = UserDietInfo.getInstance().getTotalAmountOfProteinGrams();
+        float totalProteinKG = UserDietInfo.getInstance().getTotalAmountOfProteinKG();
 
         // Pie chart will show these things
         Float[] yData = {
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("beef") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("chicken") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("pork") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("fish") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("bean") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable") / totalProteinGrams) * 100,
-                (UserDietInfo.getInstance().getAmountOfProteinGrams("egg") / totalProteinGrams) * 100
+                (UserDietInfo.getInstance().getAmountOfProteinKG("beef") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("pork") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("fish") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("bean") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") / totalProteinKG) * 100,
+                (UserDietInfo.getInstance().getAmountOfProteinKG("egg") / totalProteinKG) * 100
         };
         String[] xData = {
                 "Beef",
