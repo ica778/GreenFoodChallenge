@@ -41,15 +41,12 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(recyclerView.getContext());
-        //so latest additions shown at the top
-        manager.setReverseLayout(true);
-        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mealCardList);
         recyclerView.setAdapter(adapter);
 
-        if (!mealsShown) {
+        if(!mealsShown) {
             showMeals();
         }
 

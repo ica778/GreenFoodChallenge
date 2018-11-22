@@ -87,7 +87,6 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
             //add inputted meal
             case R.id.add_meal_btn:
                 MealCard newMeal = new MealCard();
-
                 boolean isComplete = !userInput(newMeal);
                 if (isComplete) {
                     String uuid = UUID.randomUUID().toString();

@@ -41,13 +41,6 @@ public class RecyclerViewAdapter extends RecyclerView
             restaurantLocation = view.findViewById(R.id.restaurant_location);
             mealImage = view.findViewById(R.id.meal_image);
             mealDescription = view.findViewById(R.id.description);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
     }
 
