@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class PledgeFragment extends Fragment {
 
-    private ListView pledgeListView;
+
     private Spinner regionShowSpinner;
     private ArrayAdapter adapter;
     private TextView showInformationAboutPledgesInMunicipality;
@@ -42,7 +42,7 @@ public class PledgeFragment extends Fragment {
     // assigns values to variables
     private void initView(View view) {
         showInformationAboutPledgesInMunicipality = view.findViewById(R.id.showInformationAboutPledge);
-        pledgeListView = view.findViewById(R.id.listViewPledges);
+
         listOfPledgesToShow = new ArrayList<>();
         totalGoalC02e = 0.0;
         amountOfPeoplePledged = 0;
@@ -114,7 +114,7 @@ public class PledgeFragment extends Fragment {
             listOfPledgesToShow.clear();
             listOfPledgesToShow.add("Please Choose a municipality");
 
-            pledgeListView.setAdapter(makeAdapterForList());
+
         } else {
             listOfPledgesToShow.clear();
             String individualPledgeInformation = "";
@@ -145,18 +145,9 @@ public class PledgeFragment extends Fragment {
             amountOfPeoplePledged += 1;
         }
 
-        pledgeListView.setAdapter(makeAdapterForList());
+
     }
 
-    // Handles click events on ListView
-    private void registerClickCallBackListView() {
-        pledgeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                //selectAPledgeText.setText((String) parent.getItemAtPosition(position));
-            }
-        });
-    }
 
     private int getCountOfPeoplePledged() {
         return amountOfPeoplePledged;

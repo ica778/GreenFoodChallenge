@@ -85,34 +85,7 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     }
 
     public void createTestMeals() {
-        //Just for testing
-        MealCard testMeal1 = new MealCard();
-        testMeal1.setMealName("Meal Name 1");
-        testMeal1.setMealProtein("Main Protein of Meal 1");
-        testMeal1.setRestaurantName("Restaurant Name 1");
-        testMeal1.setRestaurantLocation("Restaurant Location 1");
-        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
-                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
 
-        MealCard testMeal2 = new MealCard();
-        testMeal2.setMealName("Meal Name 2");
-        testMeal2.setMealProtein("Main Protein of Meal 2");
-        testMeal2.setRestaurantName("Restaurant Name 2");
-        testMeal2.setRestaurantLocation("Restaurant Location 2");
-        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
-                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
-
-        MealCard testMeal3 = new MealCard();
-        testMeal3.setMealName("Meal Name 3");
-        testMeal3.setMealProtein("Main Protein of Meal 3");
-        testMeal3.setRestaurantName("Restaurant Name 3");
-        testMeal3.setRestaurantLocation("Restaurant Location 3");
-        testMeal1.setDescription("afsdfjlsa fiodsjfsdaklf kjfl ajf l flj laskfdj ldf sd.sf jldasf jsdlf jldf dla " +
-                "sdf sdfj dskafj lsdlfj ldsfj ldsjf dlsfj alsd");
-
-        postMeal(testMeal1);
-        postMeal(testMeal2);
-        postMeal(testMeal3);
     }
     // Using the keyword from search bar to search restaurant.
     public void search(){
