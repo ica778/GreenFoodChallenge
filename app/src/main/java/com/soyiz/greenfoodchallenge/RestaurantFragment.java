@@ -19,7 +19,8 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
     //To make sure meals aren't created twice from Firebase
-    private boolean mealsShown = false;
+    private List<MealCard> newMealCardList = new ArrayList<>();
+    private boolean aBoolean = false;
     private Button addMealCardButton;
 
     private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
@@ -46,7 +47,7 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mealCardList);
         recyclerView.setAdapter(adapter);
 
-        if(!mealsShown) {
+        if (!aBoolean) {
             showMeals();
         }
 
@@ -70,22 +71,21 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     }
 
     public void showMeals() {
-        functions.getMealsForList(mealCardList::add);
+        newMealCardList.clear();
+        functions.getMealsForList(newMealCardList::add);
+        if (newMealCardList != mealCardList) {
+            mealCardList = newMealCardList;
+        }
         recyclerView.getAdapter().notifyDataSetChanged();
-        mealsShown = true;
+        aBoolean = true;
     }
 
     //Interface method
     @Override
     public void addMeal(String uuid) {
-        functions.getMeal(uuid, mealCardList::add);
-        recyclerView.getAdapter().notifyDataSetChanged();
-    }
-
-
-    public void deleteMeal(MealCard mealCard) {
-        mealCardList.remove(mealCard);
-        recyclerView.getAdapter().notifyDataSetChanged();
+        //functions.getMeal(uuid, mealCardList::add);
+        //recyclerView.getAdapter().notifyDataSetChanged();
+        aBoolean = false;
     }
 
 }

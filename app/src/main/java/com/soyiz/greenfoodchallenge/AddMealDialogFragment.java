@@ -4,12 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.util.UUID;
 
@@ -96,6 +97,9 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                         storage.putMealImage(mealImageUri, uuid);
                         newMeal.setImageAdded(true);
                     }
+
+                    newMeal.setCreator(getUserEmail());
+
                     functions.setMeal(newMeal);
                     ((AddMealInterface)getTargetFragment()).addMeal(uuid);
                     dismiss();
@@ -150,6 +154,23 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
         boolean userInputEmpty = TextUtils.isEmpty(mealName)||TextUtils.isEmpty(mealProtein)
                 ||TextUtils.isEmpty(restaurantName)||TextUtils.isEmpty(restaurantLocation);
         return userInputEmpty;
+    }
+
+    public String getUserEmail() {
+        User user = User.getCurrent();
+        FirebaseUser firebaseUser = user.getFirebaseUser();
+        // Get the user email by looping over the providers and grabbing the first email listed there
+        for (UserInfo profile : firebaseUser.getProviderData()) {
+            // Skip firebase as a provider
+            if (profile.getProviderId().equals("firebase")) {
+                continue;
+            }
+
+            if (profile.getEmail() != null) {
+                return profile.getEmail();
+            }
+        }
+        return null;
     }
 
     //Interface method

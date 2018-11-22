@@ -8,7 +8,8 @@ import java.util.UUID;
 
 public class MealCard {
 
-    private String uuid;
+    private String uuid = null;
+    private String creator = null;
     private String mealName = null;
     private String mealProtein = null;
     private String restaurantName = null;
@@ -101,5 +102,13 @@ public class MealCard {
 
     public void setImageAdded(boolean imageAdded) {
         this.imageAdded = imageAdded;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }
