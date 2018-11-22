@@ -11,6 +11,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:gravity="center_horizontal">
 
         <Spinner
@@ -27,6 +28,7 @@
 
         <TextView
                 android:hint="Select A Municipality"
+                android:gravity="left"
                 android:layout_width="365dp"
                 android:layout_height="wrap_content" android:id="@+id/showInformationAboutPledge"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"/>
