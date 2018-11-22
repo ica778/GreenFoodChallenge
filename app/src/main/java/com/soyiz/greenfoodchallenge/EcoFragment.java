@@ -326,9 +326,6 @@ public class EcoFragment extends Fragment {
     private void createC02eEmissionsComparedToAverageBarChart(int typeOfDiet) {
 
         float newDietTonnesOfC02e;
-        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
-        float averageC02eFromDietForRegion = 7.7f * 0.2f;
-
         // highMeat
         if (typeOfDiet == 1) {
             if (UserDietInfo.getInstance().getDietMap().size() == 0) {
@@ -336,7 +333,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietTonnesOfC02e = (float) highMeat.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
+                newDietTonnesOfC02e = (float) highMeat.getYearlyCO2e() / 1000;
             }
         }
 
@@ -347,7 +344,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietTonnesOfC02e = (float) lowMeat.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
+                newDietTonnesOfC02e = (float) lowMeat.getYearlyCO2e() / 1000;
             }
         }
 
@@ -358,7 +355,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietTonnesOfC02e = (float) onlyFish.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
+                newDietTonnesOfC02e = (float) onlyFish.getYearlyCO2e() / 1000;
             }
         }
 
@@ -369,7 +366,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietTonnesOfC02e = (float) vegetarian.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
+                newDietTonnesOfC02e = (float) vegetarian.getYearlyCO2e() / 1000;
             }
         }
 
@@ -380,7 +377,7 @@ public class EcoFragment extends Fragment {
                 return;
             }
             else {
-                newDietTonnesOfC02e = (float) vegan.getYearlyCO2e()* tonnesOfC02eFromUser / 1000;
+                newDietTonnesOfC02e = (float) vegan.getYearlyCO2e() / 1000;
             }
         }
 
@@ -395,6 +392,10 @@ public class EcoFragment extends Fragment {
                 return;
             }
         }
+
+        float tonnesOfC02eFromUser = (float) DietComparer.getHowManyTonnesOfC02eAYear();
+        float averageC02eFromDietForRegion = 7.7f * 0.2f;
+        newDietTonnesOfC02e = newDietTonnesOfC02e * tonnesOfC02eFromUser;
 
         // Bar chart will show these things
         Float[] yData = {
