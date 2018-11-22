@@ -119,7 +119,9 @@
     <string name="eggsServingsGuide">Eggs: 2 eggs</string>
 
     // Strings for restaurant fragments
+    <string name="refresh_text">Refresh</string>
     <string name="add_meal_card_text">Add A Meal</string>
+    <string name="delete_meal_card_text">Delete</string>
     <string name="exit_dialog_text">Exit</string>
     <string name="enter_meal_text">Add</string>
     <string name="add_image_text">Add Meal Image (Optional)</string>

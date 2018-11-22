@@ -3,6 +3,7 @@ package com.soyiz.greenfoodchallenge;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +20,10 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     private RecyclerView recyclerView = null;
     private List<MealCard> mealCardList = new ArrayList<>();
     //To make sure meals aren't created twice from Firebase
-    private boolean mealsShown = false;
+    private boolean mealListUpdated = false;
+
     private Button addMealCardButton;
+    private Button refreshButton;
 
     private FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
 
@@ -41,15 +44,12 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(recyclerView.getContext());
-        //so latest additions shown at the top
-        manager.setReverseLayout(true);
-        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(mealCardList);
         recyclerView.setAdapter(adapter);
 
-        if (!mealsShown) {
+        if (!mealListUpdated) {
             showMeals();
         }
 
@@ -60,6 +60,8 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
     private void initView(View view) {
         addMealCardButton = view.findViewById(R.id.add_meal_card_button);
         addMealCardButton.setOnClickListener(this);
+        refreshButton = view.findViewById(R.id.refresh_button);
+        refreshButton.setOnClickListener(this);
     }
 
     public void onClick(View view) {
@@ -69,26 +71,37 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
                 dialog.setTargetFragment(this, 0);
                 dialog.show(getFragmentManager(), "addMealDialog");
                 break;
+
+            //Refreshes page because there is a delay showing info from firebase
+            case R.id.refresh_button:
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                int fragmentContainer = ((ViewGroup)getView().getParent()).getId();
+                Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(fragmentContainer);
+                transaction.detach(fragment);
+                transaction.attach(fragment);
+                transaction.commit();
         }
     }
 
     public void showMeals() {
+        mealCardList.clear();
         functions.getMealsForList(mealCardList::add);
         recyclerView.getAdapter().notifyDataSetChanged();
-        mealsShown = true;
+        mealListUpdated = true;
     }
 
     //Interface method
     @Override
-    public void addMeal(String uuid) {
-        functions.getMeal(uuid, mealCardList::add);
-        recyclerView.getAdapter().notifyDataSetChanged();
+    public void addMeal(/*String uuid*/) {
+        //functions.getMeal(uuid, mealCardList::add);
+        //recyclerView.getAdapter().notifyDataSetChanged();
+        mealListUpdated = false;
     }
 
-
-    public void deleteMeal(MealCard mealCard) {
-        mealCardList.remove(mealCard);
-        recyclerView.getAdapter().notifyDataSetChanged();
+    public void addNewMealCard(MealCard mealCard) {
+        if (!mealCardList.contains(mealCard)) {
+            mealCardList.add(mealCard);
+        }
     }
 
 }
