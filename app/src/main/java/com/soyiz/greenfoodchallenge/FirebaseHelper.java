@@ -235,6 +235,10 @@ public class FirebaseHelper {
         public static final String FIELD_VALUE = "fieldValue";
 
         public static final String MEAL_MAP = "mealMap";
+        public static final String CREATOR = "creator";
+
+        public static final String NUMBER = "number";
+        private static final int NUM_PLEDGES_TO_LIST = 20;
 
         private Task<HttpsCallableResult> makeCall(String functionName, Map<String, Object> data) {
             return functions.getHttpsCallable(functionName).call(data).continueWith(new Continuation<HttpsCallableResult, HttpsCallableResult>() {
@@ -392,6 +396,18 @@ public class FirebaseHelper {
             internalSetter("setMeal", data, null);
         }
 
+        public void deleteMeal(MealCard meal) {
+            Map<String, Object> mealMap = meal.exportToStringMap();
+            Log.d(TAG, "deleteMeal: deleting meal '" + mealMap + "'");
+
+            mealsCollection.document(meal.getUuid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Log.d(TAG, "deleteMeal.onComplete: meal deleted!");
+                }
+            });
+        }
+
         public void getMealsForList(Consumer<MealCard> callback) {
             mealsCollection.limit(20).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -402,6 +418,23 @@ public class FirebaseHelper {
                         MealCard output = new MealCard(data);
                         callback.accept(output);
                     }
+                }
+            });
+        }
+
+        public void getPledgeListings(Consumer<List<String>> callback) {
+            Log.d(TAG, "getPledgeListings: getting pledge listings");
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(NUMBER, NUM_PLEDGES_TO_LIST);
+
+            internalGetter("getPledgeListings", data, new OnCompleteListener<HttpsCallableResult>() {
+                @Override
+                public void onComplete(@NonNull Task<HttpsCallableResult> task) {
+                    List<String> data = (List<String>) task.getResult().getData();
+                    Log.d(TAG, "getPledgeListings.onComplete: received pledge list is '" + data + "'");
+
+                    callback.accept(data);
                 }
             });
         }
@@ -433,6 +466,7 @@ public class FirebaseHelper {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     Log.d(TAG, "getImage.onSuccess: successfully downloaded image '" + file.getName() + "'");
                     // Sends file along to callback once complete
+
                     callback.accept(file);
                 }
             }).addOnFailureListener(new OnFailureListener() {
