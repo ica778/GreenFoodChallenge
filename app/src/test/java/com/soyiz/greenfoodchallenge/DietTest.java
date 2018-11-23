@@ -12,49 +12,19 @@ public class DietTest {
 
     @Test
     public void setProteinPercent() {
-        ProteinSource protein = ProteinSource.Beef;
-        float percent = 1.0f;
-        Map<ProteinSource, Float> proteinPercentMap = new HashMap<>();
-        proteinPercentMap.put(protein, percent);
-        assertEquals(1.0f, proteinPercentMap.get(protein), 0.1);
-    }
-
-    @Test
-    public void getProteinPercent() {
-        ProteinSource protein = ProteinSource.Beef;
-        float percent = 1.0f;
-        Map<ProteinSource, Float> proteinPercentMap = new HashMap<>();
-        proteinPercentMap.put(protein, percent);
-        assertEquals(1.0f, proteinPercentMap.get(protein), 0.1);
-    }
-
-    @Test
-    public void getWeeklyCO2e() {
-        float output = 0;
-        Map<ProteinSource, Float> proteinPercentMap = new HashMap<>();
-        proteinPercentMap.put(ProteinSource.Beef, 1.0f);
-        proteinPercentMap.put(ProteinSource.Chicken, 1.0f);
-        proteinPercentMap.put(ProteinSource.Vegetables, 1.0f);
-        proteinPercentMap.put(ProteinSource.Beans, 1.0f);
-        proteinPercentMap.put(ProteinSource.Eggs, 1.0f);
-        proteinPercentMap.put(ProteinSource.Pork, 1.0f);
-        proteinPercentMap.put(ProteinSource.Fish, 1.0f);
-
-        // Weekly serving in grams for protein
-        float weeklyServing = (float)ProteinSource.getDailyServing() * 7;
-        for (Map.Entry<ProteinSource, Float> pair : proteinPercentMap.entrySet()) {
-
-            // Weekly serving in grams for a specific protein
-            float proteinWeeklyServing = pair.getValue()/100 * weeklyServing;
-
-            // Puts the serving into KG and multiplies by CO2e for the protein
-            output += (proteinWeeklyServing / 1000f) * pair.getKey().getCO2e();
-        }
-        assertNotEquals(0.0f, output);
+        Diet diet = new Diet();
+        diet.setProteinPercent(ProteinSource.Beans, 10);
+        assertEquals(10,diet.getProteinPercent(ProteinSource.Beans));
     }
 
     @Test
     public void getYearlyCO2e() {
-        //works when getWeeklyCO2e works
+        Diet diet = new Diet();
+        diet.setProteinPercent(ProteinSource.Beans, 100);
+        double weeklyServing = 187.5*7;
+        double proteinWeeklyServing = 100 / 100 * weeklyServing;
+        double output = (proteinWeeklyServing / 1000.0) * 2.0;
+        assertEquals(output*52,diet.getYearlyCO2e());
     }
+
 }
