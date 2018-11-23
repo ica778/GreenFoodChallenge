@@ -32,29 +32,6 @@ public enum ProteinSource {
         proteinC02eMap.put(ProteinSource.Vegetables, VEGETABLES_PROTEIN);
     }
 
-    // Converts a string input to the enum equivalent
-    // Can't use a switch statement because they only work on constant expressions :(
-    public static ProteinSource stringToEnumValue(String input) {
-        if (input.equals(Beef.toString())) {
-            return Beef;
-        } else if (input.equals(Pork.toString())) {
-            return Pork;
-        } else if (input.equals(Chicken.toString())) {
-            return Chicken;
-        } else if (input.equals(Fish.toString())) {
-            return Fish;
-        } else if (input.equals(Eggs.toString())) {
-            return Eggs;
-        } else if (input.equals(Beans.toString())) {
-            return Beans;
-        } else if (input.equals(Vegetables.toString())) {
-            return Vegetables;
-        } else {
-            // Literally can't happen, unless we give it bad input
-            return null;
-        }
-    }
-
     public static double getDailyServing() {
         return DAILY_PROTEIN_SERVING;
     }

@@ -14,33 +14,6 @@ public class Diet {
         proteinPercentMap = new HashMap<>();
     }
 
-    // Used to load a map from Firebase into a diet object
-    public void loadFromStringMap(Map<String, Float> map) {
-        for (Map.Entry<String, Float> entry : map.entrySet()) {
-            ProteinSource protein = ProteinSource.stringToEnumValue(entry.getKey());
-
-            if (protein == null) {
-                // Yes, this is silently failing. Unfortunately that's pretty much the best we can do here.
-                // If this case occurs, eventually a NRE will happen. But if we're in that scenario, we've already lost.
-                Log.d(TAG, "[ERROR] loadFromStringMap: bad protein string. Got: '" + entry.getKey() + "'.");
-                continue;
-            }
-
-            setProteinPercent(protein, entry.getValue());
-        }
-    }
-
-    // Used to turn a diet into a string keyed map for saving with Firebase
-    public Map<String, Double> exportToStringMap() {
-        Map<String, Double> outputMap = new HashMap<>();
-
-        for (Map.Entry<ProteinSource, Double> entry : proteinPercentMap.entrySet()) {
-            outputMap.put(entry.getKey().toString(), entry.getValue());
-        }
-
-        return outputMap;
-    }
-
     // Sets the percentage of a given protein
     public void setProteinPercent(ProteinSource protein, double percent) {
         proteinPercentMap.put(protein, percent);
