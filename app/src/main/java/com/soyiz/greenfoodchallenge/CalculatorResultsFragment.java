@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -21,14 +20,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +97,8 @@ public class CalculatorResultsFragment extends Fragment {
         String textView3Text = String.format(
                 getResources().getString(R.string.calculator_text3),
                 DietComparer.getHowManyTonnesOfC02eAYear(),
-                DietComparer.getLitresOfGasolineEquivalentToDietC02e((float) DietComparer.getHowManyKGOfC02eAYear()),
+                DietComparer.getLitresOfGasolineEquivalentToDietC02e(
+                        (float) DietComparer.getHowManyKGOfC02eAYear()),
                 DietComparer.getHowWellC02eComparesToAverage(
                         DietComparer.getHowManyKGOfC02eAYear(),
                         averageC02eEmissionPerCapitaInMetroVancouverTonnes * 1000),
@@ -204,21 +200,29 @@ public class CalculatorResultsFragment extends Fragment {
     // Creates pie chart showing C02e footprint of each protein
     private void createDietC02ePercents() {
         //Pie chart will show these things
-        float totalC02eFootprintKG = ((UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2) +
-                (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2));
+        float totalC02eFootprintKG =
+                ((UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2)
+                        + (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2));
         Float[] yData = {
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("beef") * 27)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("chicken") * 12.1f)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("pork") * 6.9f)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("fish") * 6.1f)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("bean") * 4.1f)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("vegetable") * 2)) / totalC02eFootprintKG,
-                (100 * (UserDietInfo.getInstance().getAmountOfProteinKG("egg") * 2)) / totalC02eFootprintKG
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("beef") * 27)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("chicken") * 12.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("pork") * 6.9f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("fish") * 6.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("bean") * 4.1f)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("vegetable") * 2)) / totalC02eFootprintKG,
+                (100 * (UserDietInfo.getInstance()
+                        .getAmountOfProteinKG("egg") * 2)) / totalC02eFootprintKG
         };
         String[] xData = {
                 "Beef",
@@ -381,15 +385,12 @@ public class CalculatorResultsFragment extends Fragment {
         }
 
         @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+        public String getFormattedValue(
+                float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             if (value < 3) {
                 return "";
             }
             return formattedValue.format((int) value) + " %";
         }
-    }
-
-    private void showResults(float oldDietC02eKG, float newDietC02eKG) {
-
     }
 }

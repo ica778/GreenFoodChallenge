@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -153,7 +154,6 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         };
 
         List<Float> yData = new ArrayList<>();
-
 
         // high meat diet
         if (typeOfDiet == 1) {
@@ -395,8 +395,6 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         float averageC02eFromDietForRegion = 7.7f * 0.2f;
         newDietTonnesOfC02e = newDietTonnesOfC02e * tonnesOfC02eFromUser;
 
-        //showComparison(tonnesOfC02eFromUser * 1000f, newDietTonnesOfC02e * 1000);
-
         // Bar chart will show these things
         Float[] yData = {
                 tonnesOfC02eFromUser,
@@ -437,7 +435,6 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         // Set bar chart features
         compareEmissionsDataSet.setColor(Color.GREEN);
         compareEmissionsDataSet.setHighlightEnabled(false);
-
 
         // Set y axis
         YAxis yAxisLeft = compareEmissionsBarChart.getAxisLeft();
@@ -496,17 +493,9 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
             user.setCurrentDiet(myDiet);
             Toast.makeText(getContext(), user.getFirstName() + " " + user.getLastName() +
                     "\n" +
-                    "You have pledged this diet",  Toast.LENGTH_SHORT).show();
+                    "You have pledged this diet", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    //set Pledge
-    //Map<String, Object> pledge = new HashMap<>();
-    //pledge.put("currentCO2e", 0.0);
-    //pledge.put("goalCO2e", 20.0);
-    //FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
-    //functions.setUserField(FirebaseHelper.Firestore.PLEDGE, pledge);
 
     private class MyXAxisValueFormatter implements IAxisValueFormatter {
         private String[] xValues;
@@ -536,19 +525,5 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
             }
             return formattedValue.format((int) value) + " %";
         }
-    }
-
-    private void showComparison(float oldDietC02eKG, float newDietC02eKG) {
-        float percentImprovement = newDietC02eKG / oldDietC02eKG;
-        float tonnesOfC02eSaved = (oldDietC02eKG - newDietC02eKG) / 1000f;
-        float barrelsOfGasolineSaved = DietComparer.getLitresOfGasolineEquivalentToDietC02e(oldDietC02eKG) -
-                DietComparer.getLitresOfGasolineEquivalentToDietC02e(newDietC02eKG);
-        String stringToShow = String.format(
-                getResources().getString(R.string.C02eEmissionsComparisonDescription),
-                percentImprovement,
-                tonnesOfC02eSaved,
-                barrelsOfGasolineSaved
-        );
-        textView3.setText(stringToShow);
     }
 }

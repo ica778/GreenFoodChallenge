@@ -89,33 +89,4 @@ public class DietComparer {
         //2.31 kg of CO2 per L of gasoline burned
         return (double) Math.round(CO2eDifference / 2.31f);
     }
-
-    // Compares the diets and produces a report.
-    public String getChangeReport(Diet oldDiet, Diet newDiet) {
-        String report = "Changes:\n\nBeef/Pork/Chicken/Fish/Egg/Beans/Vegetables\n" + (
-                (double) Math.round(newDiet.getProteinPercent(ProteinSource.Beef) - oldDiet
-                        .getProteinPercent(ProteinSource.Beef)) + "%/" +
-                        (double) Math.round((newDiet.getProteinPercent(ProteinSource.Pork) - oldDiet
-                                .getProteinPercent(ProteinSource.Pork))) + "%/" +
-                        (double) Math.round((newDiet.getProteinPercent(ProteinSource.Chicken) - oldDiet
-                                .getProteinPercent(ProteinSource.Chicken)))) + "%/" +
-                (double) Math.round((newDiet.getProteinPercent(ProteinSource.Fish) - oldDiet
-                        .getProteinPercent(ProteinSource.Fish))) + "%/" +
-                (double) Math.round((newDiet.getProteinPercent(ProteinSource.Eggs) - oldDiet
-                        .getProteinPercent(ProteinSource.Eggs))) + "%/" +
-                (double) Math.round((newDiet.getProteinPercent(ProteinSource.Beans) - oldDiet
-                        .getProteinPercent(ProteinSource.Beans))) + "%/" +
-                (double) Math.round((newDiet.getProteinPercent(ProteinSource.Vegetables) - oldDiet
-                        .getProteinPercent(ProteinSource.Vegetables))) + "%\n\n" +
-                "You will save " + this.compareCO2ePercent(oldDiet, newDiet)
-                + "% CO2e which is about " +
-                this.compareCO2eKilos(oldDiet, newDiet) + "kg per year" + "(CO2 of  "
-                + getEquivalentLitresOfGasoline(oldDiet, newDiet) + "L gas)."
-                + " If everyone in Vancouver made the same changes, "
-                + "the city will save " + getCO2eSavedInVancouver(oldDiet, newDiet) + " millions kg CO2e.";
-        if (this.compareCO2ePercent(oldDiet, newDiet) == 0) {
-            return "Original diet is good enough!";
-        }
-        return report;
-    }
 }
