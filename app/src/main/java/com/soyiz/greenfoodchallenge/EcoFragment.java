@@ -471,13 +471,13 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
         } else {
             user = User.getCurrent();
             Map<String, Object> pledgeDiet = new HashMap<>();
-            pledgeDiet.put("beef", UserDietInfo.getInstance().getAmountOfProteinKG("beef"));
-            pledgeDiet.put("chicken", UserDietInfo.getInstance().getAmountOfProteinKG("chicken"));
-            pledgeDiet.put("pork", UserDietInfo.getInstance().getAmountOfProteinKG("pork"));
-            pledgeDiet.put("fish", UserDietInfo.getInstance().getAmountOfProteinKG("fish"));
-            pledgeDiet.put("beans", UserDietInfo.getInstance().getAmountOfProteinKG("bean"));
-            pledgeDiet.put("vegetables", UserDietInfo.getInstance().getAmountOfProteinKG("vegetable"));
-            pledgeDiet.put("eggs", UserDietInfo.getInstance().getAmountOfProteinKG("egg"));
+            pledgeDiet.put("beef", UserDietInfo.getInstance().getAmountOfProteinGrams("beef"));
+            pledgeDiet.put("chicken", UserDietInfo.getInstance().getAmountOfProteinGrams("chicken"));
+            pledgeDiet.put("pork", UserDietInfo.getInstance().getAmountOfProteinGrams("pork"));
+            pledgeDiet.put("fish", UserDietInfo.getInstance().getAmountOfProteinGrams("fish"));
+            pledgeDiet.put("beans", UserDietInfo.getInstance().getAmountOfProteinGrams("bean"));
+            pledgeDiet.put("vegetables", UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable"));
+            pledgeDiet.put("eggs", UserDietInfo.getInstance().getAmountOfProteinGrams("egg"));
             FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
             functions.setUserField(FirebaseHelper.Firestore.DIET, pledgeDiet);
 
