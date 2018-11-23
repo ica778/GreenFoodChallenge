@@ -1,10 +1,7 @@
 package com.soyiz.greenfoodchallenge;
 
-import android.graphics.Bitmap;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class MealCard {
 
@@ -15,7 +12,6 @@ public class MealCard {
     private String restaurantName = null;
     private String restaurantLocation = null;
     private String mealDescription = null;
-    private boolean imageAdded = false;
 
     MealCard() {
 

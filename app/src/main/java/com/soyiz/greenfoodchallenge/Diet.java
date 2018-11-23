@@ -14,8 +14,10 @@ public class Diet {
         proteinPercentMap = new HashMap<>();
     }
 
+    //Not being used anywhere in code
+
     // Used to load a map from Firebase into a diet object
-    public void loadFromStringMap(Map<String, Float> map) {
+    /*public void loadFromStringMap(Map<String, Float> map) {
         for (Map.Entry<String, Float> entry : map.entrySet()) {
             ProteinSource protein = ProteinSource.stringToEnumValue(entry.getKey());
 
@@ -39,7 +41,7 @@ public class Diet {
         }
 
         return outputMap;
-    }
+    }*/
 
     // Sets the percentage of a given protein
     public void setProteinPercent(ProteinSource protein, double percent) {
