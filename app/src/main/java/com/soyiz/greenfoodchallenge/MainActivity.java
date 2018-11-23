@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -98,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setAddMealDialog(AddMealDialogFragment fragment)
-    {
+    public void setAddMealDialog(AddMealDialogFragment fragment) {
         mealDialogFragment = fragment;
     }
 

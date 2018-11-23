@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.HashMap;
 
 import java.util.Map;
+
 import com.google.firebase.firestore.util.Consumer;
 
 
@@ -27,7 +28,7 @@ public class PledgeDialog extends DialogFragment {
     private static final String TAG = "PledgeDialog";
     //widgets
     private EditText mInput;
-    private TextView mActionOk,heading;
+    private TextView mActionOk, heading;
     private RecyclerView recyclerView = null;
     private List<PledgeCard> pledgeCardList = new ArrayList<>();
 
@@ -55,18 +56,6 @@ public class PledgeDialog extends DialogFragment {
             }
         });
 
-        //set Pledge
-        //Map<String, Object> pledge = new HashMap<>();
-        //pledge.put("currentCO2e", 0.0);
-        //pledge.put("goalCO2e", 20.0);
-        //FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
-        //functions.setUserField(FirebaseHelper.Firestore.PLEDGE, pledge);
-
-
-
-
-
-
         recyclerView = view.findViewById(R.id.pledge_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(recyclerView.getContext());
         //so latest additions shown at the top
@@ -79,8 +68,7 @@ public class PledgeDialog extends DialogFragment {
         return view;
     }
 
-    public void creatTestPledges(){
-
+    public void creatTestPledges() {
         PledgeCard test1 = new PledgeCard();
         test1.setUserName("ZC");
         test1.setPledgeAmount(777);
@@ -102,6 +90,5 @@ public class PledgeDialog extends DialogFragment {
         test5.setPledgeAmount(777);
         pledgeCardList.add(test5);
         recyclerView.getAdapter().notifyDataSetChanged();
-
     }
 }
