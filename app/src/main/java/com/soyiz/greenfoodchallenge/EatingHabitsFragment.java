@@ -23,7 +23,6 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
     private TextView tv_result;
     private ScrollView mScrollView;
     private TextView beefText, chickenText, porkText, fishText, beanText, vegetablesText, eggsText;
-    private int maximumUserInputLength;
 
     public EatingHabitsFragment() {
     }
@@ -77,12 +76,12 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.btn_total:
                 if (userInput() == true) {
-                    CalculatorResultsFragment nextFragment= new CalculatorResultsFragment();
+                    CalculatorResultsFragment nextFragment = new CalculatorResultsFragment();
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(((ViewGroup)getView().getParent()).getId(), nextFragment,"findThisFragment")
+                            .replace(((ViewGroup) getView().getParent()).getId(), nextFragment, "findThisFragment")
                             .addToBackStack(null)
                             .commit();
                 } else {
@@ -91,7 +90,7 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.beefText:
                 Toast.makeText(getContext(), getResources().getString(R.string.beefServingsGuide), Toast.LENGTH_SHORT).show();
-            break;
+                break;
             case R.id.chickenText:
                 Toast.makeText(getContext(), getResources().getString(R.string.chickenServingsGuide), Toast.LENGTH_SHORT).show();
                 break;
@@ -127,11 +126,11 @@ public class EatingHabitsFragment extends Fragment implements View.OnClickListen
         boolean userHasEnteredInput = false;
 
         // Put user input into singleton
-        if (TextUtils.isEmpty(beef) || Float.parseFloat("0" + beef + "0") == 0 ) {
+        if (TextUtils.isEmpty(beef) || Float.parseFloat("0" + beef + "0") == 0) {
             UserDietInfo.getInstance().setAmountOfProteinGrams("beef", 0);
         } else {
 
-            UserDietInfo.getInstance().setAmountOfProteinGrams("beef",  (Float.parseFloat("0" + beef)) * 75f / 7f);
+            UserDietInfo.getInstance().setAmountOfProteinGrams("beef", (Float.parseFloat("0" + beef)) * 75f / 7f);
             userHasEnteredInput = true;
         }
         if (TextUtils.isEmpty(chicken) || Float.parseFloat("0" + chicken + "0") == 0) {
