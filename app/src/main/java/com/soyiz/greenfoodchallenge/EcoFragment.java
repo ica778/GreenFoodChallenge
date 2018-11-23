@@ -22,7 +22,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EcoFragment extends Fragment implements View.OnClickListener {
 
@@ -468,6 +470,18 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "Select a new diet plan", Toast.LENGTH_SHORT).show();
         } else {
             user = User.getCurrent();
+            Map<String, Object> pledgeDiet = new HashMap<>();
+            pledgeDiet.put("beef", UserDietInfo.getInstance().getAmountOfProteinGrams("beef"));
+            pledgeDiet.put("chicken", UserDietInfo.getInstance().getAmountOfProteinGrams("chicken"));
+            pledgeDiet.put("pork", UserDietInfo.getInstance().getAmountOfProteinGrams("pork"));
+            pledgeDiet.put("fish", UserDietInfo.getInstance().getAmountOfProteinGrams("fish"));
+            pledgeDiet.put("beans", UserDietInfo.getInstance().getAmountOfProteinGrams("bean"));
+            pledgeDiet.put("vegetables", UserDietInfo.getInstance().getAmountOfProteinGrams("vegetable"));
+            pledgeDiet.put("eggs", UserDietInfo.getInstance().getAmountOfProteinGrams("egg"));
+            FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
+            functions.setUserField(FirebaseHelper.Firestore.DIET, pledgeDiet);
+
+
             if (positionOfSpinnerSelected == 1) {
                 user.setGoalDiet(highMeat);
             } else if (positionOfSpinnerSelected == 2) {
@@ -485,6 +499,14 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                     "You have pledged this diet",  Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    //set Pledge
+    //Map<String, Object> pledge = new HashMap<>();
+    //pledge.put("currentCO2e", 0.0);
+    //pledge.put("goalCO2e", 20.0);
+    //FirebaseHelper.Functions functions = (new FirebaseHelper()).getFunctions();
+    //functions.setUserField(FirebaseHelper.Firestore.PLEDGE, pledge);
 
     private class MyXAxisValueFormatter implements IAxisValueFormatter {
         private String[] xValues;
