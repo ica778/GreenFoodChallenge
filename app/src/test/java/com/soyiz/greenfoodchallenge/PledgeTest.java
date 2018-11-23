@@ -1,27 +1,5 @@
-package com.soyiz.greenfoodchallenge;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
+public class PledgeTest {
 
-public class PledgeTest extends TestCase {
-
-    public void testLoadFromStringMap() {
-    }
-
-    public void testExportToStringMap() {
-    }
-
-    public void testGetGoalCO2eSavings() {
-    }
-
-    public void testSetGoalCO2eSavings() {
-    }
-
-    public void testGetCurrentCO2eSavings() {
-    }
-
-    public void testAddCO2eSavings() {
-    }
-
-    public void testGetCompletionPercentage() {
-    }
 }

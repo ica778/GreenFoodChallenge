@@ -6,7 +6,6 @@ public class PledgeCard {
     private String userName = null;
     private double pledgeAmount = 0.0;
 
-
     PledgeCard() {
 
     }
@@ -19,7 +18,6 @@ public class PledgeCard {
         this.userName = userName;
     }
 
-
     public double getPledgeAmount() {
         return pledgeAmount;
     }
@@ -27,5 +25,4 @@ public class PledgeCard {
     public void setPledgeAmount(double pledgeAmount) {
         this.pledgeAmount = pledgeAmount;
     }
-
 }

@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class PledgeFragment extends Fragment {
 
-
     private Spinner regionShowSpinner;
     private ArrayAdapter adapter;
     private TextView showInformationAboutPledgesInMunicipality;
@@ -25,6 +24,7 @@ public class PledgeFragment extends Fragment {
     private int amountOfPeoplePledged;
     private Button sharing;
     private int prevSpinnerSelection = 0;
+
     public PledgeFragment() {
         // Required empty public constructor
     }
@@ -54,9 +54,9 @@ public class PledgeFragment extends Fragment {
                 myIntent.setType("text/plain");
                 String shareBody = "";
                 String shareSub = "";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
-                myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-                startActivity(Intent.createChooser(myIntent,"Sharing App"));
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(myIntent, "Sharing App"));
 
             }
         });
@@ -97,13 +97,18 @@ public class PledgeFragment extends Fragment {
 
         String stringToShow = getResources().getString(R.string.show_pledge_information);
         // String, int, float, float, float
-        String pledgeShowData = String.format(stringToShow, getCountOfPeoplePledged(), getTonnesOfC02Pledged(), getAmountOfGasolineInC02Saved(0), getAverageC02Pledged());
+        String pledgeShowData = String.format(stringToShow,
+                getCountOfPeoplePledged(),
+                getTonnesOfC02Pledged(),
+                getAmountOfGasolineInC02Saved(0),
+                getAverageC02Pledged());
         showInformationAboutPledgesInMunicipality.setText(pledgeShowData);
     }
 
     private ArrayAdapter<String> makeAdapterForList() {
         if (getActivity() == null) {
-            Log.w("PledgeFragment", "makeAdapterForList: NULL THING HAPPENED AND DIDN'T BREAK (HOPEFULLY)");
+            Log.w("PledgeFragment",
+                    "makeAdapterForList: NULL THING HAPPENED AND DIDN'T BREAK (HOPEFULLY)");
             return null;
         }
 
@@ -126,7 +131,8 @@ public class PledgeFragment extends Fragment {
     // Returns string to show on list_view for pledge
     private String pledgeStringToShowOnListView(Map<String, Object> userToShow) {
         String userData = "";
-        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow.get(FirebaseHelper.Firestore.PLEDGE);
+        Map<String, Object> pledgeMap = (Map<String, Object>) userToShow
+                .get(FirebaseHelper.Firestore.PLEDGE);
 
         userData = userData +
                 userToShow.get(FirebaseHelper.Firestore.FIRST_NAME) +
@@ -142,14 +148,12 @@ public class PledgeFragment extends Fragment {
         for (Map<String, Object> map : listToAppend) {
             listOfPledgesToShow.add(pledgeStringToShowOnListView(map));
 
-            Map<String, Object> pledgeMap = (Map<String, Object>) map.get(FirebaseHelper.Firestore.PLEDGE);
+            Map<String, Object> pledgeMap = (Map<String, Object>) map
+                    .get(FirebaseHelper.Firestore.PLEDGE);
             totalGoalC02e += (Double) pledgeMap.get(FirebaseHelper.Firestore.GOAL_CO2E);
             amountOfPeoplePledged += 1;
         }
-
-
     }
-
 
     private int getCountOfPeoplePledged() {
         return amountOfPeoplePledged;
@@ -167,5 +171,4 @@ public class PledgeFragment extends Fragment {
     private double getAverageC02Pledged() {
         return totalGoalC02e / amountOfPeoplePledged;
     }
-
 }
