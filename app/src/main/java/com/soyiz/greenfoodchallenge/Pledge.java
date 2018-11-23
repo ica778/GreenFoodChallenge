@@ -15,33 +15,35 @@ public class Pledge {
     Pledge() {
     }
 
-    // Used to load a map from Firebase into a pledge object
-    public void loadFromStringMap(Map<String, Object> map) {
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            switch (entry.getKey()) {
-                case "currentCO2e":
-                    currentCO2eSavingsTonnes = (Float) entry.getValue();
-                    break;
-                case "goalCO2e":
-                    goalCO2eSavingsTonnes = (Float) entry.getValue();
-                    break;
+    //Not being used, commented out for code coverage, not deleted since code would've been used if completed
 
-                default:
-                    // More bad silent unexpected behaviour... But still best solution without throwing.
-                    Log.d(TAG, "[ERROR] loadFromStringMap: not recognized key in map. Please update this function!");
-            }
-        }
-    }
-
-    // Used to turn a pledge into a string keyed map for saving with Firebase
-    public Map<String, Object> exportToStringMap() {
-        Map<String, Object> outputMap = new HashMap<>();
-
-        outputMap.put("currentCO2e", currentCO2eSavingsTonnes);
-        outputMap.put("goalCO2e", goalCO2eSavingsTonnes);
-
-        return outputMap;
-    }
+//    // Used to load a map from Firebase into a pledge object
+//    public void loadFromStringMap(Map<String, Object> map) {
+//        for (Map.Entry<String, Object> entry : map.entrySet()) {
+//            switch (entry.getKey()) {
+//                case "currentCO2e":
+//                    currentCO2eSavingsTonnes = (Float) entry.getValue();
+//                    break;
+//                case "goalCO2e":
+//                    goalCO2eSavingsTonnes = (Float) entry.getValue();
+//                    break;
+//
+//                default:
+//                    // More bad silent unexpected behaviour... But still best solution without throwing.
+//                    Log.d(TAG, "[ERROR] loadFromStringMap: not recognized key in map. Please update this function!");
+//            }
+//        }
+//    }
+//
+//    // Used to turn a pledge into a string keyed map for saving with Firebase
+//    public Map<String, Object> exportToStringMap() {
+//        Map<String, Object> outputMap = new HashMap<>();
+//
+//        outputMap.put("currentCO2e", currentCO2eSavingsTonnes);
+//        outputMap.put("goalCO2e", goalCO2eSavingsTonnes);
+//
+//        return outputMap;
+//    }
 
     public float getGoalCO2eSavings() {
         return goalCO2eSavingsTonnes;
@@ -53,6 +55,10 @@ public class Pledge {
 
     public float getCurrentCO2eSavings() {
         return currentCO2eSavingsTonnes;
+    }
+
+    public void setCurrentCO2eSavings(float savings) {
+        currentCO2eSavingsTonnes = savings;
     }
 
     public void addCO2eSavings(float addedSavingsInTonnes) {

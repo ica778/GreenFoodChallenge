@@ -184,12 +184,12 @@ public class User {
 //        userDocument.put(FirebaseHelper.Firestore.USE_ALIAS_FOR_NAME, value);
 //    }
 //
-//    // TODO: @Sahaj make this consistent with however you did the municipality ID thing
+//
 //    public String getCity() {
 //        return (String) userDocument.get(FirebaseHelper.Firestore.CITY);
 //    }
 //
-//    // TODO: @Sahaj make this consistent with however you did the municipality ID thing
+//
 //    public void setCity(String city) {
 //        userDocument.put(FirebaseHelper.Firestore.CITY, city);
 //    }
