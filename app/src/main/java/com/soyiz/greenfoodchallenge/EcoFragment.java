@@ -480,7 +480,9 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 user.setGoalDiet(vegan);
             }
             user.setCurrentDiet(myDiet);
-            Toast.makeText(getContext(), "You have pledged this diet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), user.getFirstName() + " " + user.getLastName() +
+                    "\n" +
+                    "You have pledged this diet",  Toast.LENGTH_SHORT).show();
         }
     }
 
