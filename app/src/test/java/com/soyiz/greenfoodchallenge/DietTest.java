@@ -13,8 +13,9 @@ public class DietTest {
     @Test
     public void setProteinPercent() {
         Diet diet = new Diet();
-        diet.setProteinPercent(ProteinSource.Beans, 10);
-        assertEquals(10,diet.getProteinPercent(ProteinSource.Beans));
+        double number = 10;
+        diet.setProteinPercent(ProteinSource.Beans, number);
+        assertEquals(number,diet.getProteinPercent(ProteinSource.Beans));
     }
 
     @Test
