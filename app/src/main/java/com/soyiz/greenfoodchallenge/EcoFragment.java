@@ -7,13 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,18 +15,9 @@ import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
@@ -174,7 +159,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                textViewEco2.setText("Emissions Comparison (Tonnes)");
+                textViewEco2.setText("Emissions Comparison (Tonnes/Year)");
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) highMeat.getProteinPercent(ProteinSource.Pork));
@@ -192,7 +177,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                textViewEco2.setText("Emissions Comparison (Tonnes)");
+                textViewEco2.setText("Emissions Comparison (Tonnes/Year)");
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) lowMeat.getProteinPercent(ProteinSource.Pork));
@@ -210,7 +195,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                textViewEco2.setText("Emissions Comparison (Tonnes)");
+                textViewEco2.setText("Emissions Comparison (Tonnes/Year)");
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) onlyFish.getProteinPercent(ProteinSource.Pork));
@@ -228,7 +213,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                textViewEco2.setText("Emissions Comparison (Tonnes)");
+                textViewEco2.setText("Emissions Comparison (Tonnes/Year)");
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) vegetarian.getProteinPercent(ProteinSource.Pork));
@@ -246,7 +231,7 @@ public class EcoFragment extends Fragment implements View.OnClickListener {
                 yData.clear();
                 pieChartDietProportionView.setCenterText("Create a Diet First");
             } else {
-                textViewEco2.setText("Emissions Comparison (Tonnes)");
+                textViewEco2.setText("Emissions Comparison (Tonnes/Year)");
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Beef));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Chicken));
                 yData.add((float) vegan.getProteinPercent(ProteinSource.Pork));
