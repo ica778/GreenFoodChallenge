@@ -10,48 +10,6 @@ import static org.junit.Assert.*;
 
 public class DietTest {
 
-
-
-    /*@Test
-    public void loadFromStringMap() {
-        Map<ProteinSource, Float> proteinPercentMap = new HashMap<>();
-        proteinPercentMap.put(ProteinSource.Beef, 1.0f);
-        proteinPercentMap.put(ProteinSource.Chicken, 1.0f);
-        proteinPercentMap.put(ProteinSource.Vegetables, 1.0f);
-        proteinPercentMap.put(ProteinSource.Beans, 1.0f);
-        proteinPercentMap.put(ProteinSource.Eggs, 1.0f);
-        proteinPercentMap.put(ProteinSource.Pork, 1.0f);
-        proteinPercentMap.put(ProteinSource.Fish, 1.0f);
-        Map<String, Float> map = new HashMap<>();
-        map.put("test1", 1.0f);
-        map.put("test2", 1.0f);
-
-        for(Map.Entry<String, Float> entry : map.entrySet()) {
-            ProteinSource protein = ProteinSource.stringToEnumValue(entry.getKey());
-            assertEquals(null, protein);
-        }
-
-    }
-
-    @Test
-    public void exportToStringMap() {
-        Map<ProteinSource, Float> proteinPercentMap = new HashMap<>();
-        proteinPercentMap.put(ProteinSource.Beef, 1.0f);
-        proteinPercentMap.put(ProteinSource.Chicken, 1.0f);
-        proteinPercentMap.put(ProteinSource.Vegetables, 1.0f);
-        proteinPercentMap.put(ProteinSource.Beans, 1.0f);
-        proteinPercentMap.put(ProteinSource.Eggs, 1.0f);
-        proteinPercentMap.put(ProteinSource.Pork, 1.0f);
-        proteinPercentMap.put(ProteinSource.Fish, 1.0f);
-        Map<String, Float> outputMap = new HashMap<>();
-        for (Map.Entry<ProteinSource, Float> entry : proteinPercentMap.entrySet()) {
-            outputMap.put(entry.getKey().toString(), entry.getValue());
-        }
-
-        assertNotNull( outputMap);
-
-    }*/
-
     @Test
     public void setProteinPercent() {
         ProteinSource protein = ProteinSource.Beef;
