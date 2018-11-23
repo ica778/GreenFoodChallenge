@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     public static final boolean DEBUG_MODE = false;
 
     public static final int RC_LOGIN_ACTIVITY = 123;
+    public static final int RC_LOAD_IMAGE = 321;
+
+    private AddMealDialogFragment mealDialogFragment;
 
     public static final String TAG = "MainActivity";
 
@@ -87,9 +90,17 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onActivityResult: successful login. Firebase user: " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
             User.getCurrent().setFirebaseUser(FirebaseAuth.getInstance().getCurrentUser());
             (new FirebaseHelper()).getFunctions().getUserInfoForDisplay();
+        } else if (requestCode == RC_LOAD_IMAGE) {
+            Log.d(TAG, "onActivityResult: imaged loaded!");
+            mealDialogFragment.setMealImageUri(data.getData());
         } else {
             Log.d(TAG, "onActivityResult: incorrect requestCode for login activity trigger. Was: " + requestCode + ", expected: " + RC_LOGIN_ACTIVITY);
         }
+    }
+
+    public void setAddMealDialog(AddMealDialogFragment fragment)
+    {
+        mealDialogFragment = fragment;
     }
 
     @Override

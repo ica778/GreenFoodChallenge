@@ -47,12 +47,6 @@
 
         <Button android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:text="addPledge"
-                android:id="@+id/addPledge"/>
-
-
-        <Button android:layout_width="200dp"
-                android:layout_height="50dp"
 
                 android:text="Share this app"
                 android:id="@+id/share"/>
