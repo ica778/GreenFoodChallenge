@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
@@ -114,22 +115,29 @@ public class AddMealDialogFragment extends DialogFragment implements View.OnClic
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
-                if (mealImageUri!= null) {
-                    imageAdded = true;
-                }
+                startActivityForResult(i, MainActivity.RC_LOAD_IMAGE);
+//                if (mealImageUri != null) {
+//                    imageAdded = true;
+//                }
                 break;
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            mealImageUri = data.getData();
-        }
+    public void setMealImageUri(Uri uri)
+    {
+        Log.d("AddMealDialogFragment", "setMealImageUri: setting meal image uri to '" + uri + "'");
+        mealImageUri = uri;
+        imageAdded = true;
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+//            mealImageUri = data.getData();
+//        }
+//    }
 
     public static AddMealDialogFragment newInstance() {
         AddMealDialogFragment fragment = new AddMealDialogFragment();

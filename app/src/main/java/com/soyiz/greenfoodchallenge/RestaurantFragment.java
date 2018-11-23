@@ -68,6 +68,8 @@ public class RestaurantFragment extends Fragment implements View.OnClickListener
         switch (view.getId()) {
             case R.id.add_meal_card_button:
                 AddMealDialogFragment dialog = AddMealDialogFragment.newInstance();
+                ((MainActivity)getActivity()).setAddMealDialog(dialog);
+
                 dialog.setTargetFragment(this, 0);
                 dialog.show(getFragmentManager(), "addMealDialog");
                 break;
